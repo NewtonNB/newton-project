@@ -31,3 +31,39 @@
 });
 
 
+// Mobile dropdown toggle logic
+function setupMobileDropdowns() {
+  if (window.innerWidth <= 700) {
+    document.querySelectorAll('.dropdown > a').forEach(function(link) {
+      link.onclick = function(e) {
+        var parent = link.parentElement;
+        if (parent.classList.contains('dropdown')) {
+          e.preventDefault();
+          // Close other open dropdowns
+          document.querySelectorAll('.dropdown.open').forEach(function(dd) {
+            if (dd !== parent) dd.classList.remove('open');
+          });
+          parent.classList.toggle('open');
+        }
+      };
+    });
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.dropdown')) {
+        document.querySelectorAll('.dropdown.open').forEach(function(dd) {
+          dd.classList.remove('open');
+        });
+      }
+    });
+  } else {
+    // Remove .open class on resize to desktop
+    document.querySelectorAll('.dropdown.open').forEach(function(dd) {
+      dd.classList.remove('open');
+    });
+  }
+}
+
+window.addEventListener('DOMContentLoaded', setupMobileDropdowns);
+window.addEventListener('resize', setupMobileDropdowns);
+
+

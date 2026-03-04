@@ -1,0 +1,418 @@
+<?php
+// settings.php - Secondary School Dashboard Settings Page
+session_start();
+// (Assume user authentication and session checks are handled in the dashboard)
+if (!isset($_SESSION['admin'])) {
+    header('Location: login.php');
+    exit();
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NYABIKONI SECONDARY SCHOOL - Settings</title>
+    <!-- Font Awesome CDN for icons -->
+    <?php include 'admin_css.php'; ?>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: "poppins";
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            margin-top: 40px;
+            display: block;
+            min-height: 100vh;
+            padding: 0 20px;
+        }
+        .modern-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            padding: 56px 40px 40px 40px;
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 0;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .modern-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c);
+            border-radius: 24px 24px 0 0;
+        }
+        .settings-title {
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            text-align: center;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+        .settings-divider {
+            border: none;
+            border-top: 2px solid rgba(102, 126, 234, 0.2);
+            margin: 0 auto 40px auto;
+            width: 80px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+        }
+        .modern-table-container {
+            margin-top: 32px;
+        }
+        /* Modern Card Styles */
+        .card {
+            border-radius: 20px !important;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.10);
+            border: 1px solid rgba(102, 126, 234, 0.10);
+            background: rgba(255,255,255,0.98);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+        .card:hover {
+            box-shadow: 0 16px 48px rgba(102, 126, 234, 0.18);
+            transform: translateY(-4px) scale(1.02);
+        }
+        .card-header {
+            border-radius: 20px 20px 0 0 !important;
+            font-weight: 700;
+            font-size: 1.15em;
+            letter-spacing: 0.5px;
+            padding: 1.1em 1.5em;
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+            color: #fff !important;
+        }
+        .card-body {
+            padding: 2em 1.5em 1.5em 1.5em;
+        }
+        /* Modern Form Styles */
+        .form-label {
+            font-weight: 600;
+            color: #4f46e5;
+            margin-bottom: 0.4em;
+        }
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 1.5px solid #cbd5e1;
+            font-size: 1.08rem;
+            padding: 0.75em 1em;
+            box-shadow: 0 1px 4px rgba(102, 126, 234, 0.04);
+            margin-bottom: 1em;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .form-control:focus, .form-select:focus {
+            border: 1.5px solid #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.10);
+            outline: none;
+        }
+        .btn {
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.08rem;
+            padding: 0.7em 2em;
+            box-shadow: 0 2px 12px rgba(102, 126, 234, 0.08);
+            transition: background 0.2s, transform 0.15s;
+        }
+        .btn-primary, .btn-secondary, .btn-info, .btn-success, .btn-dark, .btn-warning, .btn-danger {
+            color: #fff;
+            border: none;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%);
+        }
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .btn-info {
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+        }
+        .btn-info:hover {
+            background: linear-gradient(135deg, #0ea5e9 0%, #38bdf8 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .btn-success {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        .btn-success:hover {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .btn-dark {
+            background: linear-gradient(135deg, #22223b 0%, #4a4e69 100%);
+        }
+        .btn-dark:hover {
+            background: linear-gradient(135deg, #4a4e69 0%, #22223b 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .btn-warning {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e42 100%);
+            color: #22223b;
+        }
+        .btn-warning:hover {
+            background: linear-gradient(135deg, #f59e42 0%, #fbbf24 100%);
+            color: #22223b;
+            transform: translateY(-2px) scale(1.03);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+        }
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #b91c1c 0%, #ef4444 100%);
+            transform: translateY(-2px) scale(1.03);
+        }
+        /* Responsive grid for settings */
+        @media (max-width: 991px) {
+            .modern-content { padding: 40px 20px; max-width: 98vw; }
+            .modern-table-container { margin-top: 18px; }
+        }
+        @media (max-width: 700px) {
+            .modern-content { padding: 18px 6px; }
+            .content { margin-top: 20px; padding: 0 4px; }
+            .settings-title { font-size: 1.3rem; }
+            .card-body { padding: 1em 0.5em 0.5em 0.5em; }
+        }
+    </style>
+</head>
+<body>
+<?php include 'admin_sidebar.php'; ?>
+<div class="content">
+  <div class="modern-content">
+    <div class="settings-title">Settings</div>
+    <hr class="settings-divider" />
+  <div class="modern-table-container">
+    <div class="row g-4">
+      <!-- Profile Settings -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Profile Settings</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="profileName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="profileName" name="profile_name" value="<?php echo htmlspecialchars($user['name'] ?? ''); ?>" required>
+              </div>
+              <div class="mb-3">
+                <label for="profileEmail" class="form-label">Email</label>
+                <input type="email" class="form-control" id="profileEmail" name="profile_email" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>" required>
+              </div>
+              <div class="mb-3">
+                <label for="profilePhone" class="form-label">Phone</label>
+                <input type="text" class="form-control" id="profilePhone" name="profile_phone" value="<?php echo htmlspecialchars($user['phone'] ?? ''); ?>">
+              </div>
+              <div class="mb-3">
+                <label for="profilePic" class="form-label">Profile Picture</label>
+                <input type="file" class="form-control" id="profilePic" name="profile_pic">
+              </div>
+              <button type="submit" class="btn btn-primary">Update Profile</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Change Password -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Change Password</h5>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="mb-3">
+                <label for="currentPassword" class="form-label">Current Password</label>
+                <input type="password" class="form-control" id="currentPassword" name="current_password" required>
+              </div>
+              <div class="mb-3">
+                <label for="newPassword" class="form-label">New Password</label>
+                <input type="password" class="form-control" id="newPassword" name="new_password" required>
+              </div>
+              <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                <input type="password" class="form-control" id="confirmPassword" name="confirm_password" required>
+              </div>
+              <button type="submit" class="btn btn-secondary">Change Password</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- School Info (Admin Only) -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">School Information</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+              <div class="mb-3">
+                <label for="schoolName" class="form-label">School Name</label>
+                <input type="text" class="form-control" id="schoolName" name="school_name" value="<?php echo htmlspecialchars($school['name'] ?? 'Nyabikoni Secondary School'); ?>" required>
+              </div>
+              <div class="mb-3">
+                <label for="schoolAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="schoolAddress" name="school_address" value="<?php echo htmlspecialchars($school['address'] ?? ''); ?>">
+              </div>
+              <div class="mb-3">
+                <label for="schoolLogo" class="form-label">School Logo</label>
+                <input type="file" class="form-control" id="schoolLogo" name="school_logo">
+              </div>
+              <button type="submit" class="btn btn-info text-white">Update School Info</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Notification Preferences -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">Notification Preferences</h5>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="notifEmail" name="notif_email" checked>
+                <label class="form-check-label" for="notifEmail">Receive Email Notifications</label>
+              </div>
+              <div class="form-check mb-2">
+                <input class="form-check-input" type="checkbox" id="notifSMS" name="notif_sms">
+                <label class="form-check-label" for="notifSMS">Receive SMS Notifications</label>
+              </div>
+              <button type="submit" class="btn btn-success">Save Preferences</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Theme/Appearance Settings -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Appearance</h5>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="mb-3">
+                <label class="form-label">Theme</label>
+                <select class="form-select" name="theme">
+                  <option value="light">Light Mode</option>
+                  <option value="dark">Dark Mode</option>
+                  <option value="system">System Default</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-dark">Save Theme</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Academic Year/Term Settings -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-warning text-dark">
+            <h5 class="mb-0">Academic Year & Term</h5>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="mb-3">
+                <label class="form-label">Academic Year</label>
+                <input type="text" class="form-control" name="academic_year" value="<?php echo htmlspecialchars($school['academic_year'] ?? '2024'); ?>">
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Current Term</label>
+                <select class="form-select" name="current_term">
+                  <option value="1">Term 1</option>
+                  <option value="2">Term 2</option>
+                  <option value="3">Term 3</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-warning">Update Academic Info</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Backup & Restore -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">Backup & Restore</h5>
+          </div>
+          <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+              <button type="submit" name="download_backup" class="btn btn-danger mb-2">Download Backup</button>
+              <div class="mb-3">
+                <label class="form-label">Restore from Backup</label>
+                <input type="file" class="form-control" name="backup_file">
+              </div>
+              <button type="submit" name="restore_backup" class="btn btn-danger">Restore Backup</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Advanced/Other Settings Row -->
+      </div> <!-- End first row g-4 -->
+      <div class="row g-4 mt-4"> <!-- New row for advanced settings -->
+      <!-- Accessibility Settings -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">Accessibility</h5>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <div class="mb-3">
+                <label class="form-label">Font Size</label>
+                <select class="form-select" name="font_size">
+                  <option value="normal">Normal</option>
+                  <option value="large">Large</option>
+                  <option value="xlarge">Extra Large</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-secondary">Save Accessibility</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Logout All Devices -->
+      <div class="col-lg-6">
+        <div class="card shadow-sm mb-4">
+          <div class="card-header bg-dark text-white">
+            <h5 class="mb-0">Security</h5>
+          </div>
+          <div class="card-body">
+            <form method="post">
+              <button type="submit" name="logout_all" class="btn btn-dark">Logout All Devices</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      </div> <!-- End advanced settings row -->
+    </div>
+  </div>
+</div> 
+</div>
+</body>
+</html> 

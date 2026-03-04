@@ -1,0 +1,65 @@
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Sensitive configuration
+config_local.php
+config_email.php
+
+# Composer dependencies
+/vendor/
+
+# Log files
+*.log
+announcement_debug.log
+
+# Uploaded files (optional - you may want to track some)
+/uploads/*
+!/uploads/.gitkeep
+
+# Gallery uploads (optional - you may want to track some)
+/nyabzgallery/teacher_*.jpg
+/nyabzgallery/teacher_*.png
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+
+# Node modules (if you add npm later)
+node_modules/
+
+# Environment files
+.env
+.env.local
+
+# Backup files
+*.backup
+*.old
+
+# Cache files
+cache/
+*.cache
+
+# Session files
+sessions/
+
+# Error logs
+error_log
+php_errors.log
+
+# Composer lock (optional - some prefer to track it)
+# composer.lock

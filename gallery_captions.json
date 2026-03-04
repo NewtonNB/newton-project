@@ -1,0 +1,604 @@
+{
+    "images": [
+        {
+            "filename": "teacher_686e64e87bda74.25457742.jpg",
+            "category": "teachers",
+            "caption": "teacher_686e64e87bda74.25457742.jpg",
+            "order": 1
+        },
+        {
+            "filename": "teacher_686e64cb718099.16589115.png",
+            "category": "teachers",
+            "caption": "teacher_686e64cb718099.16589115.png",
+            "order": 2
+        },
+        {
+            "filename": "teacher_686e47eecf4363.94450118.jpg",
+            "category": "teachers",
+            "caption": "teacher_686e47eecf4363.94450118.jpg",
+            "order": 3
+        },
+        {
+            "filename": "teacher_686e47c8aa1c94.23380109.jpg",
+            "category": "teachers",
+            "caption": "teacher_686e47c8aa1c94.23380109.jpg",
+            "order": 4
+        },
+        {
+            "filename": "teacher_686e47b5b0f0f2.30009133.jpg",
+            "category": "teachers",
+            "caption": "teacher_686e47b5b0f0f2.30009133.jpg",
+            "order": 5
+        },
+        {
+            "filename": "collage.jpeg",
+            "category": "others",
+            "caption": "collage.jpeg",
+            "order": 6
+        },
+        {
+            "filename": "burser3.jpg",
+            "category": "nonteachers",
+            "caption": "burser3.jpg",
+            "order": 7
+        },
+        {
+            "filename": "burser2.jpg",
+            "category": "nonteachers",
+            "caption": "burser2.jpg",
+            "order": 8
+        },
+        {
+            "filename": "burser1.png",
+            "category": "nonteachers",
+            "caption": "burser1.png",
+            "order": 9
+        },
+        {
+            "filename": "secretary.jpg",
+            "category": "nonteachers",
+            "caption": "secretary.jpg",
+            "order": 10
+        },
+        {
+            "filename": "librrian.png",
+            "category": "nonteachers",
+            "caption": "librrian.png",
+            "order": 11
+        },
+        {
+            "filename": "lab attendeant.png",
+            "category": "nonteachers",
+            "caption": "lab attendeant.png",
+            "order": 12
+        },
+        {
+            "filename": "cook7.png",
+            "category": "nonteachers",
+            "caption": "cook7.png",
+            "order": 13
+        },
+        {
+            "filename": "cook6.png",
+            "category": "nonteachers",
+            "caption": "cook6.png",
+            "order": 14
+        },
+        {
+            "filename": "cook4.png",
+            "category": "nonteachers",
+            "caption": "cook4.png",
+            "order": 15
+        },
+        {
+            "filename": "cleaner.png",
+            "category": "nonteachers",
+            "caption": "cleaner.png",
+            "order": 16
+        },
+        {
+            "filename": "cook5.png",
+            "category": "nonteachers",
+            "caption": "cook5.png",
+            "order": 17
+        },
+        {
+            "filename": "cook3.png",
+            "category": "nonteachers",
+            "caption": "cook3.png",
+            "order": 18
+        },
+        {
+            "filename": "cook2.png",
+            "category": "nonteachers",
+            "caption": "cook2.png",
+            "order": 19
+        },
+        {
+            "filename": "cook1.png",
+            "category": "nonteachers",
+            "caption": "cook1.png",
+            "order": 20
+        },
+        {
+            "filename": "debating.jpg",
+            "category": "clubs",
+            "caption": "debating.jpg",
+            "order": 21
+        },
+        {
+            "filename": "writers.jpeg",
+            "category": "clubs",
+            "caption": "writers.jpeg",
+            "order": 22
+        },
+        {
+            "filename": "particts.png",
+            "category": "others",
+            "caption": "particts.png",
+            "order": 23
+        },
+        {
+            "filename": "ICT.jpeg",
+            "category": "others",
+            "caption": "ICT.jpeg",
+            "order": 24
+        },
+        {
+            "filename": "interact.png",
+            "category": "clubs",
+            "caption": "interact.png",
+            "order": 25
+        },
+        {
+            "filename": "egor-vikhrev-B8k2ufgH2ZI-unsplash.jpg",
+            "category": "others",
+            "caption": "egor-vikhrev-B8k2ufgH2ZI-unsplash.jpg",
+            "order": 26
+        },
+        {
+            "filename": "pathfinder.jpg",
+            "category": "others",
+            "caption": "pathfinder.jpg",
+            "order": 27
+        },
+        {
+            "filename": "env.jpg",
+            "category": "others",
+            "caption": "env.jpg",
+            "order": 28
+        },
+        {
+            "filename": "estern block.JPG",
+            "category": "buildings",
+            "caption": "estern block.JPG",
+            "order": 29
+        },
+        {
+            "filename": "library.JPG",
+            "category": "buildings",
+            "caption": "library.JPG",
+            "order": 30
+        },
+        {
+            "filename": "esternblock - Copy.jpg",
+            "category": "buildings",
+            "caption": "esternblock - Copy.jpg",
+            "order": 31
+        },
+        {
+            "filename": "sports4.JPG",
+            "category": "sports",
+            "caption": "sports4.JPG",
+            "order": 32
+        },
+        {
+            "filename": "clubs.JPG",
+            "category": "clubs",
+            "caption": "clubs.JPG",
+            "order": 33
+        },
+        {
+            "filename": "drama.JPG",
+            "category": "clubs",
+            "caption": "drama.JPG",
+            "order": 34
+        },
+        {
+            "filename": "school life.JPG",
+            "category": "sports",
+            "caption": "school life.JPG",
+            "order": 35
+        },
+        {
+            "filename": "VD.jpg",
+            "category": "others",
+            "caption": "VD.jpg",
+            "order": 36
+        },
+        {
+            "filename": "chapel3.jpg",
+            "category": "buildings",
+            "caption": "chapel3.jpg",
+            "order": 37
+        },
+        {
+            "filename": "Invitation Card.PNG",
+            "category": "others",
+            "caption": "Invitation Card.PNG",
+            "order": 38
+        },
+        {
+            "filename": "UCE RESULTS (2).jpg",
+            "category": "others",
+            "caption": "UCE RESULTS (2).jpg",
+            "order": 39
+        },
+        {
+            "filename": "sucsess2.jpg",
+            "category": "others",
+            "caption": "sucsess2.jpg",
+            "order": 40
+        },
+        {
+            "filename": "Mariathon.jpg",
+            "category": "others",
+            "caption": "Mariathon.jpg",
+            "order": 41
+        },
+        {
+            "filename": "retreat.jpg",
+            "category": "others",
+            "caption": "retreat.jpg",
+            "order": 42
+        },
+        {
+            "filename": "combin.png",
+            "category": "others",
+            "caption": "combin.png",
+            "order": 43
+        },
+        {
+            "filename": "exams.jpg",
+            "category": "buildings",
+            "caption": "exams.jpg",
+            "order": 44
+        },
+        {
+            "filename": "ceremony.jpg",
+            "category": "clubs",
+            "caption": "ceremony.jpg",
+            "order": 45
+        },
+        {
+            "filename": "indepe.jpg",
+            "category": "sports",
+            "caption": "indepe.jpg",
+            "order": 46
+        },
+        {
+            "filename": "SCHOOL ANTHEM.PNG",
+            "category": "others",
+            "caption": "SCHOOL ANTHEM.PNG",
+            "order": 47
+        },
+        {
+            "filename": "marquee.html",
+            "category": "others",
+            "caption": "marquee.html",
+            "order": 48
+        },
+        {
+            "filename": "NICHOLAS AKAMPURIRA.png",
+            "category": "others",
+            "caption": "NICHOLAS AKAMPURIRA.png",
+            "order": 49
+        },
+        {
+            "filename": "GUMOSHABE SHINE.jpg",
+            "category": "others",
+            "caption": "GUMOSHABE SHINE.jpg",
+            "order": 50
+        },
+        {
+            "filename": "NIWAHA IVAN.jpg",
+            "category": "others",
+            "caption": "NIWAHA IVAN.jpg",
+            "order": 51
+        },
+        {
+            "filename": "AINEMBABAZI LUCKERY.jpg",
+            "category": "others",
+            "caption": "AINEMBABAZI LUCKERY.jpg",
+            "order": 52
+        },
+        {
+            "filename": "AGABA FELIX.jpg",
+            "category": "others",
+            "caption": "AGABA FELIX.jpg",
+            "order": 53
+        },
+        {
+            "filename": "LINET.jpg",
+            "category": "others",
+            "caption": "LINET.jpg",
+            "order": 54
+        },
+        {
+            "filename": "AINEBYONA OSCAR.jpg",
+            "category": "others",
+            "caption": "AINEBYONA OSCAR.jpg",
+            "order": 55
+        },
+        {
+            "filename": "KIRABO PATRICIA.jpg",
+            "category": "others",
+            "caption": "KIRABO PATRICIA.jpg",
+            "order": 56
+        },
+        {
+            "filename": "KAKETO SULAIT.jpg",
+            "category": "others",
+            "caption": "KAKETO SULAIT.jpg",
+            "order": 57
+        },
+        {
+            "filename": "AHARITUHISYA MIRIAH.jpg",
+            "category": "others",
+            "caption": "AHARITUHISYA MIRIAH.jpg",
+            "order": 58
+        },
+        {
+            "filename": "MANDU_PEACE ISAAC.jpg",
+            "category": "others",
+            "caption": "MANDU_PEACE ISAAC.jpg",
+            "order": 59
+        },
+        {
+            "filename": "LINET K.jpg",
+            "category": "others",
+            "caption": "LINET K.jpg",
+            "order": 60
+        },
+        {
+            "filename": "confidence.jpg",
+            "category": "others",
+            "caption": "confidence.jpg",
+            "order": 61
+        },
+        {
+            "filename": "KIMULI.jpg",
+            "category": "others",
+            "caption": "KIMULI.jpg",
+            "order": 62
+        },
+        {
+            "filename": "OWOMUHANGI JEMMA.png",
+            "category": "others",
+            "caption": "OWOMUHANGI JEMMA.png",
+            "order": 63
+        },
+        {
+            "filename": "ELIZABETH.jpg",
+            "category": "others",
+            "caption": "ELIZABETH.jpg",
+            "order": 64
+        },
+        {
+            "filename": "AGATHA.jpg",
+            "category": "others",
+            "caption": "AGATHA.jpg",
+            "order": 65
+        },
+        {
+            "filename": "nyabzlogo.png",
+            "category": "others",
+            "caption": "nyabzlogo.png",
+            "order": 66
+        },
+        {
+            "filename": "cup.jpeg",
+            "category": "others",
+            "caption": "cup.jpeg",
+            "order": 67
+        },
+        {
+            "filename": "nyabz logo.png",
+            "category": "others",
+            "caption": "nyabz logo.png",
+            "order": 68
+        },
+        {
+            "filename": "Alevelstudents.jpg",
+            "category": "others",
+            "caption": "Alevelstudents.jpg",
+            "order": 69
+        },
+        {
+            "filename": "current.jpg",
+            "category": "buildings",
+            "caption": "current.jpg",
+            "order": 70
+        },
+        {
+            "filename": "boyswing - Copy.JPG",
+            "category": "buildings",
+            "caption": "boyswing - Copy.JPG",
+            "order": 71
+        },
+        {
+            "filename": "admin2 - Copy.JPG",
+            "category": "others",
+            "caption": "admin2 - Copy.JPG",
+            "order": 72
+        },
+        {
+            "filename": "students3.JPG",
+            "category": "others",
+            "caption": "students3.JPG",
+            "order": 73
+        },
+        {
+            "filename": "block - Copy.JPG",
+            "category": "buildings",
+            "caption": "block - Copy.JPG",
+            "order": 74
+        },
+        {
+            "filename": "sports3.JPG",
+            "category": "sports",
+            "caption": "sports3.JPG",
+            "order": 75
+        },
+        {
+            "filename": "sports2.JPG",
+            "category": "sports",
+            "caption": "sports2.JPG",
+            "order": 76
+        },
+        {
+            "filename": "sports.JPG",
+            "category": "sports",
+            "caption": "sports.JPG",
+            "order": 77
+        },
+        {
+            "filename": "boys - Copy.JPG",
+            "category": "others",
+            "caption": "boys - Copy.JPG",
+            "order": 78
+        },
+        {
+            "filename": "HEADMASTER.jpg",
+            "category": "teachers",
+            "caption": "HEADMASTER.jpg",
+            "order": 79
+        },
+        {
+            "filename": "student3.jpg",
+            "category": "others",
+            "caption": "student3.jpg",
+            "order": 80
+        },
+        {
+            "filename": "DEPUTY HM Eastern Campus - Copy.jpg",
+            "category": "teachers",
+            "caption": "DEPUTY HM Eastern Campus - Copy.jpg",
+            "order": 81
+        },
+        {
+            "filename": "staff.JPG",
+            "category": "others",
+            "caption": "staff.JPG",
+            "order": 82
+        },
+        {
+            "filename": "chapel2 - Copy.JPG",
+            "category": "buildings",
+            "caption": "chapel2 - Copy.JPG",
+            "order": 83
+        },
+        {
+            "filename": "SCHOOL MAIN HALL.jpg",
+            "category": "buildings",
+            "caption": "SCHOOL MAIN HALL.jpg",
+            "order": 84
+        },
+        {
+            "filename": "lab.jpg",
+            "category": "buildings",
+            "caption": "lab.jpg",
+            "order": 85
+        },
+        {
+            "filename": "students2.jpg",
+            "category": "others",
+            "caption": "students2.jpg",
+            "order": 86
+        },
+        {
+            "filename": "harvad5 - Copy.jpg",
+            "category": "others",
+            "caption": "harvad5 - Copy.jpg",
+            "order": 87
+        },
+        {
+            "filename": "harvad4 - Copy.jpg",
+            "category": "others",
+            "caption": "harvad4 - Copy.jpg",
+            "order": 88
+        },
+        {
+            "filename": "harvad4.jpg",
+            "category": "others",
+            "caption": "harvad4.jpg",
+            "order": 89
+        },
+        {
+            "filename": "harvad3 - Copy.jpg",
+            "category": "others",
+            "caption": "harvad3 - Copy.jpg",
+            "order": 90
+        },
+        {
+            "filename": "harvad3.jpg",
+            "category": "others",
+            "caption": "harvad3.jpg",
+            "order": 91
+        },
+        {
+            "filename": "students.jpg",
+            "category": "others",
+            "caption": "students.jpg",
+            "order": 92
+        },
+        {
+            "filename": "HM2.JPG",
+            "category": "others",
+            "caption": "HM2.JPG",
+            "order": 93
+        },
+        {
+            "filename": "admin - Copy.jpg",
+            "category": "others",
+            "caption": "admin - Copy.jpg",
+            "order": 94
+        },
+        {
+            "filename": "harvad2 - Copy.jpg",
+            "category": "others",
+            "caption": "harvad2 - Copy.jpg",
+            "order": 95
+        },
+        {
+            "filename": "chapel - Copy.JPG",
+            "category": "buildings",
+            "caption": "chapel - Copy.JPG",
+            "order": 96
+        },
+        {
+            "filename": "havard - Copy.jpg",
+            "category": "others",
+            "caption": "havard - Copy.jpg",
+            "order": 97
+        },
+        {
+            "filename": "newblock (2).jpg",
+            "category": "buildings",
+            "caption": "newblock (2).jpg",
+            "order": 98
+        },
+        {
+            "filename": "newblock.jpg",
+            "category": "buildings",
+            "caption": "newblock.jpg",
+            "order": 99
+        },
+        {
+            "filename": "Nyabikoni-Secondary-School-Logo.jpg",
+            "category": "others",
+            "caption": "Nyabikoni-Secondary-School-Logo.jpg",
+            "order": 100
+        }
+    ]
+}
