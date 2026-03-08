@@ -1,10 +1,20 @@
 <?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 0); // Don't display, but log errors
+
 session_start();
 header('Content-Type: application/json');
+
+// Log errors to a file instead of displaying
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/teacher_edit_errors.log');
+
 if (!isset($_SESSION['admin'])) {
     echo json_encode(['success' => false, 'error' => 'Unauthorized access']);
     exit();
 }
+
 require 'config.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     echo json_encode(['success' => false, 'error' => 'Invalid request method']);

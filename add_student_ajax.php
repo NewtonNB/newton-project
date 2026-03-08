@@ -1,4 +1,10 @@
 <?php
+// Enable error reporting for debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+ini_set('error_log', __DIR__ . '/student_add_errors.log');
+
 session_start();
 header('Content-Type: application/json');
 
@@ -13,12 +19,14 @@ require 'config.php';
 $username = trim($_POST['username'] ?? '');
 $email = trim($_POST['email'] ?? '');
 $phone = trim($_POST['phone'] ?? '');
-$password = $_POST['password'] ?? '';
-$usertype = $_POST['usertype'] ?? 'student';
+$usertype = 'student'; // Always student
 $class_id = intval($_POST['class_id'] ?? 0);
 
+// Generate default password (username + 123)
+$password = $username . '123';
+
 // Validate required fields
-if (!$username || !$email || !$phone || !$password || !$usertype || !$class_id) {
+if (!$username || !$email || !$phone || !$usertype || !$class_id) {
     echo json_encode(['success' => false, 'error' => 'All fields are required.']);
     exit();
 }
@@ -40,14 +48,16 @@ if ($stmt->num_rows > 0) {
 }
 $stmt->close();
 
-// Hash password
-$hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-// Insert new student
+// Insert new student (password stored as plain text for now - should be hashed in production)
 $stmt = $conn->prepare('INSERT INTO students (username, email, phone, password, usertype, class_id, status) VALUES (?, ?, ?, ?, ?, ?, "Active")');
-$stmt->bind_param('sssssi', $username, $email, $phone, $hashed_password, $usertype, $class_id);
+$stmt->bind_param('sssssi', $username, $email, $phone, $password, $usertype, $class_id);
 if ($stmt->execute()) {
-    echo json_encode(['success' => true]);
+    echo json_encode([
+        'success' => true, 
+        'message' => 'Student added successfully!',
+        'password' => $password,
+        'username' => $username
+    ]);
 } else {
     echo json_encode(['success' => false, 'error' => 'Database error: ' . $stmt->error]);
 }

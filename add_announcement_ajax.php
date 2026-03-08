@@ -69,7 +69,7 @@ debug_log('Preparing SQL statement with data: ' . json_encode([
     'gallery_count' => count($gallery)
 ]));
 
-$sql = "INSERT INTO announcements (title, content, date, time, location, speakers, category, gallery, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))";
+$sql = "INSERT INTO announcements (title, content, date, time, location, speakers, category, gallery, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())";
 $stmt = $conn->prepare($sql);
 $galleryJson = json_encode($gallery);
 if (!$stmt) {
@@ -81,7 +81,7 @@ if (!$stmt) {
 debug_log('Binding parameters...');
 $stmt->bind_param('ssssssss', $title, $content, $date, $time, $location, $speakers, $category, $galleryJson);
 if ($stmt->execute()) {
-    debug_log('Announcement added successfully. ID: ' . $conn->lastInsertId());
+    debug_log('Announcement added successfully. ID: ' . $conn->insert_id);
     echo json_encode(['success' => true, 'message' => 'Announcement added successfully']);
 } else {
     debug_log('Execute failed: ' . $stmt->error . ' | POST: ' . print_r($_POST, true));

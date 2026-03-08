@@ -2,6 +2,7 @@
 *.db
 *.sqlite
 *.sqlite3
+schoolproject.db
 
 # Sensitive configuration
 config_local.php

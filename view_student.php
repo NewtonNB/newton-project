@@ -975,17 +975,6 @@ $result = $conn->query($sql);
         <input type="text" name="phone" id="addStudentPhone" required placeholder="Enter phone number">
       </div>
       <div class="form-group">
-        <label>Password</label>
-        <input type="password" name="password" id="addStudentPassword" required placeholder="Enter password">
-      </div>
-      <div class="form-group">
-        <label>User Type</label>
-        <select name="usertype" id="addStudentUsertype">
-          <option value="student">Student</option>
-          <option value="admin">Admin</option>
-        </select>
-      </div>
-      <div class="form-group">
         <label>Class</label>
         <select name="class_id" id="addStudentClassId" required>
           <option value="">Select Class</option>
@@ -1179,7 +1168,7 @@ editButtons.forEach(btn => {
     document.getElementById('editStudentUsername').value = this.dataset.username;
     document.getElementById('editStudentEmail').value = this.dataset.email;
     document.getElementById('editStudentPhone').value = this.dataset.phone;
-    document.getElementById('editStudentUsertype').value = this.dataset.usertype;
+    
     document.getElementById('editStudentClassId').value = this.dataset.class_id;
     editStudentMsg.textContent = '';
     openModal('editStudentModal');
@@ -1210,9 +1199,12 @@ addStudentForm.onsubmit = function(e) {
   .then(res => res.json())
   .then(data => {
     if (data.success) {
-      addStudentMsg.textContent = 'Student added successfully! Reloading...';
+      addStudentMsg.textContent = `Student added successfully! Default password: ${data.password} (Username: ${data.username})`;
       addStudentMsg.className = 'success-msg';
-      setTimeout(() => window.location.reload(), 1500);
+      addStudentMsg.style.fontSize = '14px';
+      addStudentMsg.style.fontWeight = 'bold';
+      // Redirect to view_student.php without filters to show all students
+      setTimeout(() => window.location.href = 'view_student.php', 3000);
     } else {
       addStudentMsg.textContent = data.error || 'Failed to add student.';
       addStudentMsg.className = 'error-msg';

@@ -669,7 +669,7 @@ $result = $conn->query($sql);
       <div class="quick-links-title"><i class="fa-solid fa-bolt"></i> Quick Actions</div>
       <div class="quick-links-btns">
         <a href="view_student.php" class="quick-link-btn"><i class="fa-solid fa-users"></i> Manage Students</a>
-        <a href="add_teacher.php" class="quick-link-btn"><i class="fa-solid fa-chalkboard-teacher"></i> Add Teacher</a>
+        <a href="view_teacher.php" class="quick-link-btn"><i class="fa-solid fa-chalkboard-teacher"></i> Manage Teachers</a>
         <a href="manage_classes.php" class="quick-link-btn"><i class="fa-solid fa-layer-group"></i> Manage Classes</a>
         <a href="announcements.php" class="quick-link-btn"><i class="fa-solid fa-bullhorn"></i> Manage Events</a>
         <a href="view_event_registrations.php" class="quick-link-btn"><i class="fa-solid fa-calendar-check"></i> Event Registrations</a>

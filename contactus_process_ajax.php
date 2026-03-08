@@ -199,7 +199,7 @@ try {
         }
 
         // Save to database
-        $stmt = $conn->prepare("INSERT INTO contact_messages (first_name, last_name, email, phone, message, submitted_at) VALUES (?, ?, ?, ?, ?, datetime('now'))");
+        $stmt = $conn->prepare("INSERT INTO contact_messages (first_name, last_name, email, phone, message, submitted_at) VALUES (?, ?, ?, ?, ?, NOW())");
         if ($stmt) {
             $fullMessage = !empty($subject) ? "Subject: $subject\n\n$message" : $message;
             $stmt->bind_param('sssss', $firstName, $lastName, $email, $phone, $fullMessage);

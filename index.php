@@ -1,3 +1,33 @@
+<?php
+// Fetch statistics from database
+require_once 'config.php';
+
+// Total Students (active students only)
+$totalStudents = 0;
+$studentQuery = $conn->query("SELECT COUNT(*) as count FROM students WHERE usertype='student' AND status='Active'");
+if ($studentQuery) {
+    $totalStudents = $studentQuery->fetch_assoc()['count'];
+}
+
+// Total Teachers
+$totalTeachers = 0;
+$teacherQuery = $conn->query("SELECT COUNT(*) as count FROM teachers WHERE status='Active'");
+if ($teacherQuery) {
+    $totalTeachers = $teacherQuery->fetch_assoc()['count'];
+}
+
+// Graduated Students (you can adjust this query based on your graduation criteria)
+$graduatedStudents = 0;
+// For now, let's count students who completed S6 (you can modify this logic)
+$graduatedQuery = $conn->query("SELECT COUNT(*) as count FROM students WHERE class_id IN (SELECT id FROM classes WHERE class_name='S6') AND status='Graduated'");
+if ($graduatedQuery) {
+    $graduatedStudents = $graduatedQuery->fetch_assoc()['count'];
+}
+
+// Clubs & Activities (count from a clubs table or set a fixed number)
+$activityCount = 12; // You can change this or query from a clubs table if you have one
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

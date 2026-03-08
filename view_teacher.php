@@ -647,7 +647,7 @@ $result = $conn->query("SELECT * FROM teachers ORDER BY id DESC LIMIT $teachersP
             <td class="table_td">
                 <?php
                 // Use the photo field from the database for teacher photo
-                $photo = !empty($row['photo']) ? 'nyabzgallery/' . htmlspecialchars($row['photo']) : 'nyabzgallery/default.png';
+                $photo = !empty($row['photo']) ? 'nyabzgallery/' . htmlspecialchars($row['photo']) : 'nyabzgallery/default.svg';
                 ?>
                 <img src="<?php echo $photo; ?>" alt="Teacher Photo" style="width:48px; height:48px; object-fit:cover; border-radius:50%; border:2px solid #667eea; background:#f3f3f3;">
             </td>
@@ -753,8 +753,47 @@ $result = $conn->query("SELECT * FROM teachers ORDER BY id DESC LIMIT $teachersP
         <input type="text" name="phone" id="addTeacherPhone" required placeholder="Enter phone number">
       </div>
       <div class="form-group">
-        <label>Subject</label>
-        <input type="text" name="subject" id="addTeacherSubject" required placeholder="Enter subject">
+        <label>Subject/Position</label>
+        <select name="subject" id="addTeacherSubject" required>
+          <option value="">Select Subject/Position</option>
+          <optgroup label="Administrative">
+            <option value="Headmaster">Headmaster</option>
+            <option value="Deputy Headmaster">Deputy Headmaster</option>
+            <option value="Deputy Headmistress">Deputy Headmistress</option>
+            <option value="Director of Studies">Director of Studies</option>
+            <option value="Senior Woman Teacher">Senior Woman Teacher</option>
+            <option value="Senior Man Teacher">Senior Man Teacher</option>
+          </optgroup>
+          <optgroup label="Sciences">
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Biology">Biology</option>
+            <option value="Computer Science">Computer Science</option>
+          </optgroup>
+          <optgroup label="Languages">
+            <option value="English">English</option>
+            <option value="Literature">Literature</option>
+            <option value="Kiswahili">Kiswahili</option>
+            <option value="French">French</option>
+          </optgroup>
+          <optgroup label="Humanities">
+            <option value="History">History</option>
+            <option value="Geography">Geography</option>
+            <option value="Economics">Economics</option>
+            <option value="Entrepreneurship">Entrepreneurship</option>
+            <option value="Commerce">Commerce</option>
+          </optgroup>
+          <optgroup label="Other Subjects">
+            <option value="Agriculture">Agriculture</option>
+            <option value="Christian Religious Education">Christian Religious Education</option>
+            <option value="Islamic Religious Education">Islamic Religious Education</option>
+            <option value="Fine Art">Fine Art</option>
+            <option value="Music">Music</option>
+            <option value="Physical Education">Physical Education</option>
+            <option value="Technical Drawing">Technical Drawing</option>
+          </optgroup>
+        </select>
       </div>
       <div class="form-group">
         <label>Gender</label>
@@ -798,8 +837,47 @@ $result = $conn->query("SELECT * FROM teachers ORDER BY id DESC LIMIT $teachersP
         <input type="text" name="phone" id="editTeacherPhone" required placeholder="Enter phone number">
       </div>
       <div class="form-group">
-        <label>Subject</label>
-        <input type="text" name="subject" id="editTeacherSubject" required placeholder="Enter subject">
+        <label>Subject/Position</label>
+        <select name="subject" id="editTeacherSubject" required>
+          <option value="">Select Subject/Position</option>
+          <optgroup label="Administrative">
+            <option value="Headmaster">Headmaster</option>
+            <option value="Deputy Headmaster">Deputy Headmaster</option>
+            <option value="Deputy Headmistress">Deputy Headmistress</option>
+            <option value="Director of Studies">Director of Studies</option>
+            <option value="Senior Woman Teacher">Senior Woman Teacher</option>
+            <option value="Senior Man Teacher">Senior Man Teacher</option>
+          </optgroup>
+          <optgroup label="Sciences">
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Biology">Biology</option>
+            <option value="Computer Science">Computer Science</option>
+          </optgroup>
+          <optgroup label="Languages">
+            <option value="English">English</option>
+            <option value="Literature">Literature</option>
+            <option value="Kiswahili">Kiswahili</option>
+            <option value="French">French</option>
+          </optgroup>
+          <optgroup label="Humanities">
+            <option value="History">History</option>
+            <option value="Geography">Geography</option>
+            <option value="Economics">Economics</option>
+            <option value="Entrepreneurship">Entrepreneurship</option>
+            <option value="Commerce">Commerce</option>
+          </optgroup>
+          <optgroup label="Other Subjects">
+            <option value="Agriculture">Agriculture</option>
+            <option value="Christian Religious Education">Christian Religious Education</option>
+            <option value="Islamic Religious Education">Islamic Religious Education</option>
+            <option value="Fine Art">Fine Art</option>
+            <option value="Music">Music</option>
+            <option value="Physical Education">Physical Education</option>
+            <option value="Technical Drawing">Technical Drawing</option>
+          </optgroup>
+        </select>
       </div>
       <div class="form-group">
         <label>Gender</label>
@@ -811,7 +889,7 @@ $result = $conn->query("SELECT * FROM teachers ORDER BY id DESC LIMIT $teachersP
       <div class="form-group" style="display:flex; flex-direction:column; align-items:center;">
         <label style="font-weight:700; color:#333; margin-bottom:8px;">Current Photo</label>
         <div style="background:linear-gradient(135deg,#f3f3f3 60%,#e0e7ff 100%); border-radius:20px; padding:18px 18px 10px 18px; box-shadow:0 6px 24px rgba(102,126,234,0.13); display:inline-block; transition:box-shadow 0.3s, transform 0.3s;">
-          <img id="editTeacherCurrentPhoto" src="nyabzgallery/default.png" alt="Teacher Photo" style="width:120px; height:120px; object-fit:cover; border-radius:16px; border:4px solid #667eea; background:#f3f3f3; box-shadow:0 4px 16px rgba(102,126,234,0.15); margin-bottom:0; transition:box-shadow 0.3s, transform 0.3s; cursor:pointer;" onmouseover="this.style.boxShadow='0 8px 32px rgba(102,126,234,0.25)';this.style.transform='scale(1.04)';" onmouseout="this.style.boxShadow='0 4px 16px rgba(102,126,234,0.15)';this.style.transform='scale(1)';">
+          <img id="editTeacherCurrentPhoto" src="nyabzgallery/default.svg" alt="Teacher Photo" style="width:120px; height:120px; object-fit:cover; border-radius:16px; border:4px solid #667eea; background:#f3f3f3; box-shadow:0 4px 16px rgba(102,126,234,0.15); margin-bottom:0; transition:box-shadow 0.3s, transform 0.3s; cursor:pointer;" onmouseover="this.style.boxShadow='0 8px 32px rgba(102,126,234,0.25)';this.style.transform='scale(1.04)';" onmouseout="this.style.boxShadow='0 4px 16px rgba(102,126,234,0.15)';this.style.transform='scale(1)';">
         </div>
         <div style="font-size:0.97rem; color:#555; margin-top:10px; text-align:center;">This is the current photo. To change, upload a new one below.</div>
       </div>
@@ -881,7 +959,12 @@ addTeacherForm.onsubmit = function(e) {
     method: 'POST',
     body: formData
   })
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error('HTTP error! status: ' + res.status);
+    }
+    return res.json();
+  })
   .then(data => {
     if (data.success) {
       addTeacherMsg.textContent = 'Teacher added successfully! Reloading...';
@@ -891,14 +974,15 @@ addTeacherForm.onsubmit = function(e) {
       addTeacherMsg.textContent = data.error || 'Failed to add teacher.';
       addTeacherMsg.className = 'error-msg';
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Add Teacher';
+      submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Teacher';
     }
   })
-  .catch(() => { 
-    addTeacherMsg.textContent = 'Network error.';
+  .catch((error) => { 
+    console.error('Error:', error);
+    addTeacherMsg.textContent = 'Network error: ' + error.message;
     addTeacherMsg.className = 'error-msg';
     submitBtn.disabled = false;
-    submitBtn.textContent = 'Add Teacher';
+    submitBtn.innerHTML = '<i class="fas fa-plus"></i> Add Teacher';
   });
 };
 
@@ -940,7 +1024,7 @@ editButtons.forEach(btn => {
           document.getElementById('editTeacherPhone').value = data.teacher.phone;
           document.getElementById('editTeacherSubject').value = data.teacher.subject;
           document.getElementById('editTeacherGender').value = data.teacher.gender;
-          editTeacherCurrentPhoto.src = data.teacher.photo ? ('nyabzgallery/' + data.teacher.photo + '?t=' + Date.now()) : 'nyabzgallery/default.png';
+          editTeacherCurrentPhoto.src = data.teacher.photo ? ('nyabzgallery/' + data.teacher.photo + '?t=' + Date.now()) : 'nyabzgallery/default.svg';
           editTeacherMsg.textContent = '';
           openModal('editTeacherModal');
         } else {
@@ -962,7 +1046,12 @@ editTeacherForm.onsubmit = function(e) {
     method: 'POST',
     body: formData
   })
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error('HTTP error! status: ' + res.status);
+    }
+    return res.json();
+  })
   .then(data => {
     if (data.success) {
       editTeacherMsg.textContent = 'Teacher updated successfully! Reloading...';
@@ -973,8 +1062,9 @@ editTeacherForm.onsubmit = function(e) {
       editTeacherMsg.className = 'error-msg';
     }
   })
-  .catch(() => {
-    editTeacherMsg.textContent = 'Network error.';
+  .catch((error) => {
+    console.error('Error:', error);
+    editTeacherMsg.textContent = 'Network error: ' + error.message;
     editTeacherMsg.className = 'error-msg';
   });
 };

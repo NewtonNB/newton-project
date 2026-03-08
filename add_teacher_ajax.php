@@ -1,5 +1,12 @@
 <?php
+// Suppress all errors and warnings to prevent HTML output before JSON
+error_reporting(0);
+ini_set('display_errors', 0);
+
 session_start();
+
+// Set JSON header immediately
+header('Content-Type: application/json');
 
 // Check if user is logged in and is admin
 if (!isset($_SESSION['admin'])) {
@@ -40,17 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     $check_email->close();
-    
-    // Check if teacher with same name and subject already exists (case-insensitive)
-    $check_teacher = $conn->prepare("SELECT id FROM teachers WHERE LOWER(full_name) = LOWER(?) AND LOWER(subject) = LOWER(?)");
-    $check_teacher->bind_param("ss", $full_name, $subject);
-    $check_teacher->execute();
-    $teacher_result = $check_teacher->get_result();
-    if ($teacher_result->num_rows > 0) {
-        echo json_encode(['success' => false, 'error' => 'A teacher with this name and subject already exists']);
-        exit();
-    }
-    $check_teacher->close();
     
     // Handle file upload if photo is provided
     $photoFileName = '';
