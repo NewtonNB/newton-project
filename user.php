@@ -1,0 +1,369 @@
+<?php
+session_start();
+
+if(!isset($_SESSION['username']) || $_SESSION['usertype'] != 'admin') {
+    header("location:login.php");
+    exit();
+}
+
+require 'config.php';
+
+// Fetch counts
+$studentCount = $conn->query("SELECT COUNT(*) as count FROM students WHERE usertype='student'")->fetch_assoc()['count'];
+$teacherCount = $conn->query("SELECT COUNT(*) as count FROM teachers")->fetch_assoc()['count'];
+$adminCount = $conn->query("SELECT COUNT(*) as count FROM admins")->fetch_assoc()['count'];
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Nyabikoni Secondary School</title>
+    <?php include 'admin_css.php'; ?>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            max-width: calc(100vw - 280px);
+        }
+
+        .page-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            color: #667eea;
+            margin: 0;
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .page-header p {
+            color: #6c757d;
+            margin: 0.5rem 0 0 0;
+            font-size: 1.1rem;
+        }
+
+        .user-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .user-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .user-card.students::before {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .user-card.teachers::before {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .user-card.admins::before {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .user-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .user-card.students .user-card-icon {
+            color: #667eea;
+        }
+
+        .user-card.teachers .user-card-icon {
+            color: #10b981;
+        }
+
+        .user-card.admins .user-card-icon {
+            color: #f59e0b;
+        }
+
+        .user-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .user-card .count {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .user-card.students .count {
+            color: #667eea;
+        }
+
+        .user-card.teachers .count {
+            color: #10b981;
+        }
+
+        .user-card.admins .count {
+            color: #f59e0b;
+        }
+
+        .user-card p {
+            color: #6c757d;
+            margin-bottom: 1.5rem;
+        }
+
+        .manage-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .user-card.students .manage-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .user-card.teachers .manage-btn {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+        }
+
+        .user-card.admins .manage-btn {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+        }
+
+        .manage-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .features-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .features-section h3 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: #667eea;
+            min-width: 40px;
+        }
+
+        .feature-content h4 {
+            margin: 0 0 0.5rem 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .feature-content p {
+            margin: 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .user-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <?php include 'admin_sidebar.php'; ?>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>
+                <i class="fas fa-users-cog"></i>
+                User Management
+            </h1>
+            <p>Manage all system users from one centralized location</p>
+        </div>
+
+        <div class="user-cards">
+            <!-- Students Card -->
+            <div class="user-card students" onclick="window.location.href='view_student.php'">
+                <div class="user-card-icon">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+                <h2>Students</h2>
+                <div class="count"><?php echo $studentCount; ?></div>
+                <p>Manage student accounts, enrollment, and class assignments</p>
+                <button class="manage-btn">
+                    <i class="fas fa-cog"></i>
+                    Manage Students
+                </button>
+            </div>
+
+            <!-- Teachers Card -->
+            <div class="user-card teachers" onclick="window.location.href='view_teacher.php'">
+                <div class="user-card-icon">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <h2>Teachers</h2>
+                <div class="count"><?php echo $teacherCount; ?></div>
+                <p>Manage teacher profiles, subjects, and contact information</p>
+                <button class="manage-btn">
+                    <i class="fas fa-cog"></i>
+                    Manage Teachers
+                </button>
+            </div>
+
+            <!-- Admins Card -->
+            <div class="user-card admins" onclick="window.location.href='manage_admins.php'">
+                <div class="user-card-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <h2>Administrators</h2>
+                <div class="count"><?php echo $adminCount; ?></div>
+                <p>Manage system administrators and access permissions</p>
+                <button class="manage-btn">
+                    <i class="fas fa-cog"></i>
+                    Manage Admins
+                </button>
+            </div>
+        </div>
+
+        <div class="features-section">
+            <h3><i class="fas fa-star"></i> User Management Features</h3>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Add Users</h4>
+                        <p>Quickly add new students, teachers, or administrators</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Edit Profiles</h4>
+                        <p>Update user information and contact details</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Search & Filter</h4>
+                        <p>Find users quickly with advanced search options</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Export Data</h4>
+                        <p>Export user lists to CSV for reporting</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Access Control</h4>
+                        <p>Manage user status and permissions</p>
+                    </div>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Activity Tracking</h4>
+                        <p>Monitor user creation and modification dates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

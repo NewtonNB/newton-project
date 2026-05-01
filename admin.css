@@ -157,12 +157,13 @@ body {
 
 /* ========== CONTENT ========== */
 .content {
-    /* margin-left: 220px; */
+    margin-left: 280px;
     margin-top: 70px;
     padding: 20px 30px;
     /* background-color: #f4f6f9; */
     min-height: calc(100vh - 70px);
     overflow: auto;
+    max-width: calc(100vw - 280px);
 }
 
 /* ========== HAMBURGER MENU (hidden by default) ========== */

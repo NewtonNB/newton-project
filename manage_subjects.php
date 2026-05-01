@@ -7,10 +7,7 @@ session_start();
 require 'config.php';
 
 // Check if user is logged in and is admin
-if(!isset($_SESSION['username'])) {
-    header("location:login.php");
-    exit();
-} elseif($_SESSION['usertype']=='student'){
+if (!isset($_SESSION['admin'])) {
     header("location:login.php");
     exit();
 }
@@ -157,21 +154,28 @@ if ($alevel === false) {
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            width: 100%;
         }
         .table thead th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: #f8f9fc;
+            color: #5a5c69;
             border: none;
-            padding: 15px;
+            border-bottom: 2px solid #e3e6f0;
+            padding: 15px 20px;
             font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         .table tbody td {
-            padding: 15px;
-            border-bottom: 1px solid #e9ecef;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e3e6f0;
             vertical-align: middle;
+            color: #495057;
+            font-size: 0.95rem;
         }
         .table tbody tr:hover {
-            background-color: #f8f9fa;
+            background-color: #f8f9fc;
         }
         .alert {
             border-radius: 10px;
@@ -187,25 +191,164 @@ if ($alevel === false) {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
             color: white;
         }
-        .badge {
+        .badge-clean {
+            background: #f8f9fc;
+            color: #858796;
             padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
+            border: 1px solid #e3e6f0;
         }
-        .badge-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+        .btn-icon-danger {
+            background: #fff;
+            color: #e74a3b;
+            border: 1px solid #f8d7da;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
-        .badge-info {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            color: white;
+        .btn-icon-danger:hover {
+            background: #fee2e2;
+            color: #c53030;
+            border-color: #fecaca;
         }
         .tab-content {
             background: white;
             border-radius: 15px;
             padding: 30px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Custom Delete Modal */
+        .delete-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInOverlay 0.2s ease;
+        }
+        .delete-modal-overlay.active {
+            display: flex;
+        }
+        @keyframes fadeInOverlay {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        .delete-modal {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 36px 32px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+            animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes popIn {
+            from { transform: scale(0.75); opacity: 0; }
+            to   { transform: scale(1);    opacity: 1; }
+        }
+        .delete-modal .icon-wrap {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(238,90,82,0.35);
+        }
+        .delete-modal .icon-wrap i {
+            font-size: 30px;
+            color: #fff;
+        }
+        .delete-modal h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        .delete-modal p {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+        .delete-modal .subject-name-badge {
+            display: inline-block;
+            background: #fff3f3;
+            color: #ee5a52;
+            border: 1.5px solid #ffcdd2;
+            border-radius: 8px;
+            padding: 6px 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 8px 0 18px;
+            letter-spacing: 0.5px;
+        }
+        .delete-modal .warning-note {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            color: #856404;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .delete-modal .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .delete-modal .btn-cancel {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            background: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .delete-modal .btn-cancel:hover {
+            background: #e9ecef;
+            border-color: #ced4da;
+        }
+        .delete-modal .btn-confirm-delete {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(238,90,82,0.35);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .delete-modal .btn-confirm-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(238,90,82,0.5);
+            color: #fff;
         }
     </style>
 </head>
@@ -261,9 +404,9 @@ if ($alevel === false) {
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th width="5%">#</th>
-                            <th width="85%">Subject Name</th>
-                            <th width="10%">Action</th>
+                            <th width="10%">#</th>
+                            <th>Subject Name</th>
+                            <th width="15%" class="text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -272,14 +415,13 @@ if ($alevel === false) {
                     if ($list && $list->num_rows > 0): $i = 1;
                         while ($row = $list->fetch_assoc()): ?>
                             <tr>
-                                <td><span class="badge <?php echo $active_tab === 'alevel' ? 'badge-info' : 'badge-primary'; ?>"><?php echo $i++; ?></span></td>
-                                <td><strong><?php echo htmlspecialchars($row['subject_name']); ?></strong></td>
-                                <td>
-                                    <a href="manage_subjects.php?delete=<?php echo $row['id']; ?>&level=<?php echo $active_tab; ?>" 
-                                       class="btn btn-danger"
-                                       onclick="return confirm('Are you sure you want to delete subject <?php echo htmlspecialchars($row['subject_name']); ?>? This action cannot be undone.')">
-                                       <i class="fas fa-trash"></i> Delete
-                                    </a>
+                                <td><span class="badge-clean"><?php echo $i++; ?></span></td>
+                                <td><?php echo htmlspecialchars($row['subject_name']); ?></td>
+                                <td class="text-center">
+                                    <button type="button" class="btn-icon-danger" title="Delete Subject"
+                                        onclick="showDeleteModal('<?php echo htmlspecialchars(addslashes($row['subject_name'])); ?>', 'manage_subjects.php?delete=<?php echo $row['id']; ?>&level=<?php echo $active_tab; ?>')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
                                 </td>
                             </tr>
                         <?php endwhile;
@@ -297,6 +439,8 @@ if ($alevel === false) {
         </div>
     </div>
 </div>
+
+<?php include 'delete_modal.php'; ?>
 
 </body>
 </html>

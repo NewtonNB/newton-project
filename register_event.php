@@ -43,32 +43,38 @@ if ($stmt->execute()) {
         $event_stmt->fetch();
         $event_stmt->close();
     }
-    // Send email notification to admin
-    $admin_email = 'tukamuhebwanewton@gmail.com';
-    $subject = "New Event Registration: $event_title";
-    $body = "A new registration has been received for the event: $event_title\n\n" .
-            "Name: $name\nEmail: $email\nPhone: $phone\nTime: " . date('Y-m-d H:i:s') . "\n";
-    @mail($admin_email, $subject, $body);
-    // Send HTML confirmation email to registrant
-    $user_subject = "Registration Confirmed: $event_title";
-    $user_body = "<html><body style='font-family:Poppins,Arial,sans-serif;background:#f8f8ff;padding:24px;'><div style='max-width:520px;margin:auto;background:#fff;border-radius:16px;box-shadow:0 4px 24px rgba(102,126,234,0.10);padding:32px;'>"
-        . "<h2 style='color:#667eea;'>Thank you for registering!</h2>"
-        . "<p style='font-size:1.1rem;'>Dear <strong>$name</strong>,<br>"
-        . "You have successfully registered for the event:<br><span style='color:#764ba2;font-weight:700;'>$event_title</span></p>"
-        . "<table style='margin:18px 0 24px 0;font-size:1.05rem;'>"
-        . "<tr><td style='padding:4px 12px 4px 0;color:#764ba2;'>Name:</td><td>" . htmlspecialchars($name) . "</td></tr>"
-        . "<tr><td style='padding:4px 12px 4px 0;color:#764ba2;'>Email:</td><td>" . htmlspecialchars($email) . "</td></tr>"
-        . "<tr><td style='padding:4px 12px 4px 0;color:#764ba2;'>Phone:</td><td>" . htmlspecialchars($phone) . "</td></tr>"
-        . "</table>"
-        . "<p style='font-size:1.05rem;'>We look forward to seeing you!<br><br>Best regards,<br><span style='color:#667eea;font-weight:700;'>Nyabikoni Secondary School</span></p>"
-        . "</div></body></html>";
-    $headers = "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-    $headers .= "From: Nyabikoni Secondary School <no-reply@nyabikoni.ac.ug>\r\n";
-    if (!@mail($email, $user_subject, $user_body, $headers)) {
-        // Optionally log or handle email failure
-        // error_log('Failed to send confirmation email to ' . $email);
-    }
+    // Send emails using PHPMailer
+    require_once 'email_helper.php';
+
+    // Notify admin
+    sendEmail(SCHOOL_EMAIL, SCHOOL_NAME,
+        "New Event Registration: $event_title",
+        "<p>A new registration has been received.</p>
+        <table style='border-collapse:collapse;margin:16px 0;'>
+            " . row('Event', $event_title) . "
+            " . row('Name', $name) . "
+            " . row('Email', $email) . "
+            " . row('Phone', $phone) . "
+            " . row('Time', date('F j, Y g:i A')) . "
+        </table>"
+    );
+
+    // Confirm to registrant
+    sendEmail($email, $name,
+        "Registration Confirmed: $event_title",
+        "<p>Dear <strong>$name</strong>,</p>
+        <p>You have successfully registered for:</p>
+        <p style='font-size:1.1rem;font-weight:700;color:#764ba2;'>$event_title</p>
+        <table style='border-collapse:collapse;margin:16px 0;'>
+            " . row('Name', $name) . "
+            " . row('Email', $email) . "
+            " . row('Phone', $phone) . "
+        </table>
+        <p>We look forward to seeing you!</p>
+        <p>Best regards,<br><strong>Nyabikoni Secondary School</strong></p>",
+        SCHOOL_EMAIL, SCHOOL_NAME
+    );
+
     echo json_encode(['success' => true]);
 } else {
     echo json_encode(['success' => false, 'error' => 'Could not save registration.']);

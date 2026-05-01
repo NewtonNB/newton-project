@@ -23,3 +23,80 @@
         sidebar.classList.toggle('active');
     }
 </script>
+
+<!-- Global Custom Validation -->
+<script src="validation.js"></script>
+
+<!-- Global Soft Delete Modal -->
+<div id="softDeleteModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:99999;align-items:center;justify-content:center;">
+  <div style="background:#fff;border-radius:18px;max-width:380px;width:90vw;padding:32px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.15);">
+    <div style="width:64px;height:64px;background:#fff5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+      <i class="fa-solid fa-trash" style="font-size:1.8rem;color:#e74c3c;"></i>
+    </div>
+    <h3 style="margin:0 0 8px;color:#333;font-size:1.2rem;" id="softDeleteTitle">Move to Trash?</h3>
+    <p style="color:#888;margin:0 0 24px;font-size:0.92rem;" id="softDeleteMsg">This will move the item to trash. You can restore it later.</p>
+    <div style="display:flex;gap:12px;justify-content:center;">
+      <button id="softDeleteConfirm" style="background:linear-gradient(135deg,#e74c3c,#c0392b);color:#fff;border:none;border-radius:10px;padding:11px 28px;font-size:1rem;font-weight:700;cursor:pointer;">
+        <i class="fa-solid fa-trash"></i> Move to Trash
+      </button>
+      <button id="softDeleteCancel" style="background:#f0f0f0;color:#555;border:none;border-radius:10px;padding:11px 28px;font-size:1rem;font-weight:600;cursor:pointer;">
+        Keep it
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Global soft delete handler
+let _sdType = null, _sdId = null, _sdRow = null;
+const _sdModal = document.getElementById('softDeleteModal');
+
+function softDelete(type, id, el) {
+    _sdType = type; _sdId = id;
+    _sdRow = el ? el.closest('tr') : null;
+    _sdModal.style.display = 'flex';
+}
+
+document.getElementById('softDeleteCancel').onclick = () => {
+    _sdModal.style.display = 'none';
+};
+
+document.getElementById('softDeleteConfirm').onclick = function() {
+    if (!_sdType || !_sdId) return;
+    const btn = this;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Removing...';
+    btn.disabled = true;
+
+    const urls = {
+        student: 'delete_student.php',
+        teacher: 'delete_teacher.php',
+        message: 'delete_message_ajax.php',
+        announcement: 'delete_announcement_ajax.php'
+    };
+
+    fetch(urls[_sdType] || 'delete_student.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: 'action=trash&id=' + _sdId
+    })
+    .then(r => r.json())
+    .then(d => {
+        _sdModal.style.display = 'none';
+        if (d.success && _sdRow) {
+            _sdRow.style.transition = 'opacity 0.4s, transform 0.4s';
+            _sdRow.style.opacity = '0';
+            _sdRow.style.transform = 'translateX(20px)';
+            setTimeout(() => _sdRow.remove(), 400);
+        } else if (d.success) {
+            location.reload();
+        }
+        btn.innerHTML = '<i class="fa-solid fa-trash"></i> Move to Trash';
+        btn.disabled = false;
+    })
+    .catch(() => {
+        _sdModal.style.display = 'none';
+        btn.innerHTML = '<i class="fa-solid fa-trash"></i> Move to Trash';
+        btn.disabled = false;
+    });
+};
+</script>

@@ -11,8 +11,8 @@ if (!isset($_SESSION['admin'])) {
 require 'config.php'; // database connection
 
 // Fetch basic counts
-$studentCount = $conn->query("SELECT COUNT(*) FROM students")->fetch_row()[0];
-$teacherCount = $conn->query("SELECT COUNT(*) FROM teachers")->fetch_row()[0];
+$studentCount = $conn->query("SELECT COUNT(*) FROM students WHERE deleted_at IS NULL AND usertype='student'")->fetch_row()[0];
+$teacherCount = $conn->query("SELECT COUNT(*) FROM teachers WHERE deleted_at IS NULL")->fetch_row()[0];
 $classCount   = $conn->query("SELECT COUNT(*) FROM classes")->fetch_row()[0] ?: 0;
 $feeCollected = $conn->query("SELECT SUM(amount_paid) FROM fees")->fetch_row()[0] ?: 0;
 
@@ -39,8 +39,9 @@ $popularEventsSql = "SELECT a.title, a.date, COUNT(er.id) as registration_count
                     LIMIT 5";
 $popularEventsResult = $conn->query($popularEventsSql);
 
-$sql = "SELECT * FROM contact_messages ORDER BY submitted_at DESC LIMIT 5";
+$sql = "SELECT * FROM contact_messages WHERE deleted_at IS NULL ORDER BY submitted_at DESC LIMIT 5";
 $result = $conn->query($sql);
+$trashCount = $conn->query("SELECT COUNT(*) FROM contact_messages WHERE deleted_at IS NOT NULL")->fetch_row()[0];
 ?>
 
 <!DOCTYPE html>
@@ -64,10 +65,11 @@ $result = $conn->query($sql);
     
     .content {
         margin-top: 40px;
-        /* margin-left: 220px; Sidebar width */
+        margin-left: 280px;
         display: block;
         min-height: 100vh;
         padding: 0 20px;
+        max-width: calc(100vw - 280px);
     }
     
     .modern-content {
@@ -724,7 +726,14 @@ $result = $conn->query($sql);
     
     <!-- Recent Contact Messages Section -->
     <div class="recent-messages-card">
-      <div class="recent-messages-title"><i class="fa-solid fa-envelope-open-text"></i> Recent Contact Messages</div>
+      <div class="recent-messages-title">
+        <i class="fa-solid fa-envelope-open-text"></i> Recent Contact Messages
+        <?php if ($trashCount > 0): ?>
+          <a href="trash_messages.php" style="margin-left:12px; background:#e74c3c; color:#fff; border-radius:20px; padding:3px 12px; font-size:0.8rem; font-weight:700; text-decoration:none;">
+            <i class="fa-solid fa-trash"></i> Trash (<?php echo $trashCount; ?>)
+          </a>
+        <?php endif; ?>
+      </div>
       <div class="recent-messages-table-scroll">
         <table class="modern-table recent-messages-table">
           <thead>
@@ -749,7 +758,8 @@ $result = $conn->query($sql);
                 echo '<td>' . htmlspecialchars($row['email']) . '</td>';
                 echo '<td>' . htmlspecialchars(mb_strimwidth($row['message'], 0, 40, '...')) . '</td>';
                 echo '<td>' . htmlspecialchars($row['submitted_at']) . '</td>';
-                echo '<td><button type="button" class="reply-btn" data-id="' . htmlspecialchars($row['id']) . '" data-firstname="' . htmlspecialchars($row['first_name']) . '" data-email="' . htmlspecialchars($row['email']) . '"><i class="fa-solid fa-reply"></i> Reply</button></td>';
+                echo '<td><button type="button" class="reply-btn" data-id="' . htmlspecialchars($row['id']) . '" data-firstname="' . htmlspecialchars($row['first_name']) . '" data-email="' . htmlspecialchars($row['email']) . '"><i class="fa-solid fa-reply"></i> Reply</button>
+                <button type="button" class="remove-msg-btn" data-id="' . htmlspecialchars($row['id']) . '" style="background:linear-gradient(135deg,#ff6b6b,#ee5a52);color:#fff;border:none;border-radius:8px;padding:7px 14px;font-size:0.85rem;font-weight:600;cursor:pointer;margin-left:6px;"><i class="fa-solid fa-trash"></i> Remove</button></td>';
                 echo '</tr>';
               }
             } else {
@@ -898,6 +908,69 @@ document.getElementById('replyForm').addEventListener('submit', function(e) {
   // document.getElementById('replySuccessMsg').style.display = 'block';
   // setTimeout(function(){ document.getElementById('replyModal').style.display = 'none'; }, 1200);
 });
+</script>
+<!-- Soft Delete Modal -->
+<div id="removeModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:10000; align-items:center; justify-content:center;">
+  <div style="background:#fff; border-radius:18px; max-width:380px; width:90vw; padding:32px; text-align:center; box-shadow:0 12px 40px rgba(0,0,0,0.15);">
+    <div style="width:60px;height:60px;background:#fff5f5;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;">
+      <i class="fa-solid fa-trash" style="font-size:1.6rem;color:#e74c3c;"></i>
+    </div>
+    <h3 style="margin:0 0 8px;color:#333;font-size:1.2rem;">Remove this message?</h3>
+    <p style="color:#888;margin:0 0 24px;font-size:0.95rem;">This will quietly remove the message from your dashboard. It won't affect anything else.</p>
+    <div style="display:flex;gap:12px;justify-content:center;">
+      <button id="confirmRemove" style="background:linear-gradient(135deg,#ff6b6b,#ee5a52);color:#fff;border:none;border-radius:10px;padding:11px 28px;font-size:1rem;font-weight:700;cursor:pointer;">Yes, Remove</button>
+      <button id="cancelRemove" style="background:#f0f0f0;color:#555;border:none;border-radius:10px;padding:11px 28px;font-size:1rem;font-weight:600;cursor:pointer;">Keep it</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Soft delete messages
+let removeId = null;
+const removeModal = document.getElementById('removeModal');
+
+document.querySelectorAll('.remove-msg-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        removeId = this.dataset.id;
+        removeModal.style.display = 'flex';
+    });
+});
+
+document.getElementById('cancelRemove').onclick = () => {
+    removeModal.style.display = 'none';
+    removeId = null;
+};
+
+document.getElementById('confirmRemove').onclick = function() {
+    if (!removeId) return;
+    this.textContent = 'Removing...';
+    this.disabled = true;
+
+    fetch('delete_message_ajax.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'id=' + encodeURIComponent(removeId)
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            // Fade out the row
+            const btn = document.querySelector(`.remove-msg-btn[data-id="${removeId}"]`);
+            if (btn) {
+                const row = btn.closest('tr');
+                row.style.transition = 'opacity 0.4s';
+                row.style.opacity = '0';
+                setTimeout(() => row.remove(), 400);
+            }
+        }
+        removeModal.style.display = 'none';
+        removeId = null;
+    })
+    .catch(() => {
+        removeModal.style.display = 'none';
+        removeId = null;
+    });
+};
 </script>
 </body>
 </html>

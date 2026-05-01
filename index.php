@@ -50,6 +50,15 @@ $activityCount = 12; // You can change this or query from a clubs table if you h
     
     <!-- Custom Styles -->
     <style>
+        /* Global overflow fix */
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+        }
+        img, video, iframe, table {
+            max-width: 100%;
+        }
         :root {
             --primary-color: #2c5aa0;
             --secondary-color: #10b981;
@@ -102,20 +111,20 @@ $activityCount = 12; // You can change this or query from a clubs table if you h
             }
         }
 
-        /* DEBUG: Remove these styles after confirming centering */
+        /* Hero Caption */
         .nyab-hero-caption {
-            position: absolute !important;
-            top: 50% !important;
-            left: 50% !important;
-            transform: translate(-50%, -50%) !important;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             text-align: center;
             z-index: 10;
-            max-width: 800px;
             width: 90%;
+            max-width: 800px;
             margin: 0;
-            padding: 0;
+            padding: 0 15px;
+            box-sizing: border-box;
         }
-        /* END DEBUG */
 
         .carousel-image {
             width: 100%;
@@ -133,37 +142,25 @@ $activityCount = 12; // You can change this or query from a clubs table if you h
             z-index: 2;
         }
 
-        .nyab-hero-caption {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            z-index: 3;
-            max-width: 800px;
-            width: 90%;
-            margin: 0;
-            padding: 0;
-        }
-
         .nyab-hero-caption h1 {
             font-family: 'Bungee', cursive;
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(1.6rem, 5vw, 4rem);
             font-weight: 900;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
             color: #ffffff;
+            word-break: break-word;
         }
 
         .nyab-hero-caption h2 {
-            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            font-size: clamp(1rem, 3vw, 1.8rem);
             margin-bottom: 1.5rem;
             color: #e5e7eb;
             font-weight: 500;
         }
 
         .nyab-hero-caption p {
-            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
             margin-bottom: 2rem;
             color: #d1d5db;
             line-height: 1.6;
@@ -458,8 +455,8 @@ $activityCount = 12; // You can change this or query from a clubs table if you h
             box-shadow: var(--shadow-light);
             transition: var(--transition);
             height: 250px;
-            min-width: 320px;
-            flex: 0 0 320px;
+            min-width: min(320px, 80vw);
+            flex: 0 0 min(320px, 80vw);
             scroll-snap-align: start;
         }
 
@@ -680,10 +677,6 @@ $activityCount = 12; // You can change this or query from a clubs table if you h
         transition: var(--transition);
         position: relative;
         overflow: hidden;
-        background-image: url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/icons/trophy.svg');
-        background-repeat: no-repeat;
-        background-position: 95% 90%;
-        background-size: 60px;
     }
     .nyab-achieve-card:hover {
         box-shadow: 0 8px 32px rgba(16,185,129,0.16);
@@ -698,16 +691,8 @@ $activityCount = 12; // You can change this or query from a clubs table if you h
         gap: 0.5em;
     }
     .nyab-achieve-card:before {
-        content: '\f091';
-        font-family: 'Font Awesome 6 Free';
-        font-weight: 900;
-        position: absolute;
-        top: -18px;
-        right: 18px;
-        font-size: 2.5em;
-        color: #e2e8f0;
-        opacity: 0.25;
-        pointer-events: none;
+        display: none;
+    }
     }
 
     /* FAQ Accordion */

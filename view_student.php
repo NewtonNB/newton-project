@@ -34,9 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assign_student_id'], 
 $class_filter = isset($_GET['class_id']) ? intval($_GET['class_id']) : 0;
 $level_filter = isset($_GET['level']) ? $_GET['level'] : '';
 $status_filter = isset($_GET['status']) ? $_GET['status'] : '';
+$search_query = isset($_GET['search']) ? trim($_GET['search']) : '';
+
 $class_filter_sql = $class_filter ? " AND class_id = $class_filter" : '';
 $level_filter_sql = $level_filter ? " AND class_id IN (SELECT id FROM classes WHERE level = '" . $conn->real_escape_string($level_filter) . "')" : '';
 $status_filter_sql = $status_filter ? " AND status = '" . $conn->real_escape_string($status_filter) . "'" : '';
+$search_filter_sql = $search_query ? " AND (username LIKE '%" . $conn->real_escape_string($search_query) . "%' OR email LIKE '%" . $conn->real_escape_string($search_query) . "%' OR phone LIKE '%" . $conn->real_escape_string($search_query) . "%')" : '';
 
 // Pagination setup
 $studentsPerPage = 15;
@@ -44,14 +47,15 @@ $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] :
 if ($page < 1) $page = 1;
 
 // Count total students for current filters
-$count_sql = "SELECT COUNT(*) as total FROM students WHERE 1 $class_filter_sql $level_filter_sql $status_filter_sql";
+$conn->query("ALTER TABLE students ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP NULL DEFAULT NULL");
+$count_sql = "SELECT COUNT(*) as total FROM students WHERE 1 AND deleted_at IS NULL $class_filter_sql $level_filter_sql $status_filter_sql $search_filter_sql";
 $count_result = $conn->query($count_sql);
 $totalStudents = $count_result ? (int)$count_result->fetch_assoc()['total'] : 0;
 $totalPages = ceil($totalStudents / $studentsPerPage);
 $offset = ($page - 1) * $studentsPerPage;
 
 // Fetch paginated students
-$sql = "SELECT * FROM students WHERE 1 $class_filter_sql $level_filter_sql $status_filter_sql LIMIT $studentsPerPage OFFSET $offset";
+$sql = "SELECT * FROM students WHERE 1 AND deleted_at IS NULL $class_filter_sql $level_filter_sql $status_filter_sql $search_filter_sql LIMIT $studentsPerPage OFFSET $offset";
 $result = $conn->query($sql);
 
 ?>
@@ -79,11 +83,13 @@ $result = $conn->query($sql);
     
     .content {
         margin-top: 40px;
+        margin-left: 280px;
         display: flex;
         justify-content: center;
         align-items: flex-start;
         min-height: 80vh;
         padding: 0 20px;
+        max-width: calc(100vw - 280px);
     }
     
     .modern-table-container {
@@ -794,7 +800,7 @@ $result = $conn->query($sql);
   <form method="get" style="display:flex; gap:18px; align-items:center; flex-wrap:wrap; margin:0;">
     <span class="filter-group">
       <label for="class_id">Class:</label>
-      <select name="class_id" id="class_id" onchange="this.form.submit()">
+      <select name="class_id" id="class_id">
         <option value="0">All Classes</option>
         <?php
           $desired_classes = ['S1','S2','S3','S4','S5','S6'];
@@ -820,7 +826,7 @@ $result = $conn->query($sql);
     </span>
     <span class="filter-group">
       <label for="level">Level:</label>
-      <select name="level" id="level" onchange="this.form.submit()">
+      <select name="level" id="level">
         <option value="">All Levels</option>
         <option value="O-Level" <?php if(isset($_GET['level']) && $_GET['level']==='O-Level') echo 'selected'; ?>>O-Level</option>
         <option value="A-Level" <?php if(isset($_GET['level']) && $_GET['level']==='A-Level') echo 'selected'; ?>>A-Level</option>
@@ -828,7 +834,7 @@ $result = $conn->query($sql);
     </span>
     <span class="filter-group">
       <label for="status">Status:</label>
-      <select name="status" id="status" onchange="this.form.submit()">
+      <select name="status" id="status">
         <option value="">All Statuses</option>
         <option value="Active" <?php if(isset($_GET['status']) && $_GET['status']==='Active') echo 'selected'; ?>>Active</option>
         <option value="Graduated" <?php if(isset($_GET['status']) && $_GET['status']==='Graduated') echo 'selected'; ?>>Graduated</option>
@@ -836,6 +842,22 @@ $result = $conn->query($sql);
         <option value="Suspended" <?php if(isset($_GET['status']) && $_GET['status']==='Suspended') echo 'selected'; ?>>Suspended</option>
       </select>
     </span>
+  </form>
+  <!-- Search bar -->
+  <form method="get" style="margin:0; display:flex; align-items:center; gap:8px;">
+    <?php if($class_filter): ?><input type="hidden" name="class_id" value="<?php echo $class_filter; ?>"><?php endif; ?>
+    <?php if($level_filter): ?><input type="hidden" name="level" value="<?php echo htmlspecialchars($level_filter); ?>"><?php endif; ?>
+    <?php if($status_filter): ?><input type="hidden" name="status" value="<?php echo htmlspecialchars($status_filter); ?>"><?php endif; ?>
+    <input type="text" name="search" value="<?php echo htmlspecialchars($search_query); ?>"
+      placeholder="Search by name, email, phone..."
+      style="padding:10px 16px; border-radius:12px; border:2px solid #e0e0e0; font-size:0.95rem; width:260px; outline:none; font-family:'Poppins',sans-serif; transition:border-color 0.3s;"
+      onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e0e0e0'">
+    <button type="submit" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:10px;padding:10px 18px;cursor:pointer;font-weight:600;">
+      <i class="fas fa-search"></i>
+    </button>
+    <?php if($search_query): ?>
+    <a href="view_student.php" style="color:#e74c3c;font-size:0.85rem;text-decoration:none;font-weight:600;">✕ Clear</a>
+    <?php endif; ?>
   </form>
   <form method="post" action="export_students.php" style="margin:0;">
     <input type="hidden" name="class_id" value="<?php echo htmlspecialchars($class_filter); ?>">
@@ -911,8 +933,8 @@ $result = $conn->query($sql);
                 >
                     <i class="fas fa-edit"></i> Edit
                 </button>
-      <a href="delete_student.php?id=<?php echo $row['id']; ?>" class="btn-action btn-delete" onclick="return confirm('Are you sure you want to delete this student?')" style="flex:1; min-width:0;">
-                    <i class="fas fa-trash"></i> Delete
+      <a href="#" class="btn-action btn-delete" onclick="softDelete('student', <?php echo $row['id']; ?>, this)" style="flex:1; min-width:0;">
+                    <i class="fas fa-trash"></i> Remove
                 </a>
     </div>
   </div>
@@ -961,18 +983,18 @@ $result = $conn->query($sql);
   <div class="modal-card">
     <button class="close-x" id="closeAddModalX" title="Close">&times;</button>
     <h2>Add New Student</h2>
-    <form id="addStudentForm">
+    <form id="addStudentForm" autocomplete="off">
       <div class="form-group">
         <label>Username</label>
-        <input type="text" name="username" id="addStudentUsername" required placeholder="Enter username">
+        <input type="text" name="username" id="addStudentUsername" required placeholder="Enter username" autocomplete="off">
       </div>
       <div class="form-group">
         <label>Email</label>
-        <input type="email" name="email" id="addStudentEmail" required placeholder="Enter email address">
+        <input type="email" name="email" id="addStudentEmail" required placeholder="Enter email address" autocomplete="off">
       </div>
       <div class="form-group">
         <label>Phone</label>
-        <input type="text" name="phone" id="addStudentPhone" required placeholder="Enter phone number">
+        <input type="text" name="phone" id="addStudentPhone" required placeholder="Enter phone number" autocomplete="off">
       </div>
       <div class="form-group">
         <label>Class</label>
@@ -1125,6 +1147,23 @@ $result = $conn->query($sql);
 </div>
 
 <script>
+// Prevent filter form auto-submit when modals are open
+document.addEventListener('DOMContentLoaded', function() {
+  const filterSelects = document.querySelectorAll('#class_id, #level, #status');
+  const filterForm = document.querySelector('.filters-bar form');
+  
+  filterSelects.forEach(select => {
+    select.addEventListener('change', function(e) {
+      // Check if any modal is currently open
+      const openModal = document.querySelector('.modal.active');
+      if (!openModal && filterForm) {
+        // Only submit if no modal is open
+        filterForm.submit();
+      }
+    });
+  });
+});
+
 // Modal functionality
 function openModal(modalId) {
   const modal = document.getElementById(modalId);
@@ -1177,13 +1216,16 @@ editButtons.forEach(btn => {
 
 closeEditModal.onclick = closeEditModalX.onclick = () => closeModal('editStudentModal');
 
-// Close modals when clicking outside
+// Close modals when clicking outside - DISABLED to prevent conflicts with form fillers
+// Users must use the Cancel button or X to close modals
+/*
 window.onclick = function(event) {
-  if (event.target.classList.contains('modal')) {
+  if (event.target.classList.contains('modal') && event.target === event.currentTarget) {
     event.target.classList.remove('active');
     event.target.style.display = 'none';
   }
 };
+*/
 
 // Add Student Form Submission
 addStudentForm.onsubmit = function(e) {

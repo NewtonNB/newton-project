@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin'])) {
 }
 require_once 'config.php';
 // Fetch classes
-$classes = $conn->query("SELECT id, name FROM classes ORDER BY name ASC");
+$classes = $conn->query("SELECT id, class_name FROM classes ORDER BY class_name ASC");
 // Handle form submission
 $success = false; $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['class_id'], $_POST['date'], $_POST['attendance'])) {
@@ -27,6 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['class_id'], $_POST['d
 $selected_class = isset($_GET['class_id']) ? intval($_GET['class_id']) : 0;
 $selected_date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
 $students = [];
+if ($selected_class) {
+    $students_res = $conn->query("SELECT id, username as full_name FROM students WHERE class_id = $selected_class ORDER BY username ASC");
+    if ($students_res) {
+        while ($row = $students_res->fetch_assoc()) {
+            $students[] = $row;
+        }
+    }
+}
 // Fetch attendance records for selected class and date
 $attendance_map = [];
 // Fetch recent attendance history for the selected class
@@ -39,11 +47,15 @@ if ($selected_class) {
         SUM(status='Excused') as excused
         FROM attendance WHERE class_id = $selected_class
         GROUP BY date ORDER BY date DESC LIMIT 7");
-    while ($row = $hist_res && $hist_res->fetch_assoc()) $history[] = $row;
+    if ($hist_res) {
+        while ($row = $hist_res->fetch_assoc()) $history[] = $row;
+    }
     // Fetch attendance for this class and date
     $att_res = $conn->query("SELECT student_id, status FROM attendance WHERE class_id = $selected_class AND date = '" . $conn->real_escape_string($selected_date) . "'");
-    while ($att_row = $att_res && $att_res->fetch_assoc()) {
-        $attendance_map[$att_row['student_id']] = $att_row['status'];
+    if ($att_res) {
+        while ($att_row = $att_res->fetch_assoc()) {
+            $attendance_map[$att_row['student_id']] = $att_row['status'];
+        }
     }
 }
 // Fetch all classes for display at the bottom
@@ -65,8 +77,8 @@ if ($all_classes_res) {
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
-    .content { margin-top: 40px; display: flex; justify-content: center; align-items: flex-start; min-height: 80vh; padding: 0 20px; }
-    .modern-table-container { background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8); padding: 48px 40px 40px 40px; width: 100%; max-width: 900px; margin-top: 0; border: 1px solid rgba(255,255,255,0.2); position: relative; overflow: hidden; }
+    .content { margin-top: 40px; margin-left: 280px; padding: 20px; max-width: calc(100vw - 320px); }
+    .modern-table-container { background: rgba(255,255,255,0.97); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 8px 16px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8); padding: 48px 40px 40px 40px; width: 100%; max-width: 100%; margin-top: 0; border: 1px solid rgba(255,255,255,0.2); position: relative; overflow: hidden; }
     .modern-table-container::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #f5576c); border-radius: 24px 24px 0 0; }
     .header-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
     .modern-table-container h2 { font-size: 2.1rem; font-weight: 800; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0; display: flex; align-items: center; gap: 16px; letter-spacing: -0.5px; }
@@ -102,12 +114,26 @@ if ($all_classes_res) {
       <select name="class_id" id="class_id" class="form-select" required>
         <option value="">Select Class</option>
         <?php if ($classes && $classes->num_rows > 0): foreach ($classes as $c): ?>
-          <option value="<?php echo $c['id']; ?>" <?php if ($selected_class == $c['id']) echo 'selected'; ?>><?php echo htmlspecialchars($c['name']); ?></option>
+          <option value="<?php echo $c['id']; ?>" <?php if ($selected_class == $c['id']) echo 'selected'; ?>><?php echo htmlspecialchars($c['class_name']); ?></option>
         <?php endforeach; endif; ?>
       </select>
       <label for="date">Date:</label>
       <input type="date" name="date" id="date" class="form-date" value="<?php echo htmlspecialchars($selected_date); ?>">
     </form>
+    <script>
+      // Auto-submit form when class or date changes
+      document.getElementById('class_id').addEventListener('change', function() {
+        if (this.value) {
+          document.getElementById('class-date-form').submit();
+        }
+      });
+      document.getElementById('date').addEventListener('change', function() {
+        const classId = document.getElementById('class_id').value;
+        if (classId) {
+          document.getElementById('class-date-form').submit();
+        }
+      });
+    </script>
     <div id="attendance-section">
     <?php if ($selected_class && $students): ?>
     <form method="post" id="attendance-form">
@@ -306,28 +332,129 @@ if ($all_classes_res) {
     });
     </script>
     <?php endif; ?>
+    
+    <?php if ($selected_class): ?>
+    <!-- View All Attendance Records Section -->
+    <div style="margin-top:50px; padding-top:30px; border-top:2px solid #e0e0e0;">
+      <h3 style="color:#764ba2; font-size:1.3rem; font-weight:700; margin-bottom:20px;">
+        <i class="fas fa-history"></i> All Attendance Records
+      </h3>
+      
+      <?php
+      // Fetch all attendance records for the selected class
+      $all_records_query = "SELECT a.date, a.status, s.username, s.id as student_id
+                           FROM attendance a
+                           JOIN students s ON a.student_id = s.id
+                           WHERE a.class_id = $selected_class
+                           ORDER BY a.date DESC, s.username ASC";
+      $all_records = $conn->query($all_records_query);
+      
+      // Group by date
+      $records_by_date = [];
+      if ($all_records && $all_records->num_rows > 0) {
+        while ($record = $all_records->fetch_assoc()) {
+          $records_by_date[$record['date']][] = $record;
+        }
+      }
+      ?>
+      
+      <?php if (count($records_by_date) > 0): ?>
+        <div style="background:#f8f9ff; padding:20px; border-radius:12px; margin-bottom:20px;">
+          <p style="margin:0; color:#666;">
+            <strong>Total Records:</strong> <?php echo count($records_by_date); ?> days | 
+            <strong>Class:</strong> <?php 
+              $class_name_query = $conn->query("SELECT class_name FROM classes WHERE id = $selected_class");
+              $class_name_row = $class_name_query->fetch_assoc();
+              echo htmlspecialchars($class_name_row['class_name']);
+            ?>
+          </p>
+        </div>
+        
+        <div style="max-height:600px; overflow-y:auto; border:1px solid #e0e0e0; border-radius:12px;">
+          <?php foreach ($records_by_date as $date => $records): 
+            $present = $absent = $late = $excused = 0;
+            foreach ($records as $r) {
+              if ($r['status'] == 'Present') $present++;
+              elseif ($r['status'] == 'Absent') $absent++;
+              elseif ($r['status'] == 'Late') $late++;
+              elseif ($r['status'] == 'Excused') $excused++;
+            }
+          ?>
+          <div style="background:#fff; margin-bottom:15px; border-radius:8px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+            <div style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:#fff; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <strong style="font-size:1.1rem;"><?php echo date('l, F j, Y', strtotime($date)); ?></strong>
+              </div>
+              <div style="display:flex; gap:15px; font-size:0.9rem; flex-wrap:wrap;">
+                <span><i class="fas fa-check-circle"></i> <?php echo $present; ?> Present</span>
+                <span><i class="fas fa-times-circle"></i> <?php echo $absent; ?> Absent</span>
+                <span><i class="fas fa-clock"></i> <?php echo $late; ?> Late</span>
+                <span><i class="fas fa-user-check"></i> <?php echo $excused; ?> Excused</span>
+              </div>
+            </div>
+            
+            <div style="padding:15px 20px;">
+              <table style="width:100%; border-collapse:collapse;">
+                <thead>
+                  <tr style="border-bottom:2px solid #e0e0e0;">
+                    <th style="padding:8px; text-align:left; color:#764ba2;">Student</th>
+                    <th style="padding:8px; text-align:center; color:#764ba2;">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php foreach ($records as $record): 
+                    $status_color = '#27ae60';
+                    if ($record['status'] == 'Absent') $status_color = '#e74c3c';
+                    elseif ($record['status'] == 'Late') $status_color = '#f39c12';
+                    elseif ($record['status'] == 'Excused') $status_color = '#2980b9';
+                  ?>
+                  <tr style="border-bottom:1px solid #f0f0f0;">
+                    <td style="padding:8px;"><?php echo htmlspecialchars($record['username']); ?></td>
+                    <td style="padding:8px; text-align:center;">
+                      <span style="background:<?php echo $status_color; ?>; color:#fff; padding:4px 12px; border-radius:20px; font-size:0.85rem; font-weight:600;">
+                        <?php echo $record['status']; ?>
+                      </span>
+                    </td>
+                  </tr>
+                  <?php endforeach; ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <?php endforeach; ?>
+        </div>
+      <?php else: ?>
+        <div style="text-align:center; padding:60px; background:#f8f9ff; border-radius:12px;">
+          <i class="fas fa-calendar-times" style="font-size:3rem; color:#ccc; margin-bottom:15px;"></i>
+          <p style="color:#999; font-size:1.1rem;">No attendance records found for this class yet.</p>
+          <p style="color:#999;">Start taking attendance to see records here.</p>
+        </div>
+      <?php endif; ?>
+    </div>
+    <?php endif; ?>
+    
+    <?php if (count($all_classes) > 0): ?>
+    <div style="margin:40px 0 20px 0;">
+      <h3 style="color:#764ba2; font-size:1.1rem; font-weight:700; margin-bottom:10px;">All Classes (for reference)</h3>
+      <table style="width:100%; max-width:400px; border-collapse:collapse; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 2px 8px rgba(102,126,234,0.07);">
+        <thead>
+          <tr style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:#fff;">
+            <th style="padding:8px 8px;">Class ID</th>
+            <th style="padding:8px 8px;">Class Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($all_classes as $c): ?>
+          <tr>
+            <td style="padding:8px 8px; color:#764ba2; font-weight:600;"> <?php echo $c['id']; ?> </td>
+            <td style="padding:8px 8px; color:#333; font-weight:500;"> <?php echo htmlspecialchars($c['class_name']); ?> </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+    <?php endif; ?>
   </div>
 </div>
-<?php if (count($all_classes) > 0): ?>
-<div style="margin:40px 0 20px 0;">
-  <h3 style="color:#764ba2; font-size:1.1rem; font-weight:700; margin-bottom:10px;">All Classes (for reference)</h3>
-  <table style="width:100%; max-width:400px; border-collapse:collapse; background:#fff; border-radius:10px; overflow:hidden; box-shadow:0 2px 8px rgba(102,126,234,0.07);">
-    <thead>
-      <tr style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:#fff;">
-        <th style="padding:8px 8px;">Class ID</th>
-        <th style="padding:8px 8px;">Class Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($all_classes as $c): ?>
-      <tr>
-        <td style="padding:8px 8px; color:#764ba2; font-weight:600;"> <?php echo $c['id']; ?> </td>
-        <td style="padding:8px 8px; color:#333; font-weight:500;"> <?php echo htmlspecialchars($c['class_name']); ?> </td>
-      </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-</div>
-<?php endif; ?>
 </body>
 </html> 

@@ -52,8 +52,32 @@ $stmt->close();
 $stmt = $conn->prepare('INSERT INTO students (username, email, phone, password, usertype, class_id, status) VALUES (?, ?, ?, ?, ?, ?, "Active")');
 $stmt->bind_param('sssssi', $username, $email, $phone, $password, $usertype, $class_id);
 if ($stmt->execute()) {
+    // Send welcome email to student
+    require_once 'email_helper.php';
+    sendEmail($email, $username,
+        'Welcome to Nyabikoni Secondary School',
+        "<p>Dear <strong>$username</strong>,</p>
+        <p>Your student account has been created successfully.</p>
+        <table style='border-collapse:collapse;margin:16px 0;'>
+            " . row('Username', $username) . "
+            " . row('Password', $password) . "
+            " . row('Email', $email) . "
+        </table>
+        <p>Please log in and change your password after your first login.</p>
+        <p>Best regards,<br><strong>Nyabikoni Secondary School</strong></p>"
+    );
+    // Also notify admin
+    sendEmail(SCHOOL_EMAIL, SCHOOL_NAME,
+        'New Student Account Created',
+        "<p>A new student account has been created.</p>
+        <table style='border-collapse:collapse;margin:16px 0;'>
+            " . row('Username', $username) . "
+            " . row('Email', $email) . "
+            " . row('Phone', $phone) . "
+        </table>"
+    );
     echo json_encode([
-        'success' => true, 
+        'success' => true,
         'message' => 'Student added successfully!',
         'password' => $password,
         'username' => $username

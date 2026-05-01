@@ -50,11 +50,12 @@ if (!isset($_SESSION['admin'])) {
         .admin-container {
             background: rgba(255,255,255,0.98);
             max-width: 1400px;
-            margin: 40px auto;
+            margin: 40px auto 40px 280px;
             border-radius: 24px;
             box-shadow: var(--shadow-medium);
             padding: 40px;
             min-height: calc(100vh - 80px);
+            max-width: calc(100vw - 320px);
         }
 
         .admin-header {
@@ -1128,28 +1129,32 @@ if (!isset($_SESSION['admin'])) {
             }
 
             async deleteImage(filename) {
-                if (!confirm('Are you sure you want to delete this image?')) return;
-
-                try {
-                    const response = await fetch('delete_gallery_image.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ filename: filename })
-                    });
-
-                    const result = await response.json();
-                    if (result.success) {
-                        this.showNotification('Image deleted successfully', 'success');
-                        await this.loadImages();
-                        this.updateStats();
-                        this.renderGallery();
-                    } else {
-                        this.showNotification('Failed to delete image', 'error');
-                    }
-                } catch (error) {
-                    console.error('Delete error:', error);
-                    this.showNotification('Network error', 'error');
-                }
+                const self = this;
+                showConfirmModal(
+                    'Are you sure you want to delete this image? This cannot be undone.',
+                    async function() {
+                        try {
+                            const response = await fetch('delete_gallery_image.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ filename: filename })
+                            });
+                            const result = await response.json();
+                            if (result.success) {
+                                self.showNotification('Image deleted successfully', 'success');
+                                await self.loadImages();
+                                self.updateStats();
+                                self.renderGallery();
+                            } else {
+                                self.showNotification('Failed to delete image', 'error');
+                            }
+                        } catch (error) {
+                            console.error('Delete error:', error);
+                            self.showNotification('Network error', 'error');
+                        }
+                    },
+                    { title: 'Delete Image?', confirmText: 'Yes, Delete', icon: 'fa-image' }
+                );
             }
 
             // Bulk operations
@@ -1193,29 +1198,31 @@ if (!isset($_SESSION['admin'])) {
 
             async bulkDelete() {
                 if (this.selectedImages.size === 0) return;
-                
-                if (!confirm(`Are you sure you want to delete ${this.selectedImages.size} image(s)?`)) return;
-
+                const self = this;
                 const selectedArray = Array.from(this.selectedImages);
-
-                try {
-                    for (const filename of selectedArray) {
-                        await fetch('delete_gallery_image.php', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ filename: filename })
-                        });
-                    }
-
-                    this.showNotification(`Deleted ${selectedArray.length} image(s)`, 'success');
-                    this.deselectAll();
-                    await this.loadImages();
-                    this.updateStats();
-                    this.renderGallery();
-                } catch (error) {
-                    console.error('Bulk delete error:', error);
-                    this.showNotification('Failed to delete images', 'error');
-                }
+                showConfirmModal(
+                    `Are you sure you want to delete ${this.selectedImages.size} image(s)? This cannot be undone.`,
+                    async function() {
+                        try {
+                            for (const filename of selectedArray) {
+                                await fetch('delete_gallery_image.php', {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    body: JSON.stringify({ filename: filename })
+                                });
+                            }
+                            self.showNotification(`Deleted ${selectedArray.length} image(s)`, 'success');
+                            self.deselectAll();
+                            await self.loadImages();
+                            self.updateStats();
+                            self.renderGallery();
+                        } catch (error) {
+                            console.error('Bulk delete error:', error);
+                            self.showNotification('Failed to delete images', 'error');
+                        }
+                    },
+                    { title: 'Delete Selected Images?', confirmText: 'Yes, Delete All', icon: 'fa-trash' }
+                );
             }
 
             // Utility functions
@@ -1274,5 +1281,6 @@ if (!isset($_SESSION['admin'])) {
             galleryAdmin = new GalleryAdmin();
         });
     </script>
+<?php include 'delete_modal.php'; ?>
 </body>
 </html>

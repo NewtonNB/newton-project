@@ -1142,6 +1142,25 @@ section {
 
 <script>
 $(function() {
+  // Check for success parameter in URL
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === '1') {
+    // Show success notification
+    const notification = $('<div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;" role="alert">' +
+      '<i class="fas fa-check-circle me-2"></i><strong>Success!</strong> Your application has been submitted successfully. We will contact you soon.' +
+      '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+      '</div>');
+    $('body').append(notification);
+    
+    // Auto-dismiss after 5 seconds
+    setTimeout(() => {
+      notification.alert('close');
+    }, 5000);
+    
+    // Remove success parameter from URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+  
   var form = $('#admission-popup-form');
   if (form.length) {
     form.on('submit', function(e) {
@@ -1235,19 +1254,57 @@ $(function() {
       // If valid, proceed with AJAX
       var formData = new FormData(this);
       var feedback = $('#admission-popup-feedback');
-      feedback.hide().removeClass('error').html('');
+      feedback.hide().removeClass('error success').html('');
+      
+      // Show loading state
+      var submitBtn = form.find('button[type="submit"]');
+      var originalText = submitBtn.html();
+      submitBtn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin me-2"></i>Submitting...');
+      
       fetch('data_check.php', {
         method: 'POST',
         body: formData
       })
-      .then(response => response.text())
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
       .then(data => {
         if (data.toLowerCase().includes('success')) {
-          window.location.href = 'login.php';
+          // Close the modal
+          var modal = bootstrap.Modal.getInstance(document.getElementById('admissionModal'));
+          if (modal) {
+            modal.hide();
+          }
+          
+          // Show success notification
+          var successNotification = $('<div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 80px; right: 20px; z-index: 9999; min-width: 350px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" role="alert">' +
+            '<i class="fas fa-check-circle me-2"></i><strong>Success!</strong> Your application has been submitted successfully. We will contact you soon.' +
+            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
+            '</div>');
+          $('body').append(successNotification);
+          
+          // Reset form
+          form[0].reset();
+          
+          // Auto-dismiss after 6 seconds
+          setTimeout(() => {
+            successNotification.alert('close');
+          }, 6000);
+          
+          submitBtn.prop('disabled', false).html(originalText);
         } else {
           feedback.removeClass('success').addClass('error').html('<i class="fas fa-exclamation-circle me-2"></i>' + data).show();
+          submitBtn.prop('disabled', false).html(originalText);
         }
       })
+      .catch(error => {
+        console.error('Error:', error);
+        feedback.removeClass('success').addClass('error').html('<i class="fas fa-exclamation-circle me-2"></i>An error occurred. Please try again.').show();
+        submitBtn.prop('disabled', false).html(originalText);
+      });
       .catch(() => {
         feedback.addClass('error').html('<i class="fas fa-exclamation-triangle me-2"></i>An error occurred. Please try again later.').show();
       });

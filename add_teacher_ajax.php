@@ -74,6 +74,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $insert_stmt->bind_param("sssssss", $full_name, $email, $phone, $subject, $gender, $joined_on, $photoField);
     
     if ($insert_stmt->execute()) {
+        // Send welcome email to teacher
+        require_once 'email_helper.php';
+        sendEmail($email, $full_name,
+            'Welcome to Nyabikoni Secondary School Staff',
+            "<p>Dear <strong>$full_name</strong>,</p>
+            <p>You have been added to the Nyabikoni Secondary School staff system.</p>
+            <table style='border-collapse:collapse;margin:16px 0;'>
+                " . row('Name', $full_name) . "
+                " . row('Subject', $subject) . "
+                " . row('Phone', $phone) . "
+                " . row('Joined', $joined_on) . "
+            </table>
+            <p>Welcome to the team!</p>
+            <p>Best regards,<br><strong>Nyabikoni Secondary School Administration</strong></p>"
+        );
+        // Notify admin
+        sendEmail(SCHOOL_EMAIL, SCHOOL_NAME,
+            'New Teacher Added: ' . $full_name,
+            "<p>A new teacher has been added to the system.</p>
+            <table style='border-collapse:collapse;margin:16px 0;'>
+                " . row('Name', $full_name) . "
+                " . row('Email', $email) . "
+                " . row('Subject', $subject) . "
+                " . row('Gender', $gender) . "
+            </table>"
+        );
         // --- STAFF.HTML SYNC LOGIC ---
         $photoForStaff = $photoFileName ? $photoFileName : 'default.png';
         $staffHtmlPath = 'staff.html';

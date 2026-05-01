@@ -73,8 +73,11 @@ function initTables($conn) {
         email VARCHAR(150),
         phone VARCHAR(20),
         message TEXT,
-        submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        deleted_at TIMESTAMP NULL DEFAULT NULL
     )");
+    // Add deleted_at column if it doesn't exist (for existing tables)
+    $conn->query("ALTER TABLE contact_messages ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP NULL DEFAULT NULL");
     
     // Create announcements table
     $conn->query("CREATE TABLE IF NOT EXISTS announcements (
@@ -109,8 +112,19 @@ function initTables($conn) {
     $conn->query("CREATE TABLE IF NOT EXISTS admission (
         id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
+        dob DATE,
+        gender VARCHAR(10),
+        address TEXT,
+        nationality VARCHAR(100),
+        religion VARCHAR(100),
+        previous_school VARCHAR(255),
+        class_applying VARCHAR(50),
+        parent_name VARCHAR(255),
+        parent_phone VARCHAR(20),
         email VARCHAR(255),
         phone VARCHAR(20),
+        passport_photo VARCHAR(255),
+        message TEXT,
         status VARCHAR(20) DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )");
@@ -137,6 +151,52 @@ function initTables($conn) {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         status VARCHAR(20) DEFAULT 'registered',
         FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
+    )");
+    
+    // Create marks table
+    $conn->query("CREATE TABLE IF NOT EXISTS marks (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        student_id INT NOT NULL,
+        class_id INT NOT NULL,
+        subject_name VARCHAR(255) NOT NULL,
+        term INT NOT NULL,
+        year INT NOT NULL,
+        marks DECIMAL(5,2) NOT NULL,
+        grade VARCHAR(2),
+        remarks TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        UNIQUE KEY unique_mark (student_id, class_id, subject_name, term, year)
+    )");
+    
+    // Create attendance table
+    $conn->query("CREATE TABLE IF NOT EXISTS attendance (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        student_id INT NOT NULL,
+        class_id INT NOT NULL,
+        date DATE NOT NULL,
+        status ENUM('Present', 'Absent', 'Late', 'Excused') DEFAULT 'Absent',
+        marked_by VARCHAR(255),
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        UNIQUE KEY unique_attendance (student_id, class_id, date)
+    )");
+    
+    // Create exam_schedule table
+    $conn->query("CREATE TABLE IF NOT EXISTS exam_schedule (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        exam_name VARCHAR(255) NOT NULL,
+        class_id INT NOT NULL,
+        subject_name VARCHAR(255) NOT NULL,
+        exam_date DATE NOT NULL,
+        start_time TIME NOT NULL,
+        end_time TIME NOT NULL,
+        room VARCHAR(100),
+        term INT NOT NULL,
+        year INT NOT NULL,
+        instructions TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
     )");
     
     // Create admin user if it doesn't exist

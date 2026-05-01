@@ -123,57 +123,74 @@ $current_page = basename($_SERVER['PHP_SELF'], '.php');
 </nav>
 
 <!-- JavaScript for navbar functionality -->
+<script src="validation.js"></script>
 <script>
-// Show/hide topbar on scroll
-let lastScrollTop = 0;
-const scrollThreshold = 100;
+const topbar = document.querySelector('.topbar');
+const navbar = document.querySelector('.navbar');
+const topbarHeight = topbar ? topbar.offsetHeight : 44;
+
+// On page load - make navbar transparent if on homepage hero
+const isHomePage = document.querySelector('.nyab-hero-section, #hero, .carousel, .nyab-hero-caption');
+if (isHomePage) {
+    navbar.classList.add('transparent');
+}
+
 window.addEventListener('scroll', function() {
-    const topbar = document.querySelector('.topbar');
-    const navbar = document.querySelector('.navbar');
-    const scrollPosition = window.scrollY;
-    if (scrollPosition > scrollThreshold) {
-        topbar.classList.add('hide');
-        navbar.classList.add('sticky');
+    const scrollY = window.scrollY;
+
+    if (scrollY > 80) {
+        // Hide topbar
+        topbar.classList.add('hidden');
+        // Move navbar to top
+        navbar.classList.add('at-top');
+        // Make navbar solid
+        navbar.classList.remove('transparent');
+        // Remove body top padding gap
+        document.body.style.paddingTop = navbar.offsetHeight + 'px';
     } else {
-        topbar.classList.remove('hide');
-        navbar.classList.remove('sticky');
+        // Show topbar
+        topbar.classList.remove('hidden');
+        // Move navbar back below topbar
+        navbar.classList.remove('at-top');
+        // Make navbar transparent again on hero
+        if (isHomePage) {
+            navbar.classList.add('transparent');
+        }
+        // Restore body padding
+        document.body.style.paddingTop = '';
     }
 });
 
-// Enhanced mobile menu functionality
+// Mobile menu
 document.addEventListener('DOMContentLoaded', function() {
     const navbarToggler = document.querySelector('.navbar-toggler');
     const navbarCollapse = document.querySelector('.navbar-collapse');
-    
+
     if (navbarToggler && navbarCollapse) {
         navbarToggler.addEventListener('click', function() {
             navbarCollapse.classList.toggle('show');
         });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!navbarToggler.contains(event.target) && !navbarCollapse.contains(event.target)) {
+
+        document.addEventListener('click', function(e) {
+            if (!navbarToggler.contains(e.target) && !navbarCollapse.contains(e.target)) {
                 navbarCollapse.classList.remove('show');
             }
         });
-        
-        // Handle dropdown toggles on mobile
-        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-        dropdownToggles.forEach(toggle => {
+
+        // Mobile dropdowns
+        document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
             toggle.addEventListener('click', function(e) {
-                if (window.innerWidth < 992) { // Mobile breakpoint
+                if (window.innerWidth < 992) {
                     e.preventDefault();
-                    const dropdownMenu = this.nextElementSibling;
-                    dropdownMenu.classList.toggle('show');
+                    this.nextElementSibling.classList.toggle('show');
                 }
             });
         });
     }
-    
-    // Add hover effects for desktop dropdowns
+
+    // Desktop hover dropdowns
     if (window.innerWidth >= 992) {
-        const dropdownItems = document.querySelectorAll('.dropdown');
-        dropdownItems.forEach(item => {
+        document.querySelectorAll('.dropdown').forEach(item => {
             item.addEventListener('mouseenter', function() {
                 this.querySelector('.dropdown-menu').classList.add('show');
             });

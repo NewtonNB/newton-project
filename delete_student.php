@@ -1,24 +1,30 @@
 <?php
 session_start();
-if(!isset($_SESSION['username'])) {
-    header("location:login.php");
-    exit();
-}
-$host = "localhost";
-$user = "root";
-$password = "1234";
-$db = "schoolproject";
-$conn = mysqli_connect($host, $user, $password, $db);
-if (!$conn) { die("Connection failed: " . mysqli_connect_error()); }
+header('Content-Type: application/json');
+if (!isset($_SESSION['admin'])) { echo json_encode(['success'=>false,'error'=>'Unauthorized']); exit; }
+require_once 'config.php';
 
-if (!isset($_GET['id'])) {
-    die('No student ID provided.');
+$id = intval($_GET['id'] ?? $_POST['id'] ?? 0);
+$action = $_GET['action'] ?? $_POST['action'] ?? 'trash';
+
+if (!$id) { echo json_encode(['success'=>false,'error'=>'Invalid ID']); exit; }
+
+// Ensure deleted_at column exists
+$conn->query("ALTER TABLE students ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP NULL DEFAULT NULL");
+
+if ($action === 'trash') {
+    $conn->query("UPDATE students SET deleted_at = NOW() WHERE id = $id");
+    echo json_encode(['success'=>true]);
+} elseif ($action === 'restore') {
+    $conn->query("UPDATE students SET deleted_at = NULL WHERE id = $id");
+    echo json_encode(['success'=>true]);
+} elseif ($action === 'permanent') {
+    $conn->query("DELETE FROM students WHERE id = $id");
+    echo json_encode(['success'=>true]);
+} else {
+    // Legacy redirect support
+    $conn->query("UPDATE students SET deleted_at = NOW() WHERE id = $id");
+    header('Location: view_student.php');
+    exit;
 }
-$id = intval($_GET['id']);
-$sql = "DELETE FROM students WHERE id=?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id);
-$stmt->execute();
-header("Location: view_student.php");
-exit();
-?> 
+?>

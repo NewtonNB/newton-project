@@ -54,27 +54,11 @@
             </div>
 
             <div class="menu-section">
-                <h3 class="section-title">Student Management</h3>
-                <ul>
-                    <li><a href="admission.php" class="nav-link"><i class="fa-solid fa-user-plus" title="New Admission"></i><span>New Admission</span></a></li>
-                    <li><a href="view_student.php" class="nav-link"><i class="fa-solid fa-users" title="View Students"></i><span>View Students</span></a></li>
-                </ul>
-            </div>
-
-            <div class="menu-section">
-                <h3 class="section-title">Teacher Management</h3>
-                <ul>
-                    <li><a href="view_teacher.php" class="nav-link"><i class="fa-solid fa-user-tie" title="Manage Teachers"></i><span>Manage Teachers</span></a></li>
-                </ul>
-            </div>
-
-            <div class="menu-section">
                 <h3 class="section-title">Academic Management</h3>
                 <ul>
                     <li><a href="manage_classes.php" class="nav-link"><i class="fa-solid fa-layer-group" title="Manage Classes"></i><span>Manage Classes</span></a></li>
                     <li><a href="manage_subjects.php" class="nav-link"><i class="fa-solid fa-book" title="Manage Subjects"></i><span>Manage Subjects</span></a></li>
                     <li><a href="attendance.php" class="nav-link"><i class="fa-solid fa-clipboard-list" title="Attendance"></i><span>Attendance</span></a></li>
-                    <li><a href="view_attendance.php" class="nav-link"><i class="fa-solid fa-calendar-check" title="View Attendance Records"></i><span>View Attendance Records</span></a></li>
                 </ul>
             </div>
 
@@ -100,13 +84,15 @@
                 <ul>
                     <li><a href="send_sms.php" class="nav-link"><i class="fa-solid fa-envelope" title="Send SMS"></i><span>Send SMS</span></a></li>
                     <li><a href="announcements.php" class="nav-link"><i class="fa-solid fa-bullhorn" title="Announcements"></i><span>Announcements</span></a></li>
+                    <li><a href="send_newsletter.php" class="nav-link"><i class="fa-solid fa-paper-plane" title="Newsletter"></i><span>Newsletter</span></a></li>
+                    <li><a href="trash.php" class="nav-link"><i class="fa-solid fa-trash" title="Trash"></i><span>Trash</span></a></li>
                 </ul>
             </div>
 
             <div class="menu-section">
                 <h3 class="section-title">System Settings</h3>
                 <ul>
-                    <li><a href="users.php" class="nav-link"><i class="fa-solid fa-users-cog" title="User Management"></i><span>User Management</span></a></li>
+                    <li><a href="user.php" class="nav-link"><i class="fa-solid fa-users-cog" title="User Management"></i><span>User Management</span></a></li>
                     <li><a href="settings.php" class="nav-link"><i class="fa-solid fa-cog" title="Settings"></i><span>Settings</span></a></li>
                 </ul>
             </div>
@@ -551,8 +537,6 @@
 
 body {
     padding-top: 100px;
-    padding-left: 280px;
-    transition: padding-left 0.4s ease;
 }
 
 @media (max-width: 700px) {

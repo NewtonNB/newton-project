@@ -6,8 +6,10 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 // Fetch announcements from the database
-$sql = "SELECT * FROM announcements ORDER BY created_at DESC";
+$conn->query("ALTER TABLE announcements ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP NULL DEFAULT NULL");
+$sql = "SELECT * FROM announcements WHERE deleted_at IS NULL ORDER BY created_at DESC";
 $result = $conn->query($sql);
+$trashCount = $conn->query("SELECT COUNT(*) FROM announcements WHERE deleted_at IS NOT NULL")->fetch_row()[0];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,14 +27,15 @@ $result = $conn->query($sql);
             padding: 0;
         }
         .content {
-            margin-left: 0;
-            margin-top: 90px;
-            padding: 20px 30px;
+            margin-left: 280px;
+            margin-top: 40px;
+            padding: 20px;
             min-height: calc(100vh - 70px);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
+            max-width: calc(100vw - 280px);
         }
         .announcement-list-container {
             background: #fff;
@@ -519,7 +522,7 @@ $result = $conn->query($sql);
                 <?php endif; ?>
                 <div style="margin-top: 12px;">
                     <button type="button" class="btn btn-sm btn-warning btn-edit-announcement" data-id="<?php echo $a['id']; ?>"><i class="fa fa-edit"></i> Edit</button>
-                    <a href="delete_announcement.php?id=<?php echo $a['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this announcement?');" style="margin-left:8px;"><i class="fa fa-trash"></i> Delete</a>
+                    <a href="#" class="btn btn-sm btn-danger" onclick="softDelete('announcement', <?php echo $a['id']; ?>, this)" style="margin-left:8px;"><i class="fa fa-trash"></i> Remove</a>
                 </div>
             </div>
         <?php endwhile; ?>

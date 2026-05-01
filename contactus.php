@@ -131,11 +131,13 @@
         }
         
         .validation-message {
-            font-size: 0.85rem;
-            margin-top: 5px;
+            font-size: 0.9rem;
+            margin-top: 8px;
             opacity: 0;
             transform: translateY(-10px);
             transition: all 0.3s ease;
+            min-height: 20px;
+            font-weight: 500;
         }
         
         .validation-message.show {
@@ -145,10 +147,24 @@
         
         .validation-message.error {
             color: #e74c3c;
+            font-weight: 600;
         }
         
         .validation-message.success {
             color: #27ae60;
+            font-weight: 600;
+        }
+        
+        .inputBox input.error,
+        .inputBox textarea.error {
+            border-color: #e74c3c !important;
+            background-color: #fdeaea !important;
+        }
+        
+        .inputBox input.valid,
+        .inputBox textarea.valid {
+            border-color: #27ae60 !important;
+            background-color: #eafaf1 !important;
         }
         
         /* Character Counter */
@@ -415,7 +431,7 @@
                 </div>
                 
                 <div class="form-container">
-                    <form id="dynamicContactForm" class="form-step">
+                    <form id="dynamicContactForm" class="form-step" novalidate>
                         <div class="formBox">
                             <div class="row50">
                                 <div class="inputBox">
@@ -607,6 +623,7 @@
                 this.loadingSpinner = document.getElementById('loadingSpinner');
                 this.submitText = document.getElementById('submitText');
                 this.charCounter = document.getElementById('charCounter');
+                this.isSubmitting = false;
                 
                 this.validationRules = {
                     firstName: { required: true, minLength: 2, pattern: /^[a-zA-Z\s]+$/ },
@@ -660,7 +677,11 @@
             
             validateField(fieldName) {
                 const field = document.getElementById(fieldName);
+                if (!field) return true; // Field doesn't exist, skip validation
+                
                 const inputBox = field.closest('.inputBox');
+                if (!inputBox) return true; // No inputBox found, skip validation
+                
                 const validationIcon = inputBox.querySelector('.validation-icon');
                 const validationMessage = inputBox.querySelector('.validation-message');
                 const rules = this.validationRules[fieldName];
@@ -693,19 +714,32 @@
                 
                 // Update UI
                 inputBox.classList.remove('valid', 'invalid');
-                validationMessage.classList.remove('show', 'error', 'success');
+                field.classList.remove('valid', 'error');
+                if (validationMessage) {
+                    validationMessage.classList.remove('show', 'error', 'success');
+                }
                 
                 if (field.value.trim()) {
                     if (isValid) {
                         inputBox.classList.add('valid');
-                        validationIcon.className = 'validation-icon fas fa-check';
-                        validationMessage.textContent = 'Looks good!';
-                        validationMessage.classList.add('show', 'success');
+                        field.classList.add('valid');
+                        if (validationIcon) {
+                            validationIcon.className = 'validation-icon fas fa-check';
+                        }
+                        if (validationMessage) {
+                            validationMessage.textContent = 'Looks good!';
+                            validationMessage.classList.add('show', 'success');
+                        }
                     } else {
                         inputBox.classList.add('invalid');
-                        validationIcon.className = 'validation-icon fas fa-times';
-                        validationMessage.textContent = message;
-                        validationMessage.classList.add('show', 'error');
+                        field.classList.add('error');
+                        if (validationIcon) {
+                            validationIcon.className = 'validation-icon fas fa-times';
+                        }
+                        if (validationMessage) {
+                            validationMessage.textContent = message;
+                            validationMessage.classList.add('show', 'error');
+                        }
                     }
                 }
                 
@@ -715,12 +749,18 @@
             
             clearFieldValidation(fieldName) {
                 const field = document.getElementById(fieldName);
+                if (!field) return;
+                
                 const inputBox = field.closest('.inputBox');
+                if (!inputBox) return;
+                
                 const validationMessage = inputBox.querySelector('.validation-message');
                 
                 if (!field.value.trim()) {
                     inputBox.classList.remove('valid', 'invalid');
-                    validationMessage.classList.remove('show');
+                    if (validationMessage) {
+                        validationMessage.classList.remove('show');
+                    }
                 }
             }
             
@@ -803,6 +843,11 @@
             async handleSubmit(e) {
                 e.preventDefault();
                 
+                // Prevent duplicate submissions
+                if (this.isSubmitting) {
+                    return;
+                }
+                
                 // Validate all fields
                 let isFormValid = true;
                 Object.keys(this.validationRules).forEach(fieldName => {
@@ -817,6 +862,7 @@
                 }
                 
                 // Show loading state
+                this.isSubmitting = true;
                 this.setLoadingState(true);
                 
                 try {
@@ -826,6 +872,10 @@
                         method: 'POST',
                         body: formData
                     });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
                     
                     const result = await response.json();
                     
@@ -845,6 +895,7 @@
                     this.showNotification('Network error. Please check your connection and try again.', 'error');
                 } finally {
                     this.setLoadingState(false);
+                    this.isSubmitting = false;
                 }
             }
             

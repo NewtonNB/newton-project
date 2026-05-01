@@ -504,7 +504,9 @@ class EventRegistrationsManager {
   }
   
   async deleteRegistration(id) {
-    if (!confirm('Are you sure you want to delete this registration?')) return;
+    showConfirmModal(
+      'Are you sure you want to delete this registration? This action cannot be undone.',
+      async () => {
     
     try {
       const response = await fetch('delete_registration.php', {
@@ -524,6 +526,9 @@ class EventRegistrationsManager {
     } catch (error) {
       this.showError('Network error occurred');
     }
+      },
+      { title: 'Delete Registration?', confirmText: 'Yes, Delete', icon: 'fa-user-minus' }
+    );
   }
   
   toggleRowSelection(id, checked) {
@@ -651,10 +656,11 @@ function toggleSelectAll() {
 function bulkDelete() {
   if (registrationsManager.selectedRows.size === 0) return;
   
-  if (!confirm(`Are you sure you want to delete ${registrationsManager.selectedRows.size} registrations?`)) return;
-  
-  // Implementation for bulk delete
-  console.log('Bulk delete:', Array.from(registrationsManager.selectedRows));
+  showConfirmModal(
+    `Are you sure you want to delete ${registrationsManager.selectedRows.size} registration(s)? This action cannot be undone.`,
+    function() { console.log('Bulk delete:', Array.from(registrationsManager.selectedRows)); },
+    { title: 'Delete Selected?', confirmText: 'Yes, Delete All', icon: 'fa-trash' }
+  );
 }
 
 function bulkExport() {
@@ -727,5 +733,6 @@ window.addEventListener('beforeunload', function() {
   }
 });
 </script>
+<?php include 'delete_modal.php'; ?>
 </body>
 </html> 

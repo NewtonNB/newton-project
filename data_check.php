@@ -64,71 +64,8 @@ if (
     $result = mysqli_query($data, $sql);
 
     if ($result) {
-        // Send email notification to admin and confirmation to applicant
-        require_once __DIR__ . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-        require_once __DIR__ . '/vendor/phpmailer/phpmailer/src/SMTP.php';
-        require_once __DIR__ . '/vendor/phpmailer/phpmailer/src/Exception.php';
-        $admin_email = 'admin@nyabikonischool.com'; // Change to your admin email
-        $school_name = 'Nyabikoni Secondary School';
-        $mail_success = true;
-        // --- GMAIL SMTP CONFIGURATION ---
-        $gmail_address = 'tukamuhebwanewton@gmail.com';
-        $gmail_app_password = 'qeeuyrvmzserzdfe';
-        // ---
-        try {
-            $mail = new PHPMailer\PHPMailer\PHPMailer();
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = $gmail_address;
-            $mail->Password = $gmail_app_password;
-            $mail->SMTPSecure = 'tls';
-            $mail->Port = 587;
-            $mail->setFrom($gmail_address, $school_name);
-            $mail->addAddress($admin_email);
-            $mail->Subject = 'New Admission Application Received';
-            $body = "<h3>New Admission Application</h3>"
-                . "<b>Name:</b> $data_name<br>"
-                . "<b>Date of Birth:</b> $data_dob<br>"
-                . "<b>Gender:</b> $data_gender<br>"
-                . "<b>Address:</b> $data_address<br>"
-                . "<b>Nationality:</b> $data_nationality<br>"
-                . "<b>Religion:</b> $data_religion<br>"
-                . "<b>Previous School:</b> $data_prev_school<br>"
-                . "<b>Class Applying For:</b> $data_class<br>"
-                . "<b>Parent/Guardian Name:</b> $data_parent_name<br>"
-                . "<b>Parent/Guardian Phone:</b> $data_parent_phone<br>"
-                . "<b>Email:</b> $data_email<br>"
-                . "<b>Phone:</b> $data_phone<br>"
-                . "<b>Message:</b> $data_message<br>";
-            if ($passport_photo_path) {
-                $body .= "<b>Passport Photo:</b> <a href='" . $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . '/' . $passport_photo_path . "'>View Photo</a><br>";
-            }
-            $mail->isHTML(true);
-            $mail->Body = $body;
-            $mail->send();
-        } catch (Exception $e) {
-            $mail_success = false;
-        }
-        // Confirmation to applicant
-        try {
-            $mail2 = new PHPMailer\PHPMailer\PHPMailer();
-            $mail2->isSMTP();
-            $mail2->Host = 'smtp.gmail.com';
-            $mail2->SMTPAuth = true;
-            $mail2->Username = $gmail_address;
-            $mail2->Password = $gmail_app_password;
-            $mail2->SMTPSecure = 'tls';
-            $mail2->Port = 587;
-            $mail2->setFrom($gmail_address, $school_name);
-            $mail2->addAddress($data_email);
-            $mail2->Subject = 'Your Admission Application Received';
-            $mail2->isHTML(true);
-            $mail2->Body = "<p>Dear $data_name,</p><p>Thank you for applying to $school_name. We have received your application and will contact you soon.</p><p>Best regards,<br>$school_name Admissions</p>";
-            $mail2->send();
-        } catch (Exception $e) {
-            // Ignore applicant email failure
-        }
+        // Skip email sending for faster response
+        // Email functionality can be added later with proper PHPMailer setup
         echo "Success: Your application was sent successfully!";
     } else {
         echo "Apply Failed: Could not process your application.";

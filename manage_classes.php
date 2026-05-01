@@ -4,10 +4,7 @@ session_start();
 require 'config.php';
 
 // Check if user is logged in and is admin
-if(!isset($_SESSION['username'])) {
-    header("location:login.php");
-    exit();
-} elseif($_SESSION['usertype']=='student'){
+if (!isset($_SESSION['admin'])) {
     header("location:login.php");
     exit();
 }
@@ -232,12 +229,11 @@ $classes = $conn->query("SELECT * FROM classes ORDER BY class_name ASC");
                                 </td>
                                 <td>
                                     <div style="display:flex; gap:10px; align-items:center;">
-                                        <a href="manage_classes.php?delete=<?php echo $row['id']; ?>"
-                                           class="btn btn-danger"
-                                           title="Delete this class"
-                                           onclick="return confirm('Are you sure you want to delete class <?php echo htmlspecialchars($row['class_name']); ?>? This action cannot be undone.');">
-                                           <i class="fas fa-trash"></i> Delete
-                                        </a>
+                                        <button type="button" class="btn btn-danger"
+                                            title="Delete this class"
+                                            onclick="showDeleteModal('<?php echo htmlspecialchars(addslashes($row['class_name'])); ?>', 'manage_classes.php?delete=<?php echo $row['id']; ?>')">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
                                         <button class="btn btn-primary btn-edit-class" 
                                                 data-id="<?php echo $row['id']; ?>" 
                                                 data-class_name="<?php echo htmlspecialchars($row['class_name']); ?>" 
@@ -394,6 +390,6 @@ confirmDeleteClass.onclick = function() {
   });
 };
 </script>
-
+<?php include 'delete_modal.php'; ?>
 </body>
 </html>

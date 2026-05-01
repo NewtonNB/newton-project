@@ -18,14 +18,17 @@ $page = isset($_GET['page']) && is_numeric($_GET['page']) ? (int)$_GET['page'] :
 if ($page < 1) $page = 1;
 
 // Count total teachers
-$count_sql = "SELECT COUNT(*) as total FROM teachers";
+$conn->query("ALTER TABLE teachers ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP NULL DEFAULT NULL");
+$search_teacher = isset($_GET['search']) ? trim($_GET['search']) : '';
+$search_teacher_sql = $search_teacher ? " AND (full_name LIKE '%" . $conn->real_escape_string($search_teacher) . "%' OR email LIKE '%" . $conn->real_escape_string($search_teacher) . "%' OR subject LIKE '%" . $conn->real_escape_string($search_teacher) . "%')" : '';
+$count_sql = "SELECT COUNT(*) as total FROM teachers WHERE deleted_at IS NULL $search_teacher_sql";
 $count_result = $conn->query($count_sql);
 $totalTeachers = $count_result ? (int)$count_result->fetch_assoc()['total'] : 0;
 $totalPages = ceil($totalTeachers / $teachersPerPage);
 $offset = ($page - 1) * $teachersPerPage;
 
 // Fetch paginated teachers
-$result = $conn->query("SELECT * FROM teachers ORDER BY id DESC LIMIT $teachersPerPage OFFSET $offset");
+$result = $conn->query("SELECT * FROM teachers WHERE deleted_at IS NULL $search_teacher_sql ORDER BY id DESC LIMIT $teachersPerPage OFFSET $offset");
 
 // Parse staff.html for teacher images
 // (Removed unnecessary code that referenced staff.html)
@@ -55,11 +58,13 @@ $result = $conn->query("SELECT * FROM teachers ORDER BY id DESC LIMIT $teachersP
     
     .content {
         margin-top: 40px;
+        margin-left: 280px;
         display: flex;
         justify-content: center;
         align-items: flex-start;
         min-height: 80vh;
         padding: 0 20px;
+        max-width: calc(100vw - 280px);
     }
     
     .modern-table-container {
@@ -590,10 +595,19 @@ $result = $conn->query("SELECT * FROM teachers ORDER BY id DESC LIMIT $teachersP
     <div class="modern-table-container">
         <div class="header-section">
             <h2><span class="table-icon"><i class="fas fa-chalkboard-teacher"></i></span> Teacher Management</h2>
-            <div style="display:flex; gap:12px; align-items:center;">
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
                 <button class="add-teacher-btn" id="addTeacherBtn">
                     <i class="fas fa-plus"></i> Add New Teacher
                 </button>
+                <!-- Search bar -->
+                <form method="get" style="display:flex;align-items:center;gap:8px;margin:0;">
+                  <input type="text" name="search" value="<?php echo htmlspecialchars($search_teacher); ?>"
+                    placeholder="Search name, subject, email..."
+                    style="padding:10px 16px;border-radius:12px;border:2px solid #e0e0e0;font-size:0.95rem;width:240px;outline:none;font-family:'Poppins',sans-serif;transition:border-color 0.3s;"
+                    onfocus="this.style.borderColor='#667eea'" onblur="this.style.borderColor='#e0e0e0'">
+                  <button type="submit" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;border:none;border-radius:10px;padding:10px 18px;cursor:pointer;font-weight:600;"><i class="fas fa-search"></i></button>
+                  <?php if($search_teacher): ?><a href="view_teacher.php" style="color:#e74c3c;font-size:0.85rem;text-decoration:none;font-weight:600;">✕ Clear</a><?php endif; ?>
+                </form>
                 <form method="post" action="export_teachers.php" style="margin:0;">
                     <button type="submit" class="add-teacher-btn" style="background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);">
                         <i class="fas fa-download"></i> Export CSV
@@ -692,8 +706,8 @@ $result = $conn->query("SELECT * FROM teachers ORDER BY id DESC LIMIT $teachersP
                 <a href="#" class="btn-action btn-edit btn-edit-teacher" data-id="<?php echo $row['id']; ?>">
                     <i class="fas fa-edit"></i> Edit
                 </a>
-                <a href="delete_teacher.php?id=<?php echo $row['id']; ?>" class="btn-action btn-delete" onclick="return confirm('Are you sure you want to delete this teacher?')">
-                    <i class="fas fa-trash"></i> Delete
+                <a href="#" class="btn-action btn-delete" onclick="softDelete('teacher', <?php echo $row['id']; ?>, this)">
+                    <i class="fas fa-trash"></i> Remove
                 </a>
             </td>
         </tr>

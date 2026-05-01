@@ -1,147 +1,394 @@
+<?php
+// session_start MUST be first - before any HTML output
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="modern-footer.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Nyabikoni Secondary School</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
 
-<!-- Optional theme -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    body {
+      min-height: 100vh;
+      background: url('./nyabzgallery/current.jpg') no-repeat center center / cover;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
 
-<!-- Latest compiled and minified JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<style>
-  .login-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: url('./nyabzgallery/current.jpg') no-repeat center center/cover;
-  padding: 20px;
-}
+    /* Dark overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(102,126,234,0.72) 0%, rgba(118,75,162,0.65) 100%);
+      z-index: 0;
+    }
 
-.login-box {
-  background-color: #1e1e1e;
-  padding: 40px 30px;
-  width: 100%;
-  max-width: 400px;
-  border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
+    /* Everything above overlay */
+    .login-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.login-title {
-  background-color: #00bfff;
-  color: white;
-  font-weight: bold;
-  font-size: 22px;
-  text-align: center;
-  padding: 15px 10px;
-  margin-bottom: 25px;
-  border-radius: 6px;
-}
+    /* School branding */
+    .school-brand {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .school-brand img {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.85);
+      object-fit: contain;
+      background: #fff;
+      padding: 5px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    }
+    .school-brand h1 {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-top: 12px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      letter-spacing: 0.5px;
+    }
+    .school-brand p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.82rem;
+      margin-top: 3px;
+    }
 
-.login-title h4 {
-  font-size: 14px;
-  font-weight: normal;
-  margin-top: 8px;
-  color: #f5f5f5;
-}
+    /* Card */
+    .login-card {
+      width: 100%;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 38px 36px 34px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    }
 
-.login-form .form-group {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 20px;
-}
+    .card-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .card-header h2 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-header p {
+      color: #999;
+      font-size: 0.87rem;
+      margin-top: 5px;
+    }
 
-.login-form label {
-  color: skyblue;
-  margin-bottom: 6px;
-  font-weight: 500;
-}
+    /* Alert */
+    .alert {
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-size: 0.87rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fdeaea;
+      color: #c0392b;
+      border-left: 4px solid #e74c3c;
+    }
 
-.login-form input {
-  padding: 10px 14px;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  background-color: #2c3e50;
-  color: white;
-  outline: none;
-  transition: 0.3s ease;
-}
+    /* Form groups */
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 7px;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap .icon-left {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #bbb;
+      font-size: 0.9rem;
+      pointer-events: none;
+      transition: color 0.3s;
+    }
+    .input-wrap input {
+      width: 100%;
+      padding: 13px 44px;
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      background: #fafafa;
+      transition: all 0.3s;
+      outline: none;
+    }
+    .input-wrap input:focus {
+      border-color: #667eea;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(102,126,234,0.12);
+    }
+    .input-wrap input:focus ~ .icon-left { color: #667eea; }
+    .toggle-pw {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #bbb;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .toggle-pw:hover { color: #1abc9c; }
 
-.login-form input:focus {
-  background-color: #34495e;
-}
+    /* Error text */
+    .err-text {
+      color: #e74c3c;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 5px;
+      display: block;
+      min-height: 16px;
+    }
 
-.submit-btn {
-  background-color: #00bfff;
-  color: white;
-  border: none;
-  padding: 12px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
+    /* Extras row */
+    .form-extras {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-size: 0.85rem;
+    }
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #555;
+      cursor: pointer;
+      user-select: none;
+    }
+    .remember input[type=checkbox] {
+      width: 16px; height: 16px;
+      accent-color: #667eea;
+      cursor: pointer;
+    }
+    .forgot-link {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .forgot-link:hover { color: #764ba2; }
 
-.submit-btn:hover {
-  background-color: #009ace;
-}
+    /* Submit button */
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 6px 20px rgba(102,126,234,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(102,126,234,0.45);
+    }
+    .btn-login:active { transform: translateY(0); }
+    .btn-login:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
-/* Mobile tweaks */
-@media (max-width: 480px) {
-  .login-box {
-    padding: 30px 20px;
-  }
+    /* Back link */
+    .back-link {
+      margin-top: 18px;
+      text-align: center;
+    }
+    .back-link a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.87rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-link a:hover { color: #fff; }
 
-  .login-title {
-    font-size: 18px;
-  }
-}
-
-</style>
+    @media (max-width: 480px) {
+      .login-card { padding: 28px 20px 24px; }
+      .card-header h2 { font-size: 1.4rem; }
+    }
+  </style>
 </head>
-<?php
-session_start();
-?>
+<body>
+
 <div class="login-wrapper">
-  <div class="login-box">
-    <div class="login-title">
-      Login Form
-      <h4>
-        <?php
-          if (isset($_SESSION['loginMessage'])) {
-            echo $_SESSION['loginMessage'];
-            unset($_SESSION['loginMessage']); // Clear the message after displaying
-          }
-        ?>
-      </h4>
+
+  <!-- School Branding -->
+  <div class="school-brand">
+    <img src="nyabzgallery/nyabz logo.png" alt="Nyabikoni Logo">
+    <h1>NYABIKONI SECONDARY SCHOOL</h1>
+    <p>Empowering Future Leaders</p>
+  </div>
+
+  <!-- Login Card -->
+  <div class="login-card">
+    <div class="card-header">
+      <h2><i class="fa-solid fa-shield-halved"></i> Welcome Back</h2>
+      <p>Sign in to access the admin dashboard</p>
     </div>
 
-    <form action="login_check.php" method="POST" class="login-form">
+    <?php if (!empty($_SESSION['loginMessage'])): ?>
+      <div class="alert">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <?php echo htmlspecialchars($_SESSION['loginMessage']); unset($_SESSION['loginMessage']); ?>
+      </div>
+    <?php endif; ?>
+
+    <form action="login_check.php" method="POST" id="loginForm" novalidate>
+
       <div class="form-group">
-        <label>Username</label>
-        <input type="text" name="username" required>
+        <label for="username">Username</label>
+        <div class="input-wrap">
+          <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username">
+          <i class="fa-solid fa-user icon-left"></i>
+        </div>
+        <span class="err-text" id="err-username"></span>
       </div>
 
       <div class="form-group">
-        <label>Password</label>
-        <input type="password" name="password" required>
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password">
+          <i class="fa-solid fa-lock icon-left"></i>
+          <button type="button" class="toggle-pw" onclick="togglePw()" title="Show/hide password">
+            <i class="fa-solid fa-eye" id="pwIcon"></i>
+          </button>
+        </div>
+        <span class="err-text" id="err-password"></span>
       </div>
 
-      <div class="form-group">
-        <button type="submit" name="submit" class="submit-btn">Login</button>
+      <div class="form-extras">
+        <label class="remember">
+          <input type="checkbox" name="remember" id="remember"> Remember me
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
       </div>
+
+      <button type="submit" class="btn-login" id="loginBtn">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span id="btnText">Sign In</span>
+      </button>
+
     </form>
   </div>
+
+  <div class="back-link">
+    <a href="index.php"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
+  </div>
+
 </div>
+
+<script>
+  function togglePw() {
+    const pw = document.getElementById('password');
+    const icon = document.getElementById('pwIcon');
+    if (pw.type === 'password') {
+      pw.type = 'text';
+      icon.className = 'fa-solid fa-eye-slash';
+    } else {
+      pw.type = 'password';
+      icon.className = 'fa-solid fa-eye';
+    }
+  }
+
+  // Remember me
+  window.addEventListener('DOMContentLoaded', function() {
+    const saved = localStorage.getItem('nyabz_user');
+    if (saved) {
+      document.getElementById('username').value = saved;
+      document.getElementById('remember').checked = true;
+    }
+  });
+
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const errU = document.getElementById('err-username');
+    const errP = document.getElementById('err-password');
+    let valid = true;
+
+    errU.textContent = ''; errP.textContent = '';
+    username.style.borderColor = ''; password.style.borderColor = '';
+
+    if (!username.value.trim()) {
+      errU.textContent = 'Please enter your username';
+      username.style.borderColor = '#e74c3c';
+      valid = false;
+    }
+    if (!password.value.trim()) {
+      errP.textContent = 'Please enter your password';
+      password.style.borderColor = '#e74c3c';
+      valid = false;
+    }
+
+    if (!valid) { e.preventDefault(); return; }
+
+    // Save remember me
+    if (document.getElementById('remember').checked) {
+      localStorage.setItem('nyabz_user', username.value);
+    } else {
+      localStorage.removeItem('nyabz_user');
+    }
+
+    // Loading state
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    document.getElementById('btnText').textContent = 'Signing in...';
+    btn.querySelector('i').className = 'fa-solid fa-spinner fa-spin';
+  });
+</script>
 </body>
 </html>

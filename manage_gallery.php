@@ -27,11 +27,12 @@ if (!isset($_SESSION['admin'])) {
     .gallery-container {
         background: rgba(255,255,255,0.97);
         max-width: 1200px;
-        margin: 40px auto 0 auto;
+        margin: 40px auto 0 280px;
         border-radius: 24px;
         box-shadow: 0 8px 32px rgba(0,0,0,0.08);
         padding: 40px 30px 30px 30px;
         font-family: 'Poppins', sans-serif;
+        max-width: calc(100vw - 320px);
     }
     .gallery-title {
         font-size: 2rem;
@@ -690,20 +691,25 @@ if (!isset($_SESSION['admin'])) {
     document.querySelectorAll('.gallery-delete-btn').forEach(btn => {
         btn.onclick = function() {
             var img = this.getAttribute('data-img');
-            if (!confirm('Are you sure you want to delete this image?')) return;
-            fetch('delete_gallery_image.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ filename: img })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.reload();
-                } else {
-                    alert('Failed to delete image: ' + (data.error || 'Unknown error'));
-                }
-            });
+            showConfirmModal(
+                'Permanently delete image: "' + img + '"? This cannot be undone.',
+                function() {
+                    fetch('delete_gallery_image.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ filename: img })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            alert('Failed to delete image: ' + (data.error || 'Unknown error'));
+                        }
+                    });
+                },
+                { title: 'Delete Image?', confirmText: 'Yes, Delete', icon: 'fa-image' }
+            );
         };
     });
     
@@ -910,22 +916,28 @@ if (!isset($_SESSION['admin'])) {
     bulkDeleteBtn.onclick = function() {
       const checked = Array.from(document.querySelectorAll('.gallery-bulk-checkbox:checked'));
       if (checked.length === 0) return alert('No images selected.');
-      if (!confirm('Delete ' + checked.length + ' selected images?')) return;
-      checked.forEach(cb => {
-        const img = cb.closest('.gallery-item').getAttribute('data-img');
-        fetch('delete_gallery_image.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ filename: img })
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (!data.success) alert('Failed to delete ' + img);
-        });
-      });
-      setTimeout(() => window.location.reload(), 1200);
+      showConfirmModal(
+        'Delete ' + checked.length + ' selected image(s)? This cannot be undone.',
+        function() {
+          checked.forEach(cb => {
+            const img = cb.closest('.gallery-item').getAttribute('data-img');
+            fetch('delete_gallery_image.php', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ filename: img })
+            })
+            .then(res => res.json())
+            .then(data => {
+              if (!data.success) alert('Failed to delete ' + img);
+            });
+          });
+          setTimeout(() => window.location.reload(), 1200);
+        },
+        { title: 'Delete Selected?', confirmText: 'Yes, Delete All', icon: 'fa-trash' }
+      );
     };
     if (addImageBar) addImageBar.appendChild(bulkDeleteBtn);
     </script>
+<?php include 'delete_modal.php'; ?>
 </body>
 </html> 
