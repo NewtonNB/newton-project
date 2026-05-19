@@ -1,0 +1,22 @@
+[build]
+  publish = "frontend"
+  command = "# No build command needed for static files"
+
+[[redirects]]
+  # Redirect all API calls to backend
+  from = "/backend/*"
+  to = "/backend/:splat"
+  status = 200
+
+[[redirects]]
+  # Redirect root to frontend index
+  from = "/"
+  to = "/index.php"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Content-Security-Policy = "default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:;"

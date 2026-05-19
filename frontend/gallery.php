@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Gallery - Nyabikoni Secondary School</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Bungee&display=swap" rel="stylesheet">
+    
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
+    
+<!-- AOS CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <!-- Custom Navbar CSS -->
+    <link rel="stylesheet" href="navbar.css">
+    
+    <!-- Modern Footer CSS -->
+    <link rel="stylesheet" href="modern-footer.css">
+    <!-- Gallery-specific CSS moved inline -->
+    <style>
+/* Gallery-specific styles for Nyabikoni Secondary School */
+
+/* Hero Section */
+.gallery-hero {
+    position: relative;
+    min-height: 80vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 120px; /* Account for fixed navbar */
+}
+
+.gallery-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('nyabzgallery/current.jpg') center/cover;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+    z-index: 2;
+}
+
+.gallery-hero .container {
+    position: relative;
+    z-index: 3;
+}
+
+.hero-title {
+    font-family: 'Bungee', cursive;
+    font-size: 4rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-bottom: 3rem;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.stat-item {
+    text-align: center;
+    color: #ffffff;
+}
+
+.stat-item i {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: block;
+    opacity: 0.8;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Gallery Filter Section */
+.gallery-filter-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.filter-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    background: #ffffff;
+    border: 2px solid #e1e5e9;
+    color: #6c757d;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: #667eea;
+    color: #ffffff;
+    border-color: #667eea;
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+    transform: translateY(-2px);
+}
+
+.filter-btn i {
+    font-size: 0.8rem;
+}
+
+/* Gallery Grid Section */
+.gallery-grid-section {
+    padding: 4rem 0;
+    background: #ffffff;
+}
+
+.gallery-item {
+    margin-bottom: 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+    display: flex;
+}
+
+.gallery-item.show, .gallery-item.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.gallery-card {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 4/3;
+}
+
+.gallery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .gallery-image img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-card:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.overlay-content {
+    display: flex;
+    gap: 1rem;
+}
+
+.lightbox-btn, .share-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: #333;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+}
+
+.lightbox-btn:hover, .share-btn:hover {
+    background: #667eea;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+.gallery-info {
+    padding: 1.5rem;
+}
+
+.gallery-info h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+}
+
+.gallery-category {
+    color: #667eea;
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.gallery-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.like-btn, .download-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.like-btn:hover, .download-btn:hover {
+    color: #667eea;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.like-btn.liked {
+    color: #e74c3c;
+}
+
+.like-btn.liked i {
+    animation: heartBeat 0.6s ease;
+}
+
+/* Gallery Stats Section */
+.gallery-stats-section {
+    padding: 4rem 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 2rem 1rem;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+.stat-content h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-content p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.3); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.3); }
+    70% { transform: scale(1); }
+}
+
+/* Counter Animation */
+.stat-number {
+    transition: all 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .hero-stats {
+        gap: 2rem;
+    }
+    .filter-buttons {
+        gap: 0.5rem;
+    }
+    .filter-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    .gallery-info {
+        padding: 1rem;
+    }
+    .stat-card {
+        margin-bottom: 1rem;
+    }
+}
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    .hero-stats {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .filter-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .filter-btn {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+/* Loading animation for gallery items */
+.gallery-item.loading {
+    opacity: 0;
+    transform: translateY(30px);
+}
+.gallery-item.loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Masonry-like layout adjustments */
+.gallery-grid-section .row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.gallery-item {
+    display: flex;
+    margin-bottom: 2rem;
+}
+.gallery-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+/* Hide the Lightbox2 close (X) button */
+.lb-close {
+  display: none !important;
+}
+    </style>
+</head>
+<body>
+    <?php require_once '../shared/config.php'; ?>
+    <!-- Include the unified navbar -->
+    <?php include 'navbar.php'; ?>
+
+    <!-- Hero Section -->
+    <section class="gallery-hero">
+        <div class="hero-overlay"></div>
+      <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center" data-aos="fade-up" data-aos-duration="1000">
+                    <h1 class="hero-title">Our School Gallery</h1>
+                    <p class="hero-subtitle">Discover the vibrant moments, achievements, and memories that make Nyabikoni Secondary School special</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-images"></i>
+                            <span class="stat-number" data-count="150">0</span>
+                            <span class="stat-label">Photos</span>
+        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span class="stat-number" data-count="12">0</span>
+                            <span class="stat-label">Events</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-users"></i>
+                            <span class="stat-number" data-count="500">0</span>
+                            <span class="stat-label">Students</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Gallery Filter Section -->
+    <section class="gallery-filter-section">
+  <div class="container">
+  <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <div class="filter-buttons" data-aos="fade-up" data-aos-delay="200">
+                        <button class="filter-btn active" data-filter="all">
+                            <i class="fas fa-th"></i> All Photos
+                        </button>
+                        <button class="filter-btn" data-filter="events">
+                            <i class="fas fa-calendar"></i> Events
+                        </button>
+                        <button class="filter-btn" data-filter="activities">
+                            <i class="fas fa-running"></i> Activities
+                        </button>
+                        <button class="filter-btn" data-filter="facilities">
+                            <i class="fas fa-building"></i> Facilities
+                        </button>
+                        <button class="filter-btn" data-filter="students">
+                            <i class="fas fa-user-graduate"></i> Students
+                        </button>
+                    </div>
+    </div>
+  </div>
+</div>
+    </section>
+
+    <!-- Gallery Grid Section -->
+    <section class="gallery-grid-section">
+        <div class="container">
+            <div class="row" id="gallery-grid">
+                <?php
+                // Helper function to get proper image titles
+                function getImageTitle($filename) {
+                    $name = pathinfo($filename, PATHINFO_FILENAME);
+                    $name = str_replace(['_', '-'], ' ', $name);
+                    $name = ucwords($name);
+                    
+                    // Special cases for better titles
+                    $titleMap = [
+                        'current' => 'Main Campus View',
+                        'alevelstudents' => 'A-Level Students',
+                        'estern block' => 'Eastern Block',
+                        'esternblock' => 'Eastern Block',
+                        'boyswing' => 'Boys Wing',
+                        'chapel' => 'School Chapel',
+                        'sports' => 'Sports Activities',
+                        'sports4' => 'Sports Competition',
+                        'admin2' => 'Administration Block',
+                        'scholar' => 'Scholarship Students',
+                        'hm' => 'Headmaster Office',
+                        'deputy hm eastern campus' => 'Deputy Headmaster Office',
+                        'particts' => 'Patriotic Club',
+                        'wildlife' => 'Wildlife Club',
+                        'env' => 'Environmental Club',
+                        'writers' => 'Writers Club',
+                        'debating' => 'Debating Club'
+                    ];
+                    
+                    $lowerName = strtolower($name);
+                    foreach ($titleMap as $key => $title) {
+                        if (strpos($lowerName, $key) !== false) {
+                            return $title;
+                        }
+                    }
+                    
+                    return $name;
+                }
+
+                // Helper function to get image descriptions
+                function getImageDescription($filename, $category) {
+                    $name = strtolower(pathinfo($filename, PATHINFO_FILENAME));
+                    
+                    $descriptions = [
+                        'events' => [
+                            'graduation' => 'Annual graduation ceremony celebrating student achievements',
+                            'award' => 'Award ceremony recognizing outstanding students',
+                            'speech' => 'Speech day with guest speakers and presentations',
+                            'ceremony' => 'Special school ceremony and celebration'
+                        ],
+                        'activities' => [
+                            'sport' => 'Sports activities and competitions',
+                            'music' => 'Music and cultural performances',
+                            'debate' => 'Debating club activities and competitions',
+                            'wildlife' => 'Wildlife club environmental activities',
+                            'club' => 'Student club activities and meetings',
+                            'game' => 'Sports games and competitions'
+                        ],
+                        'facilities' => [
+                            'block' => 'School building and infrastructure',
+                            'wing' => 'Student accommodation wing',
+                            'chapel' => 'School chapel and religious facilities',
+                            'admin' => 'Administration and office buildings',
+                            'campus' => 'School campus and grounds',
+                            'library' => 'School library and study facilities'
+                        ],
+                        'students' => [
+                            'student' => 'Students in various activities',
+                            'alevel' => 'A-Level students and classes',
+                            'olevel' => 'O-Level students and classes',
+                            'scholar' => 'Scholarship and academic achievements',
+                            'class' => 'Classroom activities and learning'
+                        ]
+                    ];
+                    
+                    foreach ($descriptions[$category] ?? [] as $keyword => $desc) {
+                        if (strpos($name, $keyword) !== false) {
+                            return $desc;
+                        }
+                    }
+                    
+                    // Default descriptions by category
+                    $defaultDescriptions = [
+                        'events' => 'School events and celebrations',
+                        'activities' => 'Student activities and clubs',
+                        'facilities' => 'School buildings and facilities',
+                        'students' => 'Student life and activities'
+                    ];
+                    
+                    return $defaultDescriptions[$category] ?? 'School gallery image';
+                }
+
+                $galleryDir = 'nyabzgallery/';
+                $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'JPG', 'JPEG', 'PNG', 'GIF'];
+                $images = array_filter(scandir($galleryDir), function($file) use ($galleryDir, $allowedExts) {
+                    $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                    return is_file($galleryDir . $file) && in_array($ext, $allowedExts);
+                });
+                
+                // Exclude teachers and nonteachers images
+                $teachersKeywords = ['teacher', 'hm', 'headmaster', 'deputy'];
+                $nonteachersKeywords = ['cook', 'cleaner', 'secretary', 'burser', 'librarian', 'lab'];
+                $filtered_images = array_filter($images, function($img) use ($teachersKeywords, $nonteachersKeywords) {
+                    $imgLower = strtolower($img);
+                    foreach ($teachersKeywords as $kw) {
+                        if (strpos($imgLower, $kw) !== false) return false;
+                    }
+                    foreach ($nonteachersKeywords as $kw) {
+                        if (strpos($imgLower, $kw) !== false) return false;
+                    }
+                    return true;
+                });
+                
+                // Add some sample images for demonstration if gallery is empty
+                if (empty($filtered_images)) {
+                    $sampleImages = [
+                        'events' => ['graduation_ceremony.jpg', 'award_day.jpg', 'speech_day.jpg'],
+                        'activities' => ['sports_day.jpg', 'music_competition.jpg', 'debate_club.jpg', 'wildlife_club.jpg'],
+                        'facilities' => ['eastern_block.jpg', 'western_wing.jpg', 'chapel_building.jpg', 'admin_block.jpg'],
+                        'students' => ['alevel_students.jpg', 'olevel_class.jpg', 'scholarship_winners.jpg']
+                    ];
+                    
+                    foreach ($sampleImages as $category => $imgs) {
+                        foreach ($imgs as $img) {
+                            $filtered_images[] = $img;
+                        }
+                    }
+                }
+                
+                $count = 0;
+                foreach ($filtered_images as $img):
+                                    // Determine category based on filename
+                $imgLower = strtolower($img);
+                $category = 'all';
+                
+                // Events category
+                if (strpos($imgLower, 'event') !== false || 
+                    strpos($imgLower, 'ceremony') !== false || 
+                    strpos($imgLower, 'graduation') !== false ||
+                    strpos($imgLower, 'award') !== false ||
+                    strpos($imgLower, 'celebration') !== false) {
+                    $category = 'events';
+                }
+                // Activities category
+                elseif (strpos($imgLower, 'sport') !== false || 
+                        strpos($imgLower, 'activity') !== false ||
+                        strpos($imgLower, 'game') !== false ||
+                        strpos($imgLower, 'competition') !== false ||
+                        strpos($imgLower, 'club') !== false ||
+                        strpos($imgLower, 'dance') !== false ||
+                        strpos($imgLower, 'music') !== false) {
+                    $category = 'activities';
+                }
+                // Facilities category
+                elseif (strpos($imgLower, 'building') !== false || 
+                        strpos($imgLower, 'classroom') !== false ||
+                        strpos($imgLower, 'block') !== false ||
+                        strpos($imgLower, 'wing') !== false ||
+                        strpos($imgLower, 'chapel') !== false ||
+                        strpos($imgLower, 'admin') !== false ||
+                        strpos($imgLower, 'library') !== false ||
+                        strpos($imgLower, 'lab') !== false ||
+                        strpos($imgLower, 'campus') !== false ||
+                        strpos($imgLower, 'eastern') !== false ||
+                        strpos($imgLower, 'western') !== false) {
+                    $category = 'facilities';
+                }
+                // Students category
+                elseif (strpos($imgLower, 'student') !== false || 
+                        strpos($imgLower, 'class') !== false ||
+                        strpos($imgLower, 'alevel') !== false ||
+                        strpos($imgLower, 'olevel') !== false ||
+                        strpos($imgLower, 'scholar') !== false ||
+                        strpos($imgLower, 'boy') !== false ||
+                        strpos($imgLower, 'girl') !== false) {
+                    $category = 'students';
+                }
+                    
+                    $count++;
+                ?>
+                <div class="col-lg-4 col-md-6 gallery-item" data-category="<?= $category ?>" data-aos="fade-up" data-aos-duration="800" data-aos-delay="<?= ($count % 6) * 100 ?>">
+                    <div class="gallery-card">
+                        <div class="gallery-image">
+                            <a href="<?= $galleryDir . $img ?>" data-lightbox="gallery" data-title="<?= htmlspecialchars(getImageTitle($img)) ?>">
+                                <img src="<?= $galleryDir . $img ?>" alt="<?= htmlspecialchars(pathinfo($img, PATHINFO_FILENAME)) ?>" class="img-fluid">
+                            </a>
+                            <div class="gallery-overlay">
+                                <div class="overlay-content">
+                                    <a href="<?= $galleryDir . $img ?>" data-lightbox="gallery" class="lightbox-btn">
+                                        <i class="fas fa-search-plus"></i>
+                                    </a>
+                                    <button class="share-btn" onclick="shareImage('<?= $galleryDir . $img ?>', '<?= htmlspecialchars(pathinfo($img, PATHINFO_FILENAME)) ?>')">
+                                        <i class="fas fa-share-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="gallery-info">
+                            <h4><?= getImageTitle($img) ?></h4>
+                            <p class="gallery-category"><?= ucfirst($category) ?></p>
+                            <p class="gallery-description"><?= getImageDescription($img, $category) ?></p>
+                            <div class="gallery-actions">
+                                <button class="like-btn" onclick="toggleLike(this)">
+                                    <i class="far fa-heart"></i>
+                                    <span class="like-count">0</span>
+                                </button>
+                                <button class="download-btn" onclick="downloadImage('<?= $galleryDir . $img ?>', '<?= htmlspecialchars(pathinfo($img, PATHINFO_FILENAME)) ?>')">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Stats Section -->
+    <section class="gallery-stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number" data-count="<?= count($filtered_images) ?>">0</h3>
+                            <p class="stat-label">Total Photos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number" data-count="2500">0</h3>
+                            <p class="stat-label">Monthly Views</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number" data-count="180">0</h3>
+                            <p class="stat-label">Likes</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-download"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-number" data-count="95">0</h3>
+                            <p class="stat-label">Downloads</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include the modern footer -->
+<?php include 'modern-footer.html'; ?>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+
+    <!-- Enhanced Gallery JavaScript -->
+    <script src="gallery.js"></script>
+    <script>
+        // Enhanced Gallery with Dynamic Features
+        class EnhancedGallery {
+            constructor() {
+                this.currentFilter = 'all';
+                this.allImages = [];
+                this.filteredImages = [];
+                this.isLoading = false;
+                
+                this.init();
+            }
+
+            async init() {
+                // Load images dynamically
+                await this.loadImagesFromAPI();
+                this.setupEnhancedFeatures();
+                this.updateCounters();
+            }
+
+            async loadImagesFromAPI() {
+                try {
+                    this.isLoading = true;
+                    const response = await fetch('get_gallery_images.php');
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        this.allImages = data.images;
+                        this.filteredImages = [...this.allImages];
+                        this.updateGalleryWithAPI();
+                    }
+                } catch (error) {
+                    console.error('Error loading images:', error);
+                } finally {
+                    this.isLoading = false;
+                }
+            }
+
+            updateGalleryWithAPI() {
+                // Update existing gallery items with API data
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                
+                galleryItems.forEach((item, index) => {
+                    if (this.allImages[index]) {
+                        const image = this.allImages[index];
+                        const likeBtn = item.querySelector('.like-btn');
+                        const likeCount = item.querySelector('.like-count');
+                        
+                        if (likeCount) {
+                            likeCount.textContent = image.likes || 0;
+                        }
+                        
+                        // Add real-time features
+                        this.addRealTimeFeatures(item, image);
+                    }
+                });
+            }
+
+            addRealTimeFeatures(item, imageData) {
+                // Add view tracking
+                const img = item.querySelector('img');
+                if (img) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                this.trackView(imageData.filename);
+                                observer.unobserve(entry.target);
+                            }
+                        });
+                    });
+                    observer.observe(img);
+                }
+
+                // Add enhanced hover effects
+                item.addEventListener('mouseenter', () => {
+                    this.showImagePreview(imageData);
+                });
+
+                // Add keyboard navigation
+                item.setAttribute('tabindex', '0');
+                item.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        const lightboxLink = item.querySelector('a[data-lightbox]');
+                        if (lightboxLink) lightboxLink.click();
+                    }
+                });
+            }
+
+            setupEnhancedFeatures() {
+                // Enhanced search with debouncing
+                this.setupEnhancedSearch();
+                
+                // Real-time filtering
+                this.setupRealTimeFiltering();
+                
+                // Infinite scroll
+                this.setupInfiniteScroll();
+                
+                // Keyboard shortcuts
+                this.setupKeyboardShortcuts();
+            }
+
+            setupEnhancedSearch() {
+                const searchInput = document.querySelector('.gallery-search');
+                if (searchInput) {
+                    searchInput.addEventListener('input', this.debounce((e) => {
+                        this.performSearch(e.target.value);
+                    }, 300));
+                }
+            }
+
+            setupRealTimeFiltering() {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.currentFilter = btn.getAttribute('data-filter');
+                        this.applyFilter();
+                        this.updateFilterUI(btn);
+                    });
+                });
+            }
+
+            applyFilter() {
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                
+                galleryItems.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    const shouldShow = this.currentFilter === 'all' || category === this.currentFilter;
+                    
+                    if (shouldShow) {
+                        item.style.display = 'block';
+                        setTimeout(() => item.classList.add('show'), 50);
+                    } else {
+                        item.classList.remove('show');
+                        setTimeout(() => item.style.display = 'none', 300);
+                    }
+                });
+
+                this.updateCounters();
+            }
+
+            updateFilterUI(activeBtn) {
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                activeBtn.classList.add('active');
+            }
+
+            performSearch(searchTerm) {
+                const galleryItems = document.querySelectorAll('.gallery-item');
+                const term = searchTerm.toLowerCase();
+                
+                galleryItems.forEach(item => {
+                    const title = item.querySelector('h4').textContent.toLowerCase();
+                    const category = item.querySelector('.gallery-category').textContent.toLowerCase();
+                    const description = item.querySelector('.gallery-description')?.textContent.toLowerCase() || '';
+                    
+                    const matches = title.includes(term) || category.includes(term) || description.includes(term);
+                    
+                    if (matches || term === '') {
+                        item.style.display = 'block';
+                        item.classList.add('show');
+                    } else {
+                        item.classList.remove('show');
+                        setTimeout(() => item.style.display = 'none', 300);
+                    }
+                });
+            }
+
+            setupInfiniteScroll() {
+                let page = 1;
+                const itemsPerPage = 12;
+                
+                window.addEventListener('scroll', this.debounce(() => {
+                    if (this.isNearBottom() && !this.isLoading) {
+                        this.loadMoreImages(page++, itemsPerPage);
+                    }
+                }, 100));
+            }
+
+            setupKeyboardShortcuts() {
+                document.addEventListener('keydown', (e) => {
+                    // Press 'f' to focus search
+                    if (e.key === 'f' && !e.ctrlKey && !e.metaKey) {
+                        const searchInput = document.querySelector('.gallery-search');
+                        if (searchInput && document.activeElement !== searchInput) {
+                            e.preventDefault();
+                            searchInput.focus();
+                        }
+                    }
+                    
+                    // Press 'Escape' to clear search
+                    if (e.key === 'Escape') {
+                        const searchInput = document.querySelector('.gallery-search');
+                        if (searchInput) {
+                            searchInput.value = '';
+                            this.performSearch('');
+                        }
+                    }
+                });
+            }
+
+            async trackView(filename) {
+                try {
+                    await fetch('../backend/track_gallery_view.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ filename: filename })
+                    });
+                } catch (error) {
+                    console.error('Error tracking view:', error);
+                }
+            }
+
+            showImagePreview(imageData) {
+                // Create floating preview tooltip
+                const preview = document.createElement('div');
+                preview.className = 'image-preview-tooltip';
+                preview.innerHTML = `
+                    <div class="preview-content">
+                        <h5>${imageData.caption}</h5>
+                        <p><i class="fas fa-heart"></i> ${imageData.likes || 0} likes</p>
+                        <p><i class="fas fa-eye"></i> ${imageData.views || 0} views</p>
+                        <p><i class="fas fa-calendar"></i> ${this.formatDate(imageData.modified)}</p>
+                    </div>
+                `;
+                
+                // Add styles
+                preview.style.cssText = `
+                    position: fixed;
+                    background: rgba(0,0,0,0.9);
+                    color: white;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    z-index: 1000;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    max-width: 200px;
+                `;
+                
+                document.body.appendChild(preview);
+                
+                // Position and show
+                setTimeout(() => preview.style.opacity = '1', 100);
+                
+                // Remove after delay
+                setTimeout(() => {
+                    preview.style.opacity = '0';
+                    setTimeout(() => preview.remove(), 300);
+                }, 2000);
+            }
+
+            updateCounters() {
+                const visibleItems = document.querySelectorAll('.gallery-item[style*="block"], .gallery-item:not([style*="none"])').length;
+                
+                // Update hero stats
+                const totalPhotos = document.querySelector('.stat-number[data-count]');
+                if (totalPhotos) {
+                    this.animateCounter(totalPhotos, visibleItems);
+                }
+            }
+
+            animateCounter(element, target) {
+                const duration = 1000;
+                const start = parseInt(element.textContent) || 0;
+                const increment = (target - start) / (duration / 16);
+                let current = start;
+
+                const updateCounter = () => {
+                    current += increment;
+                    if ((increment > 0 && current < target) || (increment < 0 && current > target)) {
+                        element.textContent = Math.floor(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        element.textContent = target;
+                    }
+                };
+
+                updateCounter();
+            }
+
+            formatDate(dateString) {
+                if (!dateString) return 'Unknown';
+                const date = new Date(dateString);
+                return date.toLocaleDateString();
+            }
+
+            isNearBottom() {
+                return window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000;
+            }
+
+            debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+        }
+
+        // Enhanced download function
+        function downloadImage(url, title) {
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + url.substring(url.lastIndexOf('.'));
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            // Show notification
+            showNotification('Image downloaded successfully!', 'success');
+        }
+
+        // Enhanced share function
+        function shareImage(imageSrc, imageName) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Nyabikoni Secondary School Gallery',
+                    text: `Check out this photo: ${imageName}`,
+                    url: window.location.href
+                });
+            } else {
+                const url = window.location.href;
+                const text = `Check out this photo from Nyabikoni Secondary School: ${imageName}\n${url}`;
+                
+                navigator.clipboard.writeText(text).then(() => {
+                    showNotification('Link copied to clipboard!', 'success');
+                }).catch(() => {
+                    showNotification('Failed to copy link', 'error');
+                });
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `gallery-notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#27ae60' : '#e74c3c'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Initialize enhanced gallery
+        document.addEventListener('DOMContentLoaded', function() {
+            new EnhancedGallery();
+        });
+    </script>
+</body>
+</html> 

@@ -113,12 +113,63 @@ This is a complete school management website featuring:
    ```
 
 4. **Configure email settings**
-   - Edit `contactus_process_ajax.php`
+   - Edit `backend/contactus_process_ajax.php`
    - Update SMTP credentials
 
 5. **Access the website**
-   - Open in browser: `http://localhost/school-project`
+   - Open in browser: `http://localhost/school-project/frontend`
    - Admin login: `admin` / `admin123` (change immediately!)
+
+## 📁 Project Structure
+
+The project has been reorganized into a clean separation of concerns:
+
+```
+school-project/
+├── backend/              # Server-side logic and API endpoints
+│   ├── AJAX handlers     # All AJAX request handlers
+│   ├── Database ops      # Database operations
+│   └── API endpoints    # RESTful API endpoints
+├── frontend/            # Client-side files
+│   ├── PHP pages        # Display pages
+│   ├── CSS files        # Stylesheets
+│   ├── JavaScript       # Client-side scripts
+│   └── Assets          # Images and static files
+├── shared/              # Shared resources
+│   ├── config.php      # Database configuration
+│   └── Common files    # Shared utilities
+└── netlify.toml        # Netlify deployment config
+```
+
+## 🌐 Deployment
+
+### Local Development
+1. Ensure XAMPP/WAMP is running
+2. Place project in `htdocs/`
+3. Access at `http://localhost/school-project/frontend`
+
+### Traditional Hosting (cPanel, Plesk, etc.)
+1. Upload all folders to your server
+2. Ensure PHP 8.2+ is available
+3. Configure database credentials in `shared/config.php`
+4. Set proper file permissions
+
+### Netlify Deployment (Experimental)
+**Important:** Netlify does not natively support PHP. For full functionality, consider:
+
+1. **Using Netlify Functions** (requires refactoring to serverless functions)
+2. **Hybrid approach**: Deploy frontend to Netlify, backend to a PHP hosting service
+3. **Alternative**: Use a PHP-friendly hosting service like:
+   - Heroku (with PHP buildpack)
+   - DigitalOcean
+   - AWS Lightsail
+   - traditional shared hosting
+
+For frontend-only deployment to Netlify:
+1. Connect your repository to Netlify
+2. Set build directory to `frontend`
+3. Configure redirects in `netlify.toml`
+4. Note: Backend functionality will not work without a PHP server
 
 ## 📖 Documentation
 
