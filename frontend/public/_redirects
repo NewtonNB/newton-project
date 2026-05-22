@@ -1,0 +1,7 @@
+# Generated at build time into dist/_redirects.
+# Build with NETLIFY_BACKEND_URL set, e.g.:
+#   NETLIFY_BACKEND_URL=https://your-php-server.com npm run build
+#
+# Fallback (edit after deploy if needed):
+# /backend/*  https://your-php-server.com/backend/:splat  200
+/  /index.html  200

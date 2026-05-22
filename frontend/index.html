@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyabikoni Secondary School - Strive For Excellence</title>
+    <meta name="description" content="Nyabikoni Secondary School - A leading private day and boarding school in Kabale, Uganda offering O' and A' level education with excellence since 2003.">
+    <meta name="keywords" content="Nyabikoni, Secondary School, Kabale, Uganda, Education, O Level, A Level, Boarding School">
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="modern-footer.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom Styles -->
+    <style>
+        /* Global overflow fix */
+        *, *::before, *::after { box-sizing: border-box; }
+        html, body {
+            overflow-x: hidden !important;
+            max-width: 100vw !important;
+        }
+        img, video, iframe, table {
+            max-width: 100%;
+        }
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #10b981;
+            --accent-color: #1e3a8a;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f8f9fa;
+            --bg-white: #ffffff;
+            --shadow-light: 0 4px 24px rgba(44,90,160,0.07);
+            --shadow-medium: 0 8px 32px rgba(44,90,160,0.13);
+            --border-radius: 16px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            /* line-height: 1.6; */
+            /* Remove extra padding-top to prevent overlap/gap issues */
+        }
+
+        /* Hero Carousel Styles */
+        .nyab-hero-carousel {
+            /* Remove any margin-top or padding-top to prevent extra space */
+            position: relative;
+            z-index: 1;
+        }
+
+        .nyab-hero-slide {
+            min-height: 100vh !important;
+            height: 100dvh !important;
+            position: relative;
+            z-index: 1;
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            transition: background-image 0.5s;
+        }
+        @media (max-width: 991px) {
+            .nyab-hero-slide {
+                background-attachment: scroll; /* Disable parallax on mobile for performance */
+            }
+        }
+
+        /* Hero Caption */
+        .nyab-hero-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            width: 90%;
+            max-width: 800px;
+            margin: 0;
+            padding: 0 15px;
+            box-sizing: border-box;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .nyab-hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(44,90,160,0.8) 0%, rgba(30,58,138,0.8) 100%);
+            z-index: 2;
+        }
+
+        .nyab-hero-caption h1 {
+            font-family: 'Bungee', cursive;
+            font-size: clamp(1.6rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            color: #ffffff;
+            word-break: break-word;
+        }
+
+        .nyab-hero-caption h2 {
+            font-size: clamp(1rem, 3vw, 1.8rem);
+            margin-bottom: 1.5rem;
+            color: #e5e7eb;
+            font-weight: 500;
+        }
+
+        .nyab-hero-caption p {
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+            margin-bottom: 2rem;
+            color: #d1d5db;
+            line-height: 1.6;
+        }
+
+        .nyab-hero-btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #059669 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 25px;
+            padding: 14px 36px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nyab-hero-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+            text-decoration: none;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            padding: 5rem 0;
+            background: var(--bg-white);
+        }
+
+        .welcome-card {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 3rem 2rem;
+            border: 1px solid #e5e7eb;
+            transition: var(--transition);
+        }
+
+        .welcome-card:hover {
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-5px);
+        }
+
+        .welcome-image {
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .welcome-image:hover {
+            transform: scale(1.02);
+        }
+
+        .section-title {
+            font-family: 'Bungee', cursive;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Academics Section */
+        .academics-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .academics-card {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            height: 100%;
+            border: 1px solid #e5e7eb;
+        }
+
+        .academics-card:hover {
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-5px);
+        }
+
+        .academics-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .academics-card h3 {
+            color: var(--text-dark);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .academics-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Infrastructure Section */
+        .infrastructure-section {
+            padding: 5rem 0;
+            background: var(--bg-white);
+        }
+
+        .infrastructure-card {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            height: 300px;
+        }
+
+        .infrastructure-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .infrastructure-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .infrastructure-card:hover .infrastructure-image {
+            transform: scale(1.1);
+        }
+
+        .infrastructure-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .infrastructure-overlay h3 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Staff Section */
+        .staff-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .staff-card {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            height: 100%;
+        }
+
+        .staff-card:hover {
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-5px);
+        }
+
+        .staff-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .staff-card:hover .staff-image {
+            transform: scale(1.05);
+        }
+
+        .staff-name {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .staff-position {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #059669 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .contact-btn:hover {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            transform: translateY(-2px);
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 5rem 0;
+            background: var(--bg-white);
+        }
+
+        .testimonial-card {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            height: 100%;
+            border: 1px solid #e5e7eb;
+        }
+
+        .testimonial-card:hover {
+            box-shadow: var(--shadow-medium);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 3px solid var(--primary-color);
+        }
+
+        .testimonial-text {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .testimonial-rating {
+            color: #fbbf24;
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .gallery-marquee-outer {
+            overflow: hidden;
+            width: 100%;
+            margin-top: 3rem;
+            position: relative;
+        }
+        .gallery-marquee-inner {
+            display: flex;
+            gap: 2rem;
+            animation: gallery-marquee-scroll 30s linear infinite;
+            width: max-content;
+        }
+        @keyframes gallery-marquee-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: var(--transition);
+            height: 250px;
+            min-width: min(320px, 80vw);
+            flex: 0 0 min(320px, 80vw);
+            scroll-snap-align: start;
+        }
+
+        /* Styled View Full Gallery Button */
+        .gallery-view-btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #059669 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            padding: 16px 44px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            box-shadow: 0 4px 18px rgba(16, 185, 129, 0.18);
+            transition: all 0.2s cubic-bezier(.4,2,.6,1);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7em;
+            outline: none;
+        }
+        .gallery-view-btn:hover,
+        .gallery-view-btn:focus {
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.28);
+            text-decoration: none;
+        }
+        .gallery-view-btn i {
+            font-size: 1.2em;
+            margin-left: 0.3em;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .gallery-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-image {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .gallery-overlay h3 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-overlay p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Location Section */
+        .location-section {
+            padding: 5rem 0;
+            background: var(--bg-white);
+        }
+
+        .location-card {
+            background: var(--bg-white);
+            border-radius: var(--border-radius);
+            padding: 3rem 2rem;
+            box-shadow: var(--shadow-light);
+            border: 1px solid #e5e7eb;
+        }
+
+        .map-container {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        /* Navbar and Topbar Spacing */
+        body {
+            padding-top: 0; /* Remove any body padding */
+        }
+
+        /* Account for fixed navbar and topbar */
+        /* Carousel controls should be above overlay but below navbar */
+        .carousel-control-prev,
+        .carousel-control-next {
+            z-index: 4 !important;
+        }
+
+        .carousel-indicators {
+            z-index: 4 !important;
+        }
+
+        .nyab-hero-scroll-indicator {
+            position: absolute;
+            left: 50%;
+            bottom: 32px;
+            transform: translateX(-50%);
+            color: #fff;
+            font-size: 2.5rem;
+            opacity: 0.7;
+            animation: bounceDown 2s infinite;
+            z-index: 10;
+        }
+        @keyframes bounceDown {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(16px); }
+        }
+    </style>
+    <!-- Modern Styles for New Sections -->
+    <style>
+    /* Language Selector */
+    .nyab-lang-selector {
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 2px 12px rgba(44,90,160,0.10);
+        border: 1px solid #e5e7eb;
+        padding: 4px 16px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--primary-color);
+        transition: var(--transition);
+        cursor: pointer;
+    }
+    .nyab-lang-selector:focus {
+        outline: 2px solid var(--secondary-color);
+    }
+    .nyab-lang-selector:hover {
+        box-shadow: 0 4px 18px rgba(44,90,160,0.18);
+        border-color: var(--secondary-color);
+    }
+
+    /* Quick Links */
+    .nyab-quick-link-btn {
+        border-radius: 18px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        box-shadow: 0 2px 10px rgba(44,90,160,0.07);
+        transition: var(--transition);
+        background: #fff;
+        border: 2px solid var(--primary-color);
+        color: var(--primary-color);
+        margin-bottom: 8px;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        position: relative;
+    }
+    .nyab-quick-link-btn:hover, .nyab-quick-link-btn:focus {
+        background: var(--primary-color);
+        color: #fff;
+        transform: translateY(-3px) scale(1.04);
+        box-shadow: 0 6px 18px rgba(44,90,160,0.18);
+        text-decoration: none;
+        z-index: 2;
+    }
+    .nyab-quick-link-btn i {
+        margin-right: 0.5em;
+    }
+
+    .animate-fadein {
+        opacity: 0;
+        animation: fadeInUp 1s forwards;
+    }
+    @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* News & Announcements */
+    .nyab-news-card {
+        border-radius: 18px;
+        box-shadow: 0 2px 12px rgba(44,90,160,0.08);
+        border: none;
+        transition: var(--transition);
+        background: #f8fafc;
+        border-left: 6px solid #2c5aa0;
+    }
+    .nyab-news-card:hover {
+        box-shadow: 0 8px 32px rgba(44,90,160,0.16);
+        transform: translateY(-4px) scale(1.02);
+    }
+    .nyab-news-card .badge {
+        font-size: 0.95em;
+        border-radius: 8px;
+        padding: 0.4em 1em;
+        margin-top: 1em;
+    }
+    .news-admissions { border-left-color: #10b981 !important; }
+    .news-academics { border-left-color: #2c5aa0 !important; }
+    .news-events { border-left-color: #fbbf24 !important; }
+
+    /* Achievements/Highlights */
+    .nyab-achieve-card {
+        border-radius: 18px;
+        box-shadow: 0 2px 12px rgba(16,185,129,0.08);
+        border: none;
+        background: #fff;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+    .nyab-achieve-card:hover {
+        box-shadow: 0 8px 32px rgba(16,185,129,0.16);
+        transform: translateY(-4px) scale(1.02);
+    }
+    .nyab-achieve-card .card-title {
+        color: var(--secondary-color);
+        font-weight: 700;
+        font-size: 1.15em;
+        display: flex;
+        align-items: center;
+        gap: 0.5em;
+    }
+    .nyab-achieve-card:before {
+        display: none;
+    }
+    }
+
+    /* FAQ Accordion */
+    .accordion-item {
+        border-radius: 14px !important;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 10px rgba(44,90,160,0.07);
+        border: none;
+        overflow: hidden;
+        font-size: 1.08rem;
+    }
+    .accordion-button {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--primary-color);
+        background: #f8fafc;
+        border: none;
+        border-radius: 0 !important;
+        transition: var(--transition);
+        gap: 0.7em;
+        padding-left: 2em;
+    }
+    .accordion-button:not(.collapsed) {
+        background: var(--secondary-color);
+        color: #fff;
+        box-shadow: none;
+    }
+    .accordion-body {
+        background: #fff;
+        color: var(--text-dark);
+        font-size: 1rem;
+        padding-left: 2.5em;
+    }
+    .faq-toggle-icon {
+        width: 1.5em;
+        display: inline-block;
+        text-align: center;
+        transition: var(--transition);
+    }
+    .faq-toggle-icon i {
+        transition: var(--transition);
+    }
+
+    /* Newsletter Signup */
+    .nyab-newsletter-section {
+        background: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%);
+        border-radius: 18px;
+        box-shadow: 0 2px 12px rgba(44,90,160,0.08);
+        padding: 2.5rem 1.5rem;
+        margin-bottom: 2rem;
+        background-blend-mode: lighten;
+        position: relative;
+    }
+    .nyab-newsletter-section input[type="email"] {
+        border-radius: 12px;
+        border: 1.5px solid #cbd5e1;
+        font-size: 1.1rem;
+        padding: 0.75em 1em;
+        box-shadow: 0 1px 4px rgba(44,90,160,0.04);
+    }
+    .nyab-newsletter-section button[type="submit"] {
+        border-radius: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        border: none;
+        transition: var(--transition);
+    }
+    .nyab-newsletter-section button[type="submit"]:hover {
+        background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+        color: #fff;
+        transform: translateY(-2px) scale(1.03);
+    }
+    #newsletter-check {
+        margin-left: 0.5em;
+        font-size: 1.2em;
+        vertical-align: middle;
+        animation: popCheck 0.5s;
+    }
+    @keyframes popCheck {
+        0% { transform: scale(0.5); opacity: 0; }
+        60% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Social Media Icons */
+    .nyab-social-footer a {
+        display: inline-block;
+        margin: 0 0.5em;
+        color: #fff;
+        background: var(--primary-color);
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        line-height: 44px;
+        text-align: center;
+        font-size: 1.5rem;
+        transition: var(--transition);
+        box-shadow: 0 2px 8px rgba(44,90,160,0.10);
+        position: relative;
+    }
+    .nyab-social-footer a:hover {
+        background: var(--secondary-color);
+        color: #fff;
+        transform: scale(1.12);
+        text-decoration: none;
+        animation: bounceIcon 0.5s;
+    }
+    @keyframes bounceIcon {
+        0% { transform: scale(1) translateY(0); }
+        30% { transform: scale(1.15) translateY(-6px); }
+        60% { transform: scale(0.95) translateY(2px); }
+        100% { transform: scale(1.12) translateY(0); }
+    }
+    </style>
+    <!-- Modern Styles for Statistics Section -->
+    <style>
+    .statistics {
+        background: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%);
+        position: relative;
+        z-index: 1;
+    }
+    .statistics .container {
+        position: relative;
+        z-index: 2;
+    }
+    .stat-card {
+        background: rgba(255,255,255,0.85);
+        border-radius: 22px;
+        box-shadow: 0 8px 32px rgba(44,90,160,0.10);
+        border: 1.5px solid #e2e8f0;
+        padding: 2.5rem 1.5rem 2rem 1.5rem;
+        margin-bottom: 1rem;
+        transition: all 0.3s cubic-bezier(.4,2,.6,1);
+        position: relative;
+        overflow: hidden;
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .stat-card:hover {
+        box-shadow: 0 16px 48px rgba(44,90,160,0.18);
+        transform: translateY(-6px) scale(1.03);
+        background: rgba(255,255,255,0.97);
+    }
+    .stat-card i {
+        font-size: 3.2rem;
+        margin-bottom: 1.1rem;
+        filter: drop-shadow(0 2px 8px rgba(44,90,160,0.10));
+        transition: transform 0.3s;
+    }
+    .stat-card:hover i {
+        transform: scale(1.12) rotate(-6deg);
+    }
+    .stat-card .counter {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #2c5aa0;
+        margin-bottom: 0.5rem;
+        letter-spacing: 1px;
+        font-family: 'Bungee', cursive, sans-serif;
+        text-shadow: 0 2px 8px rgba(44,90,160,0.08);
+        transition: color 0.3s;
+    }
+    .stat-card:hover .counter {
+        color: #10b981;
+    }
+    .stat-card p {
+        font-size: 1.1rem;
+        color: #6b7280;
+        font-weight: 600;
+        margin-bottom: 0;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+    @media (max-width: 991px) {
+        .stat-card {
+            min-height: 180px;
+            padding: 2rem 1rem 1.5rem 1rem;
+        }
+        .stat-card i {
+            font-size: 2.2rem;
+        }
+        .stat-card .counter {
+            font-size: 2rem;
+        }
+    }
+    @media (max-width: 767px) {
+        .statistics .row {
+            gap: 1.5rem 0;
+        }
+        .stat-card {
+            min-height: 140px;
+            padding: 1.2rem 0.5rem 1rem 0.5rem;
+        }
+        .stat-card i {
+            font-size: 1.7rem;
+        }
+        .stat-card .counter {
+            font-size: 1.3rem;
+        }
+    }
+    </style>
+    <style>
+    .newsletter-feedback {
+      display: inline-block;
+      padding: 1.1em 1.5em;
+      border-radius: 14px;
+      font-size: 1.08em;
+      font-weight: 600;
+      margin-top: 1em;
+      box-shadow: 0 2px 12px rgba(44,90,160,0.08);
+      background: #fff;
+      border: 1.5px solid #e2e8f0;
+      color: #10b981;
+      transition: all 0.2s;
+    }
+    .newsletter-feedback.error {
+      color: #e53e3e;
+      border-color: #fbbf24;
+      background: #fff7f7;
+    }
+    .newsletter-feedback .icon {
+      margin-right: 0.6em;
+      font-size: 1.2em;
+      vertical-align: middle;
+    }
+    </style>
+</head>
+<body>
+<div id="navbar-placeholder"></div>
+    <!-- Hero Carousel -->
+    <div id="heroCarousel" class="carousel slide carousel-fade nyab-hero-carousel" data-bs-ride="carousel">
+        <!-- Carousel Indicators -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <!-- Carousel Inner -->
+        <div class="carousel-inner">
+            <!-- Slide 1 -->
+            <div class="carousel-item active nyab-hero-slide" style="background-image: url('nyabzgallery/current.jpg');">
+                <div class="nyab-hero-overlay"></div>
+                <div class="nyab-hero-caption">
+                    <h1 data-aos="fade-down" data-aos-delay="0">Nyabikoni Secondary School</h1>
+                    <h2 data-aos="fade-up" data-aos-delay="0">Strive For Excellence Is Our Motto</h2>
+                    <p data-aos="fade-up" data-aos-delay="0">We push ourselves to deliver the highest quality performance. At Nyabikoni Secondary School, we believe that those who strive for excellence will have longevity in their endeavors.</p>
+                    <a href="Academics.html" class="nyab-hero-btn" style="animation-delay: 0.5s;" data-aos="fade-up" data-aos-delay="0">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="carousel-item nyab-hero-slide" style="background-image: url('nyabzgallery/Alevelstudents.jpg');">
+                <div class="nyab-hero-overlay"></div>
+                <div class="nyab-hero-caption">
+                    <h1 data-aos="fade-down" data-aos-delay="0">Excellence in Education</h1>
+                    <h2 data-aos="fade-up" data-aos-delay="0">Nurturing Future Leaders</h2>
+                    <p data-aos="fade-up" data-aos-delay="0">Our comprehensive curriculum and dedicated teachers ensure every student reaches their full potential in a supportive learning environment.</p>
+                    <a href="Academics.html" class="nyab-hero-btn" style="animation-delay: 0.5s;" data-aos="fade-up" data-aos-delay="0">Explore Academics</a>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="carousel-item nyab-hero-slide" style="background-image: url('nyabzgallery/estern block.JPG');">
+                <div class="nyab-hero-overlay"></div>
+                <div class="nyab-hero-caption">
+                    <h1 data-aos="fade-down" data-aos-delay="0">Modern Infrastructure</h1>
+                    <h2 data-aos="fade-up" data-aos-delay="0">State-of-the-Art Facilities</h2>
+                    <p data-aos="fade-up" data-aos-delay="0">Our campus features modern classrooms, well-equipped laboratories, and excellent facilities to support quality education and student development.</p>
+                    <a href="gallery.html" class="nyab-hero-btn" style="animation-delay: 0.5s;" data-aos="fade-up" data-aos-delay="0">View Gallery</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </button>
+        <!-- Scroll Down Indicator -->
+        <div class="nyab-hero-scroll-indicator" aria-hidden="true">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+
+    <!-- Quick Links Section -->
+    <section class="py-4" style="background: #e2e8f0;">
+      <div class="container">
+        <div class="row justify-content-center g-3 text-center">
+          <div class="col-6 col-md-2">
+            <a href="admission.html" class="btn nyab-quick-link-btn w-100 py-3 fw-bold animate-fadein"><i class="fas fa-file-alt me-2"></i>Admissions</a>
+          </div>
+          <div class="col-6 col-md-2">
+            <a href="Academics.html" class="btn nyab-quick-link-btn w-100 py-3 fw-bold animate-fadein"><i class="fas fa-book me-2"></i>Academics</a>
+          </div>
+          <div class="col-6 col-md-2">
+            <a href="staff.html" class="btn nyab-quick-link-btn w-100 py-3 fw-bold animate-fadein"><i class="fas fa-users me-2"></i>Staff</a>
+          </div>
+          <div class="col-6 col-md-2">
+            <a href="gallery.html" class="btn nyab-quick-link-btn w-100 py-3 fw-bold animate-fadein"><i class="fas fa-images me-2"></i>Gallery</a>
+          </div>
+          <div class="col-6 col-md-2">
+            <a href="contactus.html" class="btn nyab-quick-link-btn w-100 py-3 fw-bold animate-fadein"><i class="fas fa-envelope me-2"></i>Contact</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5" data-aos="fade-right">
+                    <img src="nyabzgallery/HM.JPG" alt="Head Teacher - Mr. Turyasiima Elly" class="img-fluid welcome-image">
+                </div>
+                <div class="col-lg-7" data-aos="fade-left" data-aos-delay="200">
+                    <div class="welcome-card">
+                        <h1 class="section-title display-5 fw-bold mb-4">Welcome to Nyabikoni Secondary School</h1>
+                        <p class="fs-5 mb-3">
+                            <strong>Nyabikoni Secondary School</strong> is a private, day and boarding school for O' and A' levels. It was founded in 2003 by Rev. Fr. Busingye Christopher, a diocesan priest in Kabale Diocese.
+                        </p>
+                        <p class="fs-5 mb-3">
+                            The school is located in Kanyakiriro Cell, Nyabikoni Ward, Central Division, Kabale Municipality; a quarter kilometre along the Kabale-Kisoro main road and approximately 1 km from the municipal centre.
+                        </p>
+                        <p class="fs-5 mb-0">
+                            The idea to start the school was born out of the need to help less fortunate children in the region access education. It is registered with the Ministry of Education and Sports under registration number 
+                            <strong>Pass/N/169</strong> and <strong>UNEB Centre No. 1998</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News & Announcements Section -->
+    <section class="py-5" style="background: #fff;">
+      <div class="container">
+        <div class="text-center mb-4">
+          <h1 class="section-title display-5 fw-bold mb-3">Latest News & Announcements</h1>
+          <p class="fs-5 text-muted">Stay updated with our latest happenings</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+          <div class="col-md-4">
+            <div class="card h-100 nyab-news-card news-admissions animate-fadein">
+              <div class="card-body">
+                <h5 class="card-title">2024 Admissions Now Open</h5>
+                <p class="card-text">We are now accepting applications for the 2024 academic year. <a href='admission.html'>Apply here</a>.</p>
+                <span class="badge bg-success">Admissions</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 nyab-news-card news-academics animate-fadein">
+              <div class="card-body">
+                <h5 class="card-title">Mock Exams Results Released</h5>
+                <p class="card-text">Congratulations to all students for their excellent performance in the recent mock exams. <a href='Academics.html'>See results</a>.</p>
+                <span class="badge bg-primary">Academics</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 nyab-news-card news-events animate-fadein">
+              <div class="card-body">
+                <h5 class="card-title">Sports Gala 2024</h5>
+                <p class="card-text">Join us for our annual Sports Gala on July 15th. Parents and guardians are welcome!</p>
+                <span class="badge bg-warning text-dark">Events</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section Divider SVG (top) -->
+    <div style="line-height:0;">
+      <svg viewBox="0 0 1440 80" width="100%" height="80" preserveAspectRatio="none" style="display:block;"><path fill="#f8fafc" d="M0,64L48,58.7C96,53,192,43,288,53.3C384,64,480,96,576,101.3C672,107,768,85,864,80C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+    </div>
+
+    <!-- Statistics Section with Animated Counters -->
+    <section class="statistics" style="background: #f8fafc;">
+        <div class="container py-5">
+            <div class="row g-4 justify-content-center">
+                <div class="col-md-3 col-6">
+                    <div class="stat-card text-center p-4 bg-white rounded shadow-sm">
+                        <i class="fa-solid fa-users fa-2x mb-2 text-primary"></i>
+                        <h2 class="counter" data-target="">0</h2>
+                        <p>Total Students</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card text-center p-4 bg-white rounded shadow-sm">
+                        <i class="fa-solid fa-chalkboard-teacher fa-2x mb-2 text-success"></i>
+                        <h2 class="counter" data-target="">0</h2>
+                        <p>Total Teachers</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card text-center p-4 bg-white rounded shadow-sm">
+                        <i class="fa-solid fa-user-graduate fa-2x mb-2 text-warning"></i>
+                        <h2 class="counter" data-target="">0</h2>
+                        <p>Graduated Students</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-6">
+                    <div class="stat-card text-center p-4 bg-white rounded shadow-sm">
+                        <i class="fa-solid fa-people-group fa-2x mb-2 text-info"></i>
+                        <h2 class="counter" data-target="">0</h2>
+                        <p>Clubs & Activities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Section Divider SVG (bottom) -->
+    <div style="line-height:0;">
+      <svg viewBox="0 0 1440 80" width="100%" height="80" preserveAspectRatio="none" style="display:block;"><path fill="#e2e8f0" d="M0,32L48,37.3C96,43,192,53,288,53.3C384,53,480,43,576,48C672,53,768,75,864,80C960,85,1056,75,1152,69.3C1248,64,1344,64,1392,64L1440,64L1440,80L1392,80C1344,80,1248,80,1152,80C1056,80,960,80,864,80C768,80,672,80,576,80C480,80,384,80,288,80C192,80,96,80,48,80L0,80Z"></path></svg>
+    </div>
+
+    <!-- Academics Section -->
+    <section class="academics-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-down">
+                <h1 class="section-title display-4 fw-bold mb-3">Our Academic Programs</h1>
+                <p class="fs-5 text-muted">Comprehensive education for every student's success</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
+                    <div class="academics-card">
+                        <i class="fas fa-graduation-cap academics-icon"></i>
+                        <h3>Ordinary Level (O' Level)</h3>
+                        <p>Our ordinary level program serves over 500 students from S.1 to S.4. Academics centers around the Uganda National curriculum with comprehensive subject coverage and excellent teaching standards.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="academics-card">
+                        <i class="fas fa-university academics-icon"></i>
+                        <h3>Advanced Level (A' Level)</h3>
+                        <p>Our Advanced level program serves over 240 students from S.5 to S.6. We offer specialized subject combinations with modern teaching methods and excellent academic support.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-left" data-aos-delay="300">
+                    <div class="academics-card">
+                        <i class="fas fa-music academics-icon"></i>
+                        <h3>Co-Curricular Activities</h3>
+                        <p>The school has a rich co-curricular programme that includes Music, Dance, Drama, Elocution, Games, Sports, and various Club Activities to develop well-rounded students.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Infrastructure Section -->
+    <section class="infrastructure-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-down">
+                <h1 class="section-title display-4 fw-bold mb-3">Our School Infrastructure</h1>
+                <p class="fs-5 text-muted">Modern facilities for quality education and student development</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4" data-aos="fade-right" data-aos-delay="100">
+                    <div class="infrastructure-card">
+                        <img src="nyabzgallery/admin2 - Copy.jpg" alt="Administration Block" class="infrastructure-image">
+                        <div class="infrastructure-overlay">
+                            <h3>Administration Block</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="infrastructure-card">
+                        <img src="nyabzgallery/students3.JPG" alt="Main Campus" class="infrastructure-image">
+                        <div class="infrastructure-overlay">
+                            <h3>Main Campus</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4" data-aos="fade-left" data-aos-delay="300">
+                    <div class="infrastructure-card">
+                        <img src="nyabzgallery/esternblock - Copy.jpg" alt="Eastern Campus" class="infrastructure-image">
+                        <div class="infrastructure-overlay">
+                            <h3>Eastern Campus</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Staff Section -->
+    <section class="staff-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-down">
+                <h1 class="section-title display-4 fw-bold mb-3">Our Administrative Personnel</h1>
+                <p class="fs-5 text-muted">Meet our dedicated leadership team</p>
+            </div>
+            
+            <div class="swiper staff-swiper" data-aos="fade-up">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="staff-card">
+                            <img src="nyabzgallery/scholar.JPG" alt="Rev. Fr. Busingye Christopher" class="staff-image">
+                            <h3 class="staff-name">Rev. Fr. Busingye Christopher</h3>
+                            <p class="staff-position">Executive Director</p>
+                            <button class="contact-btn">Contact</button>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="staff-card">
+                            <img src="nyabzgallery/HM.JPG" alt="Mr. Turyasiima Elly" class="staff-image">
+                            <h3 class="staff-name">Mr. Turyasiima Elly</h3>
+                            <p class="staff-position">Head Teacher</p>
+                            <button class="contact-btn">Contact</button>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="staff-card">
+                            <img src="nyabzgallery/scholar.JPG" alt="Ms. Kyomugisha Scholastic" class="staff-image">
+                            <h3 class="staff-name">Ms. Kyomugisha Scholastic</h3>
+                            <p class="staff-position">Assistant Director</p>
+                            <button class="contact-btn">Contact</button>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="staff-card">
+                            <img src="nyabzgallery/LINET.jpg" alt="Eng. Agaba Wenceslaus" class="staff-image">
+                            <h3 class="staff-name">Eng. Agaba Wenceslaus</h3>
+                            <p class="staff-position">Technical Advisor & Marketing Manager</p>
+                            <button class="contact-btn">Contact</button>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="staff-card">
+                            <img src="nyabzgallery/KAKETO SULAIT.jpg" alt="Ngabirano Agricola" class="staff-image">
+                            <h3 class="staff-name">Ngabirano Agricola</h3>
+                            <p class="staff-position">Software Developer</p>
+                            <button class="contact-btn">Contact</button>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="staff-card">
+                            <img src="nyabzgallery/DEPUTY HM Eastern Campus - Copy.jpg" alt="Madam Scholar" class="staff-image">
+                            <h3 class="staff-name">Madam Scholar</h3>
+                            <p class="staff-position">Deputy Head Teacher (Administration)</p>
+                            <button class="contact-btn">Contact</button>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="staff-card">
+                            <img src="nyabzgallery/DEPUTY HM Eastern Campus - Copy.jpg" alt="Mr. Tukamushaba Moses" class="staff-image">
+                            <h3 class="staff-name">Mr. Tukamushaba Moses</h3>
+                            <p class="staff-position">Deputy Head Teacher</p>
+                            <button class="contact-btn">Contact</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Carousel Section -->
+    <section class="testimonials-section py-5" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);">
+      <div class="container">
+        <div class="text-center mb-5" data-aos="fade-down">
+          <h1 class="section-title display-4 fw-bold mb-3">What Our Community Says</h1>
+          <p class="fs-5 text-muted">Testimonials from our students, parents, and staff</p>
+        </div>
+        <div id="testimonialsCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="testimonial-card mx-auto" style="max-width: 500px;">
+                <img src="nyabzgallery/scholar.JPG" alt="Madam Scholastic" class="testimonial-image">
+                <p class="testimonial-text">
+                    "Nyabikoni Secondary School has provided an excellent learning environment for our students. The dedication of teachers and the comprehensive curriculum ensure our children receive quality education."
+                </p>
+                <h5 class="testimonial-author">Madam Scholastic</h5>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="testimonial-card mx-auto" style="max-width: 500px;">
+                <img src="nyabzgallery/HM.JPG" alt="Mr. Turyasiima Elly" class="testimonial-image">
+                <p class="testimonial-text">
+                    "Our commitment to excellence in education is reflected in our students' achievements. We strive to provide not just academic excellence but also character development."
+                </p>
+                <h5 class="testimonial-author">Mr. Turyasiima Elly</h5>
+                <div class="testimonial-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#testimonialsCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#testimonialsCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+          <div class="carousel-indicators mt-4">
+            <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Testimonial 1"></button>
+            <button type="button" data-bs-target="#testimonialsCarousel" data-bs-slide-to="1" aria-label="Testimonial 2"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Section Divider SVG (bottom) -->
+    <div style="line-height:0;">
+      <svg viewBox="0 0 1440 80" width="100%" height="80" preserveAspectRatio="none" style="display:block;"><path fill="#fff" d="M0,64L48,58.7C96,53,192,43,288,53.3C384,64,480,96,576,101.3C672,107,768,85,864,80C960,75,1056,85,1152,80C1248,75,1344,53,1392,42.7L1440,32L1440,80L1392,80C1344,80,1248,80,1152,80C1056,80,960,80,864,80C768,80,672,80,576,80C480,80,384,80,288,80C192,80,96,80,48,80L0,80Z"></path></svg>
+    </div>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <div class="container">
+            <div class="text-center mb-5" data-aos="fade-down">
+                <h1 class="section-title display-4 fw-bold mb-3">Featured Gallery</h1>
+                <p class="fs-5 text-muted">Explore our school life, events, and facilities through our photo gallery</p>
+            </div>
+            <div class="gallery-marquee-outer" data-aos="fade-up">
+                <div class="gallery-marquee-inner">
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/current.jpg" alt="Main Campus" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Main Campus</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/sports.JPG" alt="Co-curricular Activities" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Co-curricular Activities</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/chapel - Copy.JPG" alt="Chapel Times" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Chapel Times</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/sports4.JPG" alt="School Clubs" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>School Clubs</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/esternblock - Copy.jpg" alt="Eastern Block" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Eastern Block</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/admin2 - Copy.JPG" alt="Admin Block" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Admin Block</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/boyswing - Copy.JPG" alt="Eastern Campus" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Eastern Campus</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/chapel2 - Copy.JPG" alt="School Chapel" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>School Chapel</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/estern block.JPG" alt="Eastern Block 2" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Eastern Block 2</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <!-- Duplicate for seamless marquee -->
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/current.jpg" alt="Main Campus" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Main Campus</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/sports.JPG" alt="Co-curricular Activities" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Co-curricular Activities</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/chapel - Copy.JPG" alt="Chapel Times" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Chapel Times</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/sports4.JPG" alt="School Clubs" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>School Clubs</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/esternblock - Copy.jpg" alt="Eastern Block" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Eastern Block</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/admin2 - Copy.JPG" alt="Admin Block" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Admin Block</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/boyswing - Copy.JPG" alt="Eastern Campus" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Eastern Campus</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/chapel2 - Copy.JPG" alt="School Chapel" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>School Chapel</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="nyabzgallery/estern block.JPG" alt="Eastern Block 2" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <h3>Eastern Block 2</h3>
+                            <p>Our Gallery</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="gallery.html" class="gallery-view-btn">View Full Gallery <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements/Highlights Section -->
+    <section class="py-5" style="background: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%);">
+      <div class="container">
+        <div class="text-center mb-4">
+          <h1 class="section-title display-5 fw-bold mb-3">School Achievements & Highlights</h1>
+          <p class="fs-5 text-muted">Celebrating our milestones and successes</p>
+        </div>
+        <div class="row g-4 justify-content-center">
+          <div class="col-md-4">
+            <div class="card h-100 nyab-achieve-card animate-fadein">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-trophy me-2 text-warning"></i>Best Performing School in Kabale (2023)</h5>
+                <p class="card-text">Recognized for outstanding academic results in the 2023 UNEB exams.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 nyab-achieve-card animate-fadein">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-star me-2 text-primary"></i>National Debate Champions</h5>
+                <p class="card-text">Winners of the 2023 National Inter-Schools Debate Competition.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card h-100 nyab-achieve-card animate-fadein">
+              <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-laptop-code me-2 text-success"></i>ICT Innovation Award</h5>
+                <p class="card-text">Awarded for excellence in ICT integration in education, 2023.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="location-section">
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="location-card">
+                        <h1 class="section-title display-5 fw-bold mb-4">School Location</h1>
+                        <p class="fs-5 mb-4">
+                            Nyabikoni Secondary School is located along Rushanbwa Rd, Kabale District, Uganda - East Africa. 
+                            We are easily accessible and provide a safe, conducive environment for learning.
+                        </p>
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <h5 class="fw-bold text-primary"><i class="fas fa-map-marker-alt me-2"></i>Address</h5>
+                                <p class="mb-0">Kanyakiriro Cell, Nyabikoni Ward<br>Central Division, Kabale Municipality</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <h5 class="fw-bold text-primary"><i class="fas fa-phone me-2"></i>Contact</h5>
+                                <p class="mb-0">+256 XXX XXX XXX<br>info@nyabikoni.ac.ug</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.867278060912!2d29.975607541358137!3d-1.2510354323165203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x19dc0df04d1debb7%3A0xcf77785b2b3d1338!2sNyabikoni%20Secondary%20School!5e0!3m2!1sen!2sug!4v1737384566062!5m2!1sen!2sug" 
+                                title="Nyabikoni Secondary School Location" 
+                                allowfullscreen="" 
+                                loading="lazy" 
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5" style="background: #f8fafc;">
+      <div class="container">
+        <div class="text-center mb-4">
+          <h1 class="section-title display-5 fw-bold mb-3">Frequently Asked Questions</h1>
+          <p class="fs-5 text-muted">Find answers to common questions</p>
+        </div>
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq1">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                <span class="faq-toggle-icon"><i class="fas fa-plus"></i></span> How do I apply for admission?
+              </button>
+            </h2>
+            <div id="collapse1" class="accordion-collapse collapse show" aria-labelledby="faq1" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Visit our <a href="admission.html">Admissions page</a> and fill out the online application form or contact the school office for more details.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq2">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                <span class="faq-toggle-icon"><i class="fas fa-plus"></i></span> What are the school fees?
+              </button>
+            </h2>
+            <div id="collapse2" class="accordion-collapse collapse" aria-labelledby="faq2" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                School fees vary by level and program. Please contact the bursar's office or check the <a href="admission.html">Admissions page</a> for the latest fee structure.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="faq3">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3" aria-expanded="false" aria-controls="collapse3">
+                <span class="faq-toggle-icon"><i class="fas fa-plus"></i></span> How can I contact the school?
+              </button>
+            </h2>
+            <div id="collapse3" class="accordion-collapse collapse" aria-labelledby="faq3" data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                You can call us at +256 XXX XXX XXX or email info@nyabikoni.ac.ug. Visit our <a href="contactus.html">Contact page</a> for more options.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter Signup Section -->
+    <section class="py-5 nyab-newsletter-section" style="background: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%), url('nyabzgallery/nyabzlogo.png') right bottom no-repeat; background-size: 120px;">
+      <div class="container">
+        <div class="row justify-content-center align-items-center">
+          <div class="col-md-8 text-center">
+            <h2 class="fw-bold mb-3">Subscribe to Our Newsletter</h2>
+            <p class="mb-4">Get the latest news, events, and updates from Nyabikoni Secondary School directly to your inbox.</p>
+            <form id="newsletter-form" class="row g-2 justify-content-center">
+              <div class="col-sm-5">
+                <input type="text" name="name" class="form-control form-control-lg" placeholder="Full Name" required>
+              </div>
+              <div class="col-sm-5">
+                <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter your email address" required>
+              </div>
+              <div class="col-sm-2">
+                <button type="submit" class="btn btn-primary btn-lg w-100">Subscribe <span id="newsletter-check" style="display:none;"><i class="fas fa-check-circle text-success"></i></span></button>
+              </div>
+            </form>
+            <div id="newsletter-message" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Media Icons (Footer Area) -->
+    <div class="text-center py-3 nyab-social-footer" style="background: #2c5aa0;">
+      <a href="#" class="text-white mx-2" style="font-size: 1.5rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Follow us on Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" class="text-white mx-2" style="font-size: 1.5rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Follow us on Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="#" class="text-white mx-2" style="font-size: 1.5rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Follow us on Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" class="text-white mx-2" style="font-size: 1.5rem;" data-bs-toggle="tooltip" data-bs-placement="top" title="Subscribe on YouTube"><i class="fab fa-youtube"></i></a>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Initialize WOW.js
+        new WOW().init();
+
+        // Initialize Staff Swiper
+        const staffSwiper = new Swiper('.staff-swiper', {
+            loop: true,
+            grabCursor: true,
+            spaceBetween: 30,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+                dynamicBullets: true
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                0: {
+                    slidesPerView: 1
+                },
+                768: {
+                    slidesPerView: 2
+                },
+                1024: {
+                    slidesPerView: 3
+                },
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Contact button functionality
+        document.querySelectorAll('.contact-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Add contact functionality here
+                alert('Contact functionality will be implemented soon.');
+            });
+        });
+
+        // Gallery item click functionality
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Add lightbox or gallery view functionality here
+                const imageSrc = this.querySelector('img').src;
+                const imageAlt = this.querySelector('img').alt;
+                // You can implement a lightbox here
+                console.log('Gallery item clicked:', imageSrc, imageAlt);
+            });
+        });
+
+        // Animated Counters for Statistics
+        document.addEventListener("DOMContentLoaded", () => {
+            const counters = document.querySelectorAll(".counter");
+            counters.forEach(counter => {
+                const updateCounter = () => {
+                    const target = +counter.getAttribute("data-target");
+                    const count = +counter.innerText;
+                    const increment = Math.max(1, Math.ceil(target / 100));
+                    if (count < target) {
+                        counter.innerText = Math.min(target, count + increment);
+                        setTimeout(updateCounter, 18);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCounter();
+            });
+        });
+
+        // Enable Bootstrap tooltips for social icons
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+          return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        // FAQ plus/minus icon toggle
+        document.querySelectorAll('.accordion-button').forEach(btn => {
+          btn.addEventListener('click', function() {
+            setTimeout(() => {
+              document.querySelectorAll('.accordion-button').forEach(b => {
+                const icon = b.querySelector('.faq-toggle-icon i');
+                if (b.classList.contains('collapsed')) {
+                  icon.classList.remove('fa-minus');
+                  icon.classList.add('fa-plus');
+                } else {
+                  icon.classList.remove('fa-plus');
+                  icon.classList.add('fa-minus');
+                }
+              });
+            }, 200);
+          });
+        });
+
+        // Newsletter AJAX submission
+        document.addEventListener('DOMContentLoaded', function() {
+          var form = document.getElementById('newsletter-form');
+          if (form) {
+            form.addEventListener('submit', function(e) {
+              e.preventDefault();
+              var formData = new FormData(form);
+              var messageDiv = document.getElementById('newsletter-message');
+              messageDiv.innerHTML = '';
+              fetch('../backend/subscribe_newsletter.php', {
+                method: 'POST',
+                body: formData
+              })
+              .then(response => response.json())
+              .then(data => {
+                if (data.success) {
+                  messageDiv.innerHTML = '<span class="newsletter-feedback"><span class="icon"><i class="fas fa-check-circle"></i></span>' + data.message + '</span>';
+                  form.reset();
+                } else {
+                  messageDiv.innerHTML = '<span class="newsletter-feedback error"><span class="icon"><i class="fas fa-exclamation-circle"></i></span>' + data.message + '</span>';
+                }
+              })
+              .catch(() => {
+                messageDiv.innerHTML = '<span class="newsletter-feedback error"><span class="icon"><i class="fas fa-exclamation-triangle"></i></span>An error occurred. Please try again later.</span>';
+              });
+            });
+          }
+        });
+    </script>
+<script src="js/includes.js"></script>
+</body>
+</html>
+
+

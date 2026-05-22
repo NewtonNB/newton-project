@@ -42,6 +42,7 @@ desktop.ini
 
 # Node modules (if you add npm later)
 node_modules/
+dist/
 
 # Environment files
 .env

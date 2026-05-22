@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Nyabikoni Secondary School</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      min-height: 100vh;
+      background: url('./nyabzgallery/current.jpg') no-repeat center center / cover;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+    }
+
+    /* Dark overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(102,126,234,0.72) 0%, rgba(118,75,162,0.65) 100%);
+      z-index: 0;
+    }
+
+    /* Everything above overlay */
+    .login-wrapper {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* School branding */
+    .school-brand {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .school-brand img {
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.85);
+      object-fit: contain;
+      background: #fff;
+      padding: 5px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    }
+    .school-brand h1 {
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-top: 12px;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.35);
+      letter-spacing: 0.5px;
+    }
+    .school-brand p {
+      color: rgba(255,255,255,0.8);
+      font-size: 0.82rem;
+      margin-top: 3px;
+    }
+
+    /* Card */
+    .login-card {
+      width: 100%;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(20px);
+      border-radius: 24px;
+      padding: 38px 36px 34px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    }
+
+    .card-header {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .card-header h2 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .card-header p {
+      color: #999;
+      font-size: 0.87rem;
+      margin-top: 5px;
+    }
+
+    /* Alert */
+    .alert {
+      padding: 11px 15px;
+      border-radius: 10px;
+      font-size: 0.87rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #fdeaea;
+      color: #c0392b;
+      border-left: 4px solid #e74c3c;
+    }
+
+    /* Form groups */
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block;
+      font-size: 0.87rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 7px;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap .icon-left {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #bbb;
+      font-size: 0.9rem;
+      pointer-events: none;
+      transition: color 0.3s;
+    }
+    .input-wrap input {
+      width: 100%;
+      padding: 13px 44px;
+      border: 2px solid #e8e8e8;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-family: 'Poppins', sans-serif;
+      color: #333;
+      background: #fafafa;
+      transition: all 0.3s;
+      outline: none;
+    }
+    .input-wrap input:focus {
+      border-color: #667eea;
+      background: #fff;
+      box-shadow: 0 0 0 4px rgba(102,126,234,0.12);
+    }
+    .input-wrap input:focus ~ .icon-left { color: #667eea; }
+    .toggle-pw {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #bbb;
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .toggle-pw:hover { color: #1abc9c; }
+
+    /* Error text */
+    .err-text {
+      color: #e74c3c;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 5px;
+      display: block;
+      min-height: 16px;
+    }
+
+    /* Extras row */
+    .form-extras {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-size: 0.85rem;
+    }
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: #555;
+      cursor: pointer;
+      user-select: none;
+    }
+    .remember input[type=checkbox] {
+      width: 16px; height: 16px;
+      accent-color: #667eea;
+      cursor: pointer;
+    }
+    .forgot-link {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .forgot-link:hover { color: #764ba2; }
+
+    /* Submit button */
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 6px 20px rgba(102,126,234,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(102,126,234,0.45);
+    }
+    .btn-login:active { transform: translateY(0); }
+    .btn-login:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+    /* Back link */
+    .back-link {
+      margin-top: 18px;
+      text-align: center;
+    }
+    .back-link a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 0.87rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-link a:hover { color: #fff; }
+
+    @media (max-width: 480px) {
+      .login-card { padding: 28px 20px 24px; }
+      .card-header h2 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+
+  <!-- School Branding -->
+  <div class="school-brand">
+    <img src="nyabzgallery/nyabz logo.png" alt="Nyabikoni Logo">
+    <h1>NYABIKONI SECONDARY SCHOOL</h1>
+    <p>Empowering Future Leaders</p>
+  </div>
+
+  <!-- Login Card -->
+  <div class="login-card">
+    <div class="card-header">
+      <h2><i class="fa-solid fa-shield-halved"></i> Welcome Back</h2>
+      <p>Sign in to access the admin dashboard</p>
+    </div>
+
+    <div class="alert">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        </div>
+    <form action="../backend/login_check.php" method="POST" id="loginForm" novalidate>
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <div class="input-wrap">
+          <input type="text" id="username" name="username" placeholder="Enter your username" autocomplete="username">
+          <i class="fa-solid fa-user icon-left"></i>
+        </div>
+        <span class="err-text" id="err-username"></span>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="password" placeholder="Enter your password" autocomplete="current-password">
+          <i class="fa-solid fa-lock icon-left"></i>
+          <button type="button" class="toggle-pw" onclick="togglePw()" title="Show/hide password">
+            <i class="fa-solid fa-eye" id="pwIcon"></i>
+          </button>
+        </div>
+        <span class="err-text" id="err-password"></span>
+      </div>
+
+      <div class="form-extras">
+        <label class="remember">
+          <input type="checkbox" name="remember" id="remember"> Remember me
+        </label>
+        <a href="#" class="forgot-link">Forgot password?</a>
+      </div>
+
+      <button type="submit" class="btn-login" id="loginBtn">
+        <i class="fa-solid fa-right-to-bracket"></i>
+        <span id="btnText">Sign In</span>
+      </button>
+
+    </form>
+  </div>
+
+  <div class="back-link">
+    <a href="index.html"><i class="fa-solid fa-arrow-left"></i> Back to Website</a>
+  </div>
+
+</div>
+
+<script>
+  function togglePw() {
+    const pw = document.getElementById('password');
+    const icon = document.getElementById('pwIcon');
+    if (pw.type === 'password') {
+      pw.type = 'text';
+      icon.className = 'fa-solid fa-eye-slash';
+    } else {
+      pw.type = 'password';
+      icon.className = 'fa-solid fa-eye';
+    }
+  }
+
+  // Remember me
+  window.addEventListener('DOMContentLoaded', function() {
+    const saved = localStorage.getItem('nyabz_user');
+    if (saved) {
+      document.getElementById('username').value = saved;
+      document.getElementById('remember').checked = true;
+    }
+  });
+
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    const username = document.getElementById('username');
+    const password = document.getElementById('password');
+    const errU = document.getElementById('err-username');
+    const errP = document.getElementById('err-password');
+    let valid = true;
+
+    errU.textContent = ''; errP.textContent = '';
+    username.style.borderColor = ''; password.style.borderColor = '';
+
+    if (!username.value.trim()) {
+      errU.textContent = 'Please enter your username';
+      username.style.borderColor = '#e74c3c';
+      valid = false;
+    }
+    if (!password.value.trim()) {
+      errP.textContent = 'Please enter your password';
+      password.style.borderColor = '#e74c3c';
+      valid = false;
+    }
+
+    if (!valid) { e.preventDefault(); return; }
+
+    // Save remember me
+    if (document.getElementById('remember').checked) {
+      localStorage.setItem('nyabz_user', username.value);
+    } else {
+      localStorage.removeItem('nyabz_user');
+    }
+
+    // Loading state
+    const btn = document.getElementById('loginBtn');
+    btn.disabled = true;
+    document.getElementById('btnText').textContent = 'Signing in...';
+    btn.querySelector('i').className = 'fa-solid fa-spinner fa-spin';
+  });
+</script>
+<script src="js/includes.js"></script>
+</body>
+</html>
+

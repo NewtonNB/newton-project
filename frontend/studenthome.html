@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { background: #f4f8fb; font-family: 'Poppins', sans-serif; }
+        .student-dashboard { max-width: 1100px; margin: 40px auto; background: #fff; border-radius: 18px; box-shadow: 0 8px 32px rgba(52,152,219,0.10); padding: 36px; }
+        .dashboard-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+        .student-info { display: flex; align-items: center; gap: 18px; }
+        .student-avatar { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #3498db; }
+        .student-name { font-size: 1.7rem; font-weight: 700; color: #3498db; }
+        .logout-btn { background: #e74c3c; color: #fff; padding: 8px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; }
+        .logout-btn:hover { background: #c0392b; }
+        .dashboard-section { margin-bottom: 32px; }
+        .section-title { font-size: 1.2rem; color: #2980b9; font-weight: 600; margin-bottom: 12px; }
+        .card { background: #f7fbfd; border-radius: 12px; padding: 18px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(52,152,219,0.06); }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .list { list-style: none; padding: 0; margin: 0; }
+        .list li { margin-bottom: 8px; }
+        @media (max-width: 800px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .student-dashboard { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="student-dashboard">
+        <div class="dashboard-header">
+            <div class="student-info">
+                <img src="" alt="Profile" class="student-avatar">
+                <span class="student-name">Welcome, !</span>
+            </div>
+            <a href="logout.html" class="logout-btn">Logout</a>
+        </div>
+        <div class="dashboard-section">
+            <div class="section-title">My Classes</div>
+            <div class="card">
+                </div>
+        </div>
+        <div class="dashboard-grid">
+            <div>
+                <div class="dashboard-section">
+                    <div class="section-title">Upcoming Assignments</div>
+                    <div class="card">
+                        <ul class="list">
+                            <li>
+                                    <strong>:</strong>
+                                    (Due: )
+                                </li>
+                            <li>No upcoming assignments.</li>
+                            </ul>
+                    </div>
+                </div>
+                <div class="dashboard-section">
+                    <div class="section-title">Fee Balance</div>
+                    <div class="card"></div>
+                </div>
+            </div>
+            <div>
+                <div class="dashboard-section">
+                    <div class="section-title">Recent Grades</div>
+                    <div class="card">
+                        <ul class="list">
+                            <li>
+                                    <strong>:</strong>
+                                    </li>
+                            <li>No recent grades.</li>
+                            </ul>
+                    </div>
+                </div>
+                <div class="dashboard-section">
+                    <div class="section-title">Announcements</div>
+                    <div class="card">No new announcements.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script src="js/includes.js"></script>
+</body>
+</html>

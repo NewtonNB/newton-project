@@ -1,0 +1,117 @@
+<!-- Topbar Section -->
+<div class="topbar" role="region" aria-label="School contact and social bar">
+  <div class="container">
+    <div class="topbar-left">
+      <span class="topbar-contact" aria-label="Email"><i class="fa fa-envelope"></i> nyabikonisecschool@gmail.com</span>
+      <span class="topbar-contact" aria-label="Phone"><i class="fa fa-info-circle"></i> +256 703 599 882</span>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-message-wrapper">
+        <span class="scrolling-text">We deliver the highest quality performance we do. <a href="contactus.html">Contact Us</a></span>
+      </span>
+      <span class="topbar-social">
+        <a href="https://www.facebook.com/profile.php?id=100094514101119" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="https://twitter.com/nyabikoniss" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.youtube.com/channel/UCpiBxBBifIwLdhXDrqZggMA" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.instagram.com/nyabikoniss/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      </span>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" role="navigation" aria-label="Main navigation">
+  <div class="container">
+    <a href="index.html" class="navbar-brand" aria-label="Nyabikoni Secondary School Home">
+      <img src="nyabzgallery/nyabz logo.png" alt="Nyabikoni Secondary School Logo" class="navbar-logo">
+    </a>
+    <div class="navbar-title navbar-title-marquee">
+      <div class="navbar-title-marquee-track">
+        <span>NYABIKONI SECONDARY SCHOOL &nbsp; • &nbsp;</span>
+        <span>NYABIKONI SECONDARY SCHOOL &nbsp; • &nbsp;</span>
+        <span>NYABIKONI SECONDARY SCHOOL &nbsp; • &nbsp;</span>
+        <span>NYABIKONI SECONDARY SCHOOL &nbsp; • &nbsp;</span>
+      </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+
+        <!-- HOME -->
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">HOME</a>
+        </li>
+
+        <!-- ABOUT US -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="about.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">ABOUT US</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="about.html">SCHOOL OVERVIEW</a></li>
+            <li><a class="dropdown-item" href="anthem.html">SCHOOL ANTHEM</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="staff.html">TEACHING STAFF</a></li>
+            <li><a class="dropdown-item" href="nonstaff.html">NON-TEACHING STAFF</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="clubs.html">STUDENT CLUBS</a></li>
+          </ul>
+        </li>
+
+        <!-- ACADEMICS -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="Academics.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">ACADEMICS</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="Academics.html">ACADEMIC OVERVIEW</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="olevel.html">O'LEVEL</a></li>
+            <li><a class="dropdown-item" href="alevel.html">A'LEVEL</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="Academics.html">ADMISSION</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="events.html">NEWS &amp; EVENTS</a></li>
+          </ul>
+        </li>
+
+        <!-- GALLERY -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="gallery.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">GALLERY</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="viewgallery.html">GALLERY HOME</a></li>
+            <li><a class="dropdown-item" href="gallery.html">PHOTO GALLERY</a></li>
+            <li><a class="dropdown-item" href="manage_gallery.html">MANAGE GALLERY</a></li>
+          </ul>
+        </li>
+
+        <!-- CONTACT -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="contactus.html" role="button" data-bs-toggle="dropdown" aria-expanded="false">CONTACT</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="contactus.html">CONTACT US</a></li>
+          </ul>
+        </li>
+
+        <!-- LOGIN / DASHBOARD -->
+        <li class="nav-item" id="nav-login-item">
+          <a class="nav-link login-btn" href="login.html" id="nav-login-link">
+            <i class="fas fa-sign-in-alt"></i> LOGIN
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+// Show DASHBOARD link if logged in (check localStorage flag set by login_check)
+(function() {
+  const loginLink = document.getElementById('nav-login-link');
+  if (!loginLink) return;
+  const isLoggedIn = sessionStorage.getItem('nyabz_admin') === '1';
+  if (isLoggedIn) {
+    loginLink.href = 'dashboard.html';
+    loginLink.innerHTML = '<i class="fas fa-tachometer-alt"></i> DASHBOARD';
+  }
+})();
+</script>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Subjects - Admin Dashboard</title>
+    <style>
+        .card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        .card-body {
+            padding: 30px;
+        }
+        .nav-tabs {
+            border: none;
+            margin-bottom: 30px;
+        }
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 10px;
+            margin-right: 10px;
+            padding: 12px 25px;
+            color: #6c757d;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        .nav-tabs .nav-link:hover {
+            background: #e9ecef;
+            color: #495057;
+        }
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-control {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 12px 15px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        .btn-danger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(255, 107, 107, 0.4);
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            width: 100%;
+        }
+        .table thead th {
+            background: #f8f9fc;
+            color: #5a5c69;
+            border: none;
+            border-bottom: 2px solid #e3e6f0;
+            padding: 15px 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .table tbody td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #e3e6f0;
+            vertical-align: middle;
+            color: #495057;
+            font-size: 0.95rem;
+        }
+        .table tbody tr:hover {
+            background-color: #f8f9fc;
+        }
+        .alert {
+            border-radius: 10px;
+            border: none;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        .alert-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+        }
+        .badge-clean {
+            background: #f8f9fc;
+            color: #858796;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            border: 1px solid #e3e6f0;
+        }
+        .btn-icon-danger {
+            background: #fff;
+            color: #e74a3b;
+            border: 1px solid #f8d7da;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-icon-danger:hover {
+            background: #fee2e2;
+            color: #c53030;
+            border-color: #fecaca;
+        }
+        .tab-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        /* Custom Delete Modal */
+        .delete-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            animation: fadeInOverlay 0.2s ease;
+        }
+        .delete-modal-overlay.active {
+            display: flex;
+        }
+        @keyframes fadeInOverlay {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+        .delete-modal {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 36px 32px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+            animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+        }
+        @keyframes popIn {
+            from { transform: scale(0.75); opacity: 0; }
+            to   { transform: scale(1);    opacity: 1; }
+        }
+        .delete-modal .icon-wrap {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            box-shadow: 0 8px 24px rgba(238,90,82,0.35);
+        }
+        .delete-modal .icon-wrap i {
+            font-size: 30px;
+            color: #fff;
+        }
+        .delete-modal h4 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 10px;
+        }
+        .delete-modal p {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 6px;
+        }
+        .delete-modal .subject-name-badge {
+            display: inline-block;
+            background: #fff3f3;
+            color: #ee5a52;
+            border: 1.5px solid #ffcdd2;
+            border-radius: 8px;
+            padding: 6px 16px;
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 8px 0 18px;
+            letter-spacing: 0.5px;
+        }
+        .delete-modal .warning-note {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.82rem;
+            color: #856404;
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        .delete-modal .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .delete-modal .btn-cancel {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 2px solid #e9ecef;
+            background: #f8f9fa;
+            color: #495057;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .delete-modal .btn-cancel:hover {
+            background: #e9ecef;
+            border-color: #ced4da;
+        }
+        .delete-modal .btn-confirm-delete {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(238,90,82,0.35);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        .delete-modal .btn-confirm-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(238,90,82,0.5);
+            color: #fff;
+        }
+    </style>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<div id="sidebar-placeholder"></div>
+
+<div class="content">
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-book"></i> Manage School Subjects
+        </div>
+        <div class="card-body">
+            <div class="alert alert-success">
+                    <i class="fas fa-check-circle"></i> </div>
+            <div class="alert alert-danger">
+                    <i class="fas fa-exclamation-circle"></i> </div>
+            <ul class="nav nav-tabs mb-4">
+                <li class="nav-item">
+                    <a class="nav-link " href="?tab=olevel"><i class="fas fa-graduation-cap"></i> O-Level</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="?tab=alevel"><i class="fas fa-university"></i> A-Level</a>
+                </li>
+            </ul>
+
+            <form method="POST" class="row mb-4">
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="subject_name"><i class="fas fa-plus-circle"></i> Add Subject</label>
+                        <input type="text" id="subject_name" name="subject_name" class="form-control" placeholder="Enter subject name" required>
+                        <input type="hidden" name="level" value="">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-plus"></i> Add Subject
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <div class="table-responsive mt-4">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th width="10%">#</th>
+                            <th>Subject Name</th>
+                            <th width="15%" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                                <td><span class="badge-clean"></span></td>
+                                <td></td>
+                                <td class="text-center">
+                                    <button type="button" class="btn-icon-danger" title="Delete Subject"
+                                        onclick="showDeleteModal('', '../backend/delete_class_ajax.php?delete=')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td colspan="3" class="text-center py-4">
+                                <i class="fas fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">No subjects found. Add your first subject using the form above.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/includes.js"></script>
+</body>
+</html>
+

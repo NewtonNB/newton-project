@@ -3,6 +3,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
+require_once __DIR__ . '/cors.php';
+nyabz_cors_preflight();
 session_start();
 
 // Use centralized database connection
@@ -24,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['username'] = $name;
         $_SESSION['usertype'] = "admin";
         $_SESSION['admin'] = true;
-        header("location: dashboard.php");
+        header("location: ../frontend/dashboard.html");
         exit();
     }
     
@@ -41,20 +43,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $result->fetch_assoc();
         $_SESSION['username'] = $name;
         $_SESSION['usertype'] = "student";
-        header("location: studenthome.php");
+        header("location: ../frontend/studenthome.html");
         exit();
     }
     
-    // Login failed
-    $message = "Username or password do not match";
-    $_SESSION['loginMessage'] = $message;
-    header("location: login.php");
+    // Login failed - pass error as URL parameter
+    header("location: ../frontend/login.html?error=1");
     exit();
     
     $stmt->close();
 } else {
     // If not POST request, redirect to login
-    header("location: login.php");
+    header("location: ../frontend/login.html");
     exit();
 }
 ?>

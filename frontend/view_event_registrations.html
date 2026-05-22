@@ -1,21 +1,8 @@
-<?php
-// Disable error reporting to prevent HTML output
-error_reporting(0);
-ini_set('display_errors', 0);
-
-session_start();
-if (!isset($_SESSION['admin'])) {
-    header('Location: login.php');
-    exit;
-}
-require_once '../shared/config.php';
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Event Registrations - Admin</title>
-  <?php include 'admin_css.php'; ?>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
@@ -83,9 +70,11 @@ require_once '../shared/config.php';
     
     @media (max-width: 900px) { .filter-bar { flex-direction: column; gap: 12px; align-items: stretch; padding: 12px 8px; } .modern-table th, .modern-table td { padding: 12px 6px; font-size: 0.97rem; } }
   </style>
+    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-<?php include 'admin_sidebar.php'; ?>
+<div id="sidebar-placeholder"></div>
 <div class="content">
   <div class="modern-table-container">
     <!-- Loading Overlay -->
@@ -104,60 +93,17 @@ require_once '../shared/config.php';
         </button>
       </div>
     </div>
-    <?php
-    // Fetch all events for dropdown
-    $events = $conn->query("SELECT id, title FROM announcements WHERE category = 'Event' ORDER BY date DESC, created_at DESC");
-    $event_id = isset($_GET['event_id']) ? intval($_GET['event_id']) : 0;
-    
-    // Pagination logic
-    $perPage = 15;
-    $page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
-    $offset = ($page - 1) * $perPage;
-    $where = $event_id ? "WHERE r.event_id = $event_id" : '';
-    
-    // Get total count safely
-    $totalResult = $conn->query("SELECT COUNT(*) FROM event_registrations r $where");
-    $total = $totalResult ? $totalResult->fetch_row()[0] : 0;
-    $totalPages = $total > 0 ? ceil($total / $perPage) : 1;
-    
-    // Get registrations
-    $sql = "SELECT r.id, a.title AS event_title, r.name, r.email, r.phone, r.created_at, r.event_id 
-            FROM event_registrations r 
-            LEFT JOIN announcements a ON r.event_id = a.id 
-            $where 
-            ORDER BY r.created_at DESC 
-            LIMIT $perPage OFFSET $offset";
-    $result = $conn->query($sql);
-    
-    // Dashboard stats
-    $totalEventsResult = $conn->query("SELECT COUNT(*) FROM announcements WHERE category = 'Event'");
-    $totalEvents = $totalEventsResult ? $totalEventsResult->fetch_row()[0] : 0;
-    
-    $mostPopular = $conn->query("SELECT event_id, COUNT(*) as cnt FROM event_registrations GROUP BY event_id ORDER BY cnt DESC LIMIT 1");
-    $mostPopularTitle = '';
-    $mostPopularCount = 0;
-    if ($mostPopular && $mostPopular->num_rows > 0) {
-        $row = $mostPopular->fetch_assoc();
-        $mostPopularCount = $row['cnt'];
-        $eid = $row['event_id'];
-        $titleRes = $conn->query("SELECT title FROM announcements WHERE id = $eid");
-        if ($titleRes && $titleRes->num_rows > 0) {
-            $t = $titleRes->fetch_assoc();
-            $mostPopularTitle = $t['title'];
-        }
-    }
-    ?>
     <div class="stats-section" id="statsSection">
       <div class="stat-card">
-        <div class="stat-number" id="totalRegistrations"><?php echo $total; ?></div>
+        <div class="stat-number" id="totalRegistrations"></div>
         <div class="stat-label">Total Registrations</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number" id="totalEvents"><?php echo $totalEvents; ?></div>
+        <div class="stat-number" id="totalEvents"></div>
         <div class="stat-label">Total Events</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number" id="mostPopularEvent"><?php echo $mostPopularTitle ? htmlspecialchars($mostPopularTitle) : 'N/A'; ?><br><span style="font-size:1rem;font-weight:500; color:#764ba2;" id="mostPopularCount">(<?php echo $mostPopularCount; ?> regs)</span></div>
+        <div class="stat-number" id="mostPopularEvent"><br><span style="font-size:1rem;font-weight:500; color:#764ba2;" id="mostPopularCount">(regs)</span></div>
         <div class="stat-label">Most Popular Event</div>
       </div>
     </div>
@@ -165,10 +111,8 @@ require_once '../shared/config.php';
       <div style="display:flex; gap:18px; align-items:center; flex-wrap:wrap; width: 100%;">
         <select id="eventFilter" style="min-width:180px;">
           <option value="0">All Events</option>
-          <?php if ($events && $events->num_rows > 0): foreach ($events as $ev): ?>
-            <option value="<?php echo $ev['id']; ?>" <?php if ($event_id == $ev['id']) echo 'selected'; ?>><?php echo htmlspecialchars($ev['title']); ?></option>
-          <?php endforeach; endif; ?>
-        </select>
+          <option value="" ></option>
+          </select>
         <input type="text" id="searchInput" placeholder="Search by name, email, event, phone..." style="min-width:220px; flex: 1;">
         <button class="export-btn" onclick="exportTableToCSV('event_registrations.csv')">
           <i class="fa fa-download"></i> Export to CSV
@@ -372,7 +316,7 @@ class EventRegistrationsManager {
         ...this.currentFilters
       });
       
-      const response = await fetch(`get_registrations_ajax.php?${params}`);
+      const response = await fetch(`../backend/get_registrations_ajax.php?${params}`);
       const data = await response.json();
       
       if (data.success) {
@@ -733,6 +677,6 @@ window.addEventListener('beforeunload', function() {
   }
 });
 </script>
-<?php include 'delete_modal.php'; ?>
+<script src="js/includes.js"></script>
 </body>
 </html> 

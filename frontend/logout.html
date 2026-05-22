@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Logging out...</title>
+  <meta http-equiv="refresh" content="0;url=../backend/do_logout.php">
+</head>
+<body>
+  <script>
+    // Clear any local session indicators and redirect to backend logout
+    localStorage.removeItem('nyabz_loggedIn');
+    localStorage.removeItem('nyabz_user');
+    window.location.href = '../backend/do_logout.php';
+  </script>
+<script src="js/includes.js"></script>
+</body>
+</html>

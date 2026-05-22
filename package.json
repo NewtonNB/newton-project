@@ -1,0 +1,14 @@
+{
+  "name": "school-project",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Nyabz School — static frontend build for Netlify",
+  "scripts": {
+    "build": "node scripts/build-netlify.mjs",
+    "build:static": "node scripts/build-netlify.mjs",
+    "preview": "npx serve dist -l 4173"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
