@@ -41,14 +41,8 @@ $result = $conn->query("SELECT * FROM teachers WHERE deleted_at IS NULL $search_
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Management - NYABIKONI SECONDARY SCHOOL</title>
     <?php include 'admin_css.php'; ?>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-    
-    * {
-        font-family: 'Inter', sans-serif;
-    }
-    
+    /* Use shared Poppins font from admin_css.php */
     body {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
@@ -64,7 +58,18 @@ $result = $conn->query("SELECT * FROM teachers WHERE deleted_at IS NULL $search_
         align-items: flex-start;
         min-height: 80vh;
         padding: 0 20px;
+        width: auto;
         max-width: calc(100vw - 280px);
+    }
+
+    @media (max-width: 900px) {
+        .content {
+            margin-left: 0;
+            max-width: 100vw;
+            width: 100%;
+            padding: 20px 16px 40px;
+            min-height: auto;
+        }
     }
     
     .modern-table-container {

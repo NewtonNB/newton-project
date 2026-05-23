@@ -16,7 +16,6 @@ $classes = $conn->query("SELECT id, class_name FROM classes ORDER BY class_name 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Report Cards - Nyabikoni Secondary School</title>
   <?php include 'admin_css.php'; ?>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { 
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 

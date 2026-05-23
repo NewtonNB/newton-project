@@ -48,7 +48,7 @@ $students = $students_query->get_result();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Report Cards - <?php echo htmlspecialchars($class_info['class_name']); ?></title>
-  <?php include 'admin_css.php'; ?>
+  <?php include '../frontend/admin_css.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     body { 
@@ -171,7 +171,7 @@ $students = $students_query->get_result();
   </style>
 </head>
 <body>
-<?php include 'admin_sidebar.php'; ?>
+<?php include '../frontend/admin_sidebar.php'; ?>
 <div class="content">
   <div class="report-header">
     <h1><i class="fas fa-file-alt"></i> Report Cards</h1>

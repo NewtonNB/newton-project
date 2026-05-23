@@ -5,7 +5,7 @@ if (!isset($_SESSION['admin'])) {
     exit();
 }
 require '../shared/config.php';
-include 'admin_sidebar.php';
+include '../frontend/admin_sidebar.php';
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 if ($id <= 0) { echo '<div class="modern-content">Invalid announcement ID.</div>'; exit; }
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Delete Announcement/Event</title>
     <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Poppins:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="../frontend/admin.css">
     <style>body { background: #f4f8fb; font-family: 'Poppins', Arial, sans-serif; font-size: 1rem; } .modern-content { font-size: 1rem; } h2 { font-size: 2.1rem; font-weight: 900; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 8px; text-align: center; letter-spacing: -1px; line-height: 1.1; } </style>
 </head>
 <body>

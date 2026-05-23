@@ -45,7 +45,7 @@ $total_subs  = $subscribers->num_rows;
 <head>
   <meta charset="UTF-8">
   <title>Send Newsletter</title>
-  <?php include 'admin_css.php'; ?>
+  <?php include '../frontend/admin_css.php'; ?>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <style>
     body { background: linear-gradient(135deg,#667eea,#764ba2); min-height:100vh; font-family:'Poppins',sans-serif; margin:0; }
@@ -71,7 +71,7 @@ $total_subs  = $subscribers->num_rows;
   </style>
 </head>
 <body>
-<?php include 'admin_sidebar.php'; ?>
+<?php include '../frontend/admin_sidebar.php'; ?>
 <div class="content">
 
   <div class="stat-box">

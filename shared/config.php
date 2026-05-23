@@ -1,16 +1,17 @@
 <?php
 // MySQL Database Configuration
-$db_host = 'localhost';
+$db_host = '127.0.0.1';
+$db_port = 3306;
 $db_user = 'root';
 $db_pass = '1234';
 $db_name = 'schoolproject';
 
 // Create connection
-$conn = new mysqli($db_host, $db_user, $db_pass);
+$conn = new mysqli($db_host, $db_user, $db_pass, '', $db_port);
 
 // Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error . " (host=$db_host port=$db_port)");
 }
 
 // Create database if it doesn't exist

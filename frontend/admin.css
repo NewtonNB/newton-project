@@ -6,8 +6,13 @@
     font-family: "Poppins";
 }
 
+html {
+    font-size: 13px;
+}
+
 body, html {
     font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
 }
 
 body {
@@ -119,10 +124,10 @@ body {
 .sidebar li a {
     display: block;
     color: #ecf0f1;
-    padding: 12px 25px;
+    padding: 8px 18px;
     text-align: left;
-    font-weight: 500;
-    font-size: 15px;
+    font-weight: 400;
+    font-size: 13px;
     text-decoration: none;
     transition: background 0.3s, padding-left 0.3s;
 }
@@ -169,7 +174,7 @@ body {
 /* ========== HAMBURGER MENU (hidden by default) ========== */
 .menu-toggle {
     display: none;
-    font-size: 24px;
+    font-size: 20px;
     cursor: pointer;
     color: #2c3e50;
 }
@@ -226,23 +231,23 @@ body {
     background: #fff;
     border-radius: 18px;
     box-shadow: 0 8px 32px rgba(52,152,219,0.10), 0 1.5px 4px rgba(0,0,0,0.04);
-    padding: 48px 36px 36px 36px;
+    padding: 40px 32px 32px 32px;
     width: 100%;
     max-width: 1200px;
     margin-top: 20px; /* Adjusted from 0 to give some space from content top */
 }
 .modern-table-container h2 {
-    font-size: 2.1rem;
-    font-weight: 700;
+    font-size: 1.7rem;
+    font-weight: 600;
     color: #3498db;
-    margin-bottom: 32px;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
 }
 .table-icon {
     color: #6dd5fa;
-    font-size: 2.2rem;
+    font-size: 1.8rem;
 }
 .table-responsive {
     overflow-x: auto;
@@ -269,10 +274,10 @@ body {
     margin-bottom: 0;
 }
 .custom-table-th {
-    padding: 15px 20px;
+    padding: 12px 14px;
     background: #3498db;
     color: #fff;
-    font-size: 16px;
+    font-size: 14px;
     text-align: left;
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -280,9 +285,9 @@ body {
     word-break: break-word;
 }
 .custom-table-td {
-    padding: 15px 20px;
+    padding: 12px 14px;
     background: #f7fbfd;
-    font-size: 15px;
+    font-size: 13px;
     border-bottom: 1.5px solid #e3eaf1;
     color: #222;
     word-break: break-word;
@@ -319,24 +324,24 @@ tr:hover .custom-table-td {
     max-width: 500px;
     background: #fff;
     margin: 40px auto 0 auto;
-    padding: 48px 36px 36px 36px;
+    padding: 42px 32px 32px 32px;
     box-shadow: 0 8px 32px rgba(52,152,219,0.10), 0 1.5px 4px rgba(0,0,0,0.04);
     border-radius: 18px;
 }
 .modern-form-container h2 {
     text-align: center;
-    margin-bottom: 25px;
-    font-size: 2.1rem;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
     color: #3498db;
-    font-weight: 700;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     justify-content: center;
 }
 .form-icon {
     color: #6dd5fa;
-    font-size: 2.2rem;
+    font-size: 1.8rem;
 }
 .student-form .form-group {
     margin-bottom: 20px;
@@ -352,7 +357,7 @@ tr:hover .custom-table-td {
     padding: 12px 16px;
     border: 1.5px solid #e3eaf1;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 14px;
     background-color: #f7fbfd;
     color: #222;
     outline: none;
@@ -368,10 +373,10 @@ tr:hover .custom-table-td {
     background: linear-gradient(90deg, #3498db 0%, #6dd5fa 100%);
     color: white;
     border: none;
-    padding: 14px;
+    padding: 12px;
     border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 600;
     cursor: pointer;
     transition: background 0.3s, transform 0.15s;
     box-shadow: 0 2px 8px rgba(52,152,219,0.08);

@@ -71,7 +71,9 @@
       .then(html => {
         placeholder.outerHTML = html;
         setActiveNavLink();
-        initNavbarScroll();
+        requestAnimationFrame(function () {
+          initNavbarScroll();
+        });
       })
       .catch(() => {});
   }
@@ -91,27 +93,55 @@
     });
   }
 
+  function updateHeaderHeight() {
+    const topbar = document.querySelector('.topbar');
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    const h = (topbar ? topbar.offsetHeight : 0) + navbar.offsetHeight;
+    document.documentElement.style.setProperty('--site-header-height', h + 'px');
+  }
+
+  function syncNavbarOnScroll() {
+    const topbar = document.querySelector('.topbar');
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+
+    const isHomePage = document.body.classList.contains('home-page');
+    const scrolled = window.scrollY > 50;
+
+    if (scrolled) {
+      if (topbar) topbar.classList.add('hidden');
+      navbar.classList.add('at-top');
+      navbar.classList.remove('transparent');
+      if (!isHomePage) {
+        document.body.style.paddingTop = navbar.offsetHeight + (topbar && !topbar.classList.contains('hidden') ? topbar.offsetHeight : 0) + 'px';
+      } else {
+        document.body.style.paddingTop = '';
+      }
+    } else {
+      if (topbar) topbar.classList.remove('hidden');
+      navbar.classList.remove('at-top');
+      if (isHomePage) navbar.classList.add('transparent');
+      document.body.style.paddingTop = '';
+    }
+  }
+
   function initNavbarScroll() {
     const topbar = document.querySelector('.topbar');
     const navbar = document.querySelector('.navbar');
     if (!navbar) return;
 
-    const isHomePage = document.querySelector('.nyab-hero-section, #hero, .carousel, .nyab-hero-caption');
-    if (isHomePage) navbar.classList.add('transparent');
+    const isHomePage = document.body.classList.contains('home-page') ||
+      !!document.querySelector('.nyab-hero-carousel, .nyab-hero-section, #hero, .nyab-hero-caption');
+    if (isHomePage) {
+      document.body.classList.add('home-page');
+      navbar.classList.add('transparent');
+    }
 
-    window.addEventListener('scroll', function () {
-      if (window.scrollY > 80) {
-        if (topbar) topbar.classList.add('hidden');
-        navbar.classList.add('at-top');
-        navbar.classList.remove('transparent');
-        document.body.style.paddingTop = navbar.offsetHeight + 'px';
-      } else {
-        if (topbar) topbar.classList.remove('hidden');
-        navbar.classList.remove('at-top');
-        if (isHomePage) navbar.classList.add('transparent');
-        document.body.style.paddingTop = '';
-      }
-    });
+    updateHeaderHeight();
+    syncNavbarOnScroll();
+    window.addEventListener('scroll', syncNavbarOnScroll, { passive: true });
+    window.addEventListener('resize', updateHeaderHeight);
 
     const toggler = navbar.querySelector('.navbar-toggler');
     const collapse = navbar.querySelector('.navbar-collapse');

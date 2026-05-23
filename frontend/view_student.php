@@ -68,11 +68,7 @@ $result = $conn->query($sql);
     <title>View Students</title>
     <?php include 'admin_css.php'; ?>
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    
-    * {
-        font-family: 'Inter', sans-serif;
-    }
+    /* Use shared Poppins font from admin_css.php */
     
     body {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);

@@ -20,7 +20,7 @@ if (!isset($_SESSION['admin'])) {
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            font-family: "poppins";
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
         }

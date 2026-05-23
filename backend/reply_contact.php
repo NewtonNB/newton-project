@@ -67,10 +67,9 @@ function get_initials($first, $last) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reply to Contact</title>
-    <link rel="stylesheet" href="admin_css.php">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <?php include '../frontend/admin_css.php'; ?>
     <style>
-        body { background: #f4f8fb; font-family: 'Inter', 'Poppins', Arial, sans-serif; }
+        body { background: #f4f8fb; font-family: 'Poppins', Arial, sans-serif; }
         .reply-card {
             max-width: 480px;
             margin: 48px auto;

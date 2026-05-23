@@ -21,12 +21,8 @@ $adminCount = $conn->query("SELECT COUNT(*) as count FROM admins")->fetch_assoc(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Management - Nyabikoni Secondary School</title>
     <?php include 'admin_css.php'; ?>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
-        
+        /* Use shared Poppins font from admin_css.php */
         body {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;

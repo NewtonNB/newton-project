@@ -62,7 +62,7 @@ $students = $conn->query($students_query);
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fee Collection - Nyabikoni Secondary School</title>
-  <?php include 'admin_css.php'; ?>
+  <?php include '../frontend/admin_css.php'; ?>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { 
@@ -197,7 +197,7 @@ $students = $conn->query($students_query);
   </style>
 </head>
 <body>
-<?php include 'admin_sidebar.php'; ?>
+<?php include '../frontend/admin_sidebar.php'; ?>
 <div class="content">
   <div class="modern-container">
     <div class="page-header">

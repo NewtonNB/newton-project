@@ -57,43 +57,91 @@
             /* Remove extra padding-top to prevent overlap/gap issues */
         }
 
-        /* Hero Carousel Styles */
-        .nyab-hero-carousel {
-            /* Remove any margin-top or padding-top to prevent extra space */
-            position: relative;
-            z-index: 1;
+        /* Homepage: no body offset — hero fills entire screen */
+        body.home-page {
+            padding-top: 0 !important;
+            margin: 0;
         }
 
-        .nyab-hero-slide {
-            min-height: 100vh !important;
-            height: 100dvh !important;
+        /* Hero = full viewport; quick links only after scroll */
+        body.home-page #heroCarousel.nyab-hero-carousel {
             position: relative;
             z-index: 1;
-            background-position: center;
+            width: 100%;
+            overflow: hidden;
+            isolation: isolate;
+            contain: paint;
+            margin-top: calc(-1 * var(--site-header-height, 108px));
+            height: 100vh !important;
+            height: 100svh !important;
+            min-height: 100vh !important;
+            min-height: 100svh !important;
+            max-height: 100svh;
+            background: #1e3a8a;
+        }
+        body.home-page #heroCarousel .carousel-inner {
+            position: relative;
+            height: 100% !important;
+            min-height: 100% !important;
+            overflow: hidden;
+        }
+        body.home-page #heroCarousel .carousel-item {
+            height: 100% !important;
+            min-height: 100% !important;
+            overflow: hidden;
+        }
+
+        .nyab-hero-carousel {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Background image layer — clipped to hero only */
+        .nyab-hero-slide {
+            height: 100% !important;
+            min-height: 100% !important;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .nyab-hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
-            background-attachment: fixed;
-            transition: background-image 0.5s;
-        }
-        @media (max-width: 991px) {
-            .nyab-hero-slide {
-                background-attachment: scroll; /* Disable parallax on mobile for performance */
-            }
+            background-attachment: scroll;
+            pointer-events: none;
         }
 
-        /* Hero Caption */
+        /* Hero caption — below navbar, vertically centered in hero */
         .nyab-hero-caption {
             position: absolute;
-            top: 50%;
+            top: 72%;
             left: 50%;
             transform: translate(-50%, -50%);
             text-align: center;
             z-index: 10;
-            width: 90%;
-            max-width: 800px;
+            width: 92%;
+            max-width: 720px;
             margin: 0;
-            padding: 0 15px;
+            padding: 0 20px;
             box-sizing: border-box;
+        }
+        @media (max-width: 768px) {
+            .nyab-hero-caption {
+                top: 68%;
+                width: 96%;
+            }
+            body.home-page #heroCarousel.nyab-hero-carousel {
+                margin-top: calc(-1 * var(--site-header-height, 98px));
+            }
         }
 
         .carousel-image {
@@ -106,34 +154,44 @@
             position: absolute;
             top: 0;
             left: 0;
+            right: 0;
+            bottom: 0;
             width: 100%;
             height: 100%;
             background: linear-gradient(135deg, rgba(44,90,160,0.8) 0%, rgba(30,58,138,0.8) 100%);
             z-index: 2;
+            pointer-events: none;
+        }
+        .nyab-hero-carousel .carousel-item:not(.active) .nyab-hero-caption {
+            opacity: 0;
+            visibility: hidden;
         }
 
         .nyab-hero-caption h1 {
             font-family: 'Bungee', cursive;
-            font-size: clamp(1.6rem, 5vw, 4rem);
+            font-size: clamp(1.4rem, 4.2vw, 2.75rem);
             font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+            margin-bottom: 0.65rem;
+            text-shadow: 2px 2px 12px rgba(0,0,0,0.45);
             color: #ffffff;
-            word-break: break-word;
+            line-height: 1.15;
         }
 
         .nyab-hero-caption h2 {
-            font-size: clamp(1rem, 3vw, 1.8rem);
-            margin-bottom: 1.5rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.35rem);
+            margin-bottom: 1rem;
             color: #e5e7eb;
             font-weight: 500;
         }
 
         .nyab-hero-caption p {
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-            margin-bottom: 2rem;
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
+            margin-bottom: 1.5rem;
             color: #d1d5db;
-            line-height: 1.6;
+            line-height: 1.55;
+            max-width: 560px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .nyab-hero-btn {
@@ -141,8 +199,8 @@
             color: #ffffff;
             border: none;
             border-radius: 25px;
-            padding: 14px 36px;
-            font-size: 1.1rem;
+            padding: 12px 32px;
+            font-size: 0.95rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -530,27 +588,59 @@
             padding-top: 0; /* Remove any body padding */
         }
 
-        /* Account for fixed navbar and topbar */
-        /* Carousel controls should be above overlay but below navbar */
-        .carousel-control-prev,
-        .carousel-control-next {
-            z-index: 4 !important;
+        /* Carousel controls */
+        .nyab-hero-carousel .carousel-control-prev,
+        .nyab-hero-carousel .carousel-control-next {
+            z-index: 8 !important;
+            width: 52px;
+            height: 52px;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0.85;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.35);
+        }
+        .nyab-hero-carousel .carousel-control-prev { left: 16px; }
+        .nyab-hero-carousel .carousel-control-next { right: 16px; }
+        .nyab-hero-carousel .carousel-control-prev:hover,
+        .nyab-hero-carousel .carousel-control-next:hover {
+            opacity: 1;
+            background: rgba(0, 0, 0, 0.5);
         }
 
-        .carousel-indicators {
-            z-index: 4 !important;
+        .nyab-hero-carousel .carousel-indicators {
+            z-index: 8 !important;
+            margin-bottom: 18px;
+        }
+        .nyab-hero-carousel .carousel-indicators [data-bs-target] {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
         }
 
         .nyab-hero-scroll-indicator {
             position: absolute;
             left: 50%;
-            bottom: 32px;
+            bottom: 12px;
             transform: translateX(-50%);
             color: #fff;
-            font-size: 2.5rem;
-            opacity: 0.7;
+            font-size: 1.75rem;
+            opacity: 0.85;
             animation: bounceDown 2s infinite;
-            z-index: 10;
+            z-index: 12;
+            pointer-events: none;
+        }
+
+        /* Sections below hero — solid background, no hero image bleed */
+        body.home-page .nyab-quick-links-section {
+            position: relative;
+            z-index: 2;
+            background: #e2e8f0 !important;
+        }
+        body.home-page > section:not(.nyab-quick-links-section),
+        body.home-page > .welcome-section,
+        body.home-page > .container {
+            background-color: var(--bg-light, #f8f9fa);
         }
         @keyframes bounceDown {
             0%, 100% { transform: translateX(-50%) translateY(0); }
@@ -894,7 +984,7 @@
     }
     </style>
 </head>
-<body>
+<body class="home-page">
 <div id="navbar-placeholder"></div>
     <!-- Hero Carousel -->
     <div id="heroCarousel" class="carousel slide carousel-fade nyab-hero-carousel" data-bs-ride="carousel">
@@ -908,7 +998,8 @@
         <!-- Carousel Inner -->
         <div class="carousel-inner">
             <!-- Slide 1 -->
-            <div class="carousel-item active nyab-hero-slide" style="background-image: url('nyabzgallery/current.jpg');">
+            <div class="carousel-item active nyab-hero-slide">
+                <div class="nyab-hero-bg" style="background-image: url('nyabzgallery/current.jpg');" aria-hidden="true"></div>
                 <div class="nyab-hero-overlay"></div>
                 <div class="nyab-hero-caption">
                     <h1 data-aos="fade-down" data-aos-delay="0">Nyabikoni Secondary School</h1>
@@ -919,7 +1010,8 @@
             </div>
 
             <!-- Slide 2 -->
-            <div class="carousel-item nyab-hero-slide" style="background-image: url('nyabzgallery/Alevelstudents.jpg');">
+            <div class="carousel-item nyab-hero-slide">
+                <div class="nyab-hero-bg" style="background-image: url('nyabzgallery/Alevelstudents.jpg');" aria-hidden="true"></div>
                 <div class="nyab-hero-overlay"></div>
                 <div class="nyab-hero-caption">
                     <h1 data-aos="fade-down" data-aos-delay="0">Excellence in Education</h1>
@@ -930,7 +1022,8 @@
             </div>
 
             <!-- Slide 3 -->
-            <div class="carousel-item nyab-hero-slide" style="background-image: url('nyabzgallery/estern block.JPG');">
+            <div class="carousel-item nyab-hero-slide">
+                <div class="nyab-hero-bg" style="background-image: url('nyabzgallery/estern block.JPG');" aria-hidden="true"></div>
                 <div class="nyab-hero-overlay"></div>
                 <div class="nyab-hero-caption">
                     <h1 data-aos="fade-down" data-aos-delay="0">Modern Infrastructure</h1>
@@ -957,7 +1050,7 @@
     </div>
 
     <!-- Quick Links Section -->
-    <section class="py-4" style="background: #e2e8f0;">
+    <section class="py-4 nyab-quick-links-section" style="background: #e2e8f0;">
       <div class="container">
         <div class="row justify-content-center g-3 text-center">
           <div class="col-6 col-md-2">

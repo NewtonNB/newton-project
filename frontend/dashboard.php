@@ -19,7 +19,7 @@ $feeCollected = $conn->query("SELECT SUM(amount_paid) FROM fees")->fetch_row()[0
 // Fetch event statistics
 $totalEvents = $conn->query("SELECT COUNT(*) FROM announcements WHERE category = 'Event'")->fetch_row()[0] ?: 0;
 $totalEventRegistrations = $conn->query("SELECT COUNT(*) FROM event_registrations")->fetch_row()[0] ?: 0;
-$upcomingEvents = $conn->query("SELECT COUNT(*) FROM announcements WHERE category = 'Event' AND date >= date('now')")->fetch_row()[0] ?: 0;
+$upcomingEvents = $conn->query("SELECT COUNT(*) FROM announcements WHERE category = 'Event' AND date >= CURDATE()")->fetch_row()[0] ?: 0;
 
 // Fetch recent event registrations
 $eventRegistrationsSql = "SELECT er.*, a.title as event_title 
@@ -30,7 +30,7 @@ $eventRegistrationsSql = "SELECT er.*, a.title as event_title
 $eventRegistrationsResult = $conn->query($eventRegistrationsSql);
 
 // Fetch popular events
-$popularEventsSql = "SELECT a.title, a.date, COUNT(er.id) as registration_count 
+$popularEventsSql = "SELECT a.id, a.title, a.date, COUNT(er.id) as registration_count 
                     FROM announcements a 
                     LEFT JOIN event_registrations er ON a.id = er.event_id 
                     WHERE a.category = 'Event' 
@@ -58,7 +58,7 @@ $trashCount = $conn->query("SELECT COUNT(*) FROM contact_messages WHERE deleted_
     body {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         min-height: 100vh;
-        font-family: "poppins";
+        font-family: 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
     }
@@ -650,7 +650,7 @@ $trashCount = $conn->query("SELECT COUNT(*) FROM contact_messages WHERE deleted_
                 echo '<td>' . htmlspecialchars($eventDate) . '</td>';
                 echo '<td><span style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 4px 12px; border-radius: 12px; font-weight: 600;">' . $event['registration_count'] . '</span></td>';
                 echo '<td>' . $status . '</td>';
-                echo '<td><a href="announcements.php" class="reply-btn"><i class="fa-solid fa-edit"></i> Manage</a></td>';
+                echo '<td><a href="announcements.php" class="manage-event-btn reply-btn" data-event-id="' . htmlspecialchars($event['id'] ?? '') . '"><i class="fa-solid fa-edit"></i> Manage</a></td>';
                 echo '</tr>';
               }
             } else {
@@ -886,11 +886,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 document.querySelectorAll('.reply-btn').forEach(function(btn) {
-  btn.addEventListener('click', function() {
+  if (!btn.dataset.email || !btn.dataset.id) return;
+  btn.addEventListener('click', function(event) {
+    event.preventDefault();
     document.getElementById('replyModal').style.display = 'flex';
-    document.getElementById('replyMessageId').value = btn.getAttribute('data-id');
-    document.getElementById('replyTo').value = btn.getAttribute('data-email');
-    document.getElementById('modalRecipient').textContent = btn.getAttribute('data-email') + ' (' + btn.getAttribute('data-firstname') + ')';
+    document.getElementById('replyMessageId').value = btn.dataset.id;
+    document.getElementById('replyTo').value = btn.dataset.email;
+    document.getElementById('modalRecipient').textContent = btn.dataset.email + ' (' + btn.dataset.firstname + ')';
     document.getElementById('replyMessage').value = '';
     document.getElementById('replySuccessMsg').style.display = 'none';
   });

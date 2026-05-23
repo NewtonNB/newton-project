@@ -122,7 +122,6 @@ $exams = $conn->query("SELECT e.*, c.class_name FROM exam_schedule e
   <title>Exam Schedule</title>
   <?php include 'admin_css.php'; ?>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
     .content { margin-top: 40px; margin-left: 280px; padding: 20px; max-width: calc(100vw - 320px); }

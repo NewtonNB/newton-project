@@ -46,7 +46,7 @@ if (!$student) { die('Student not found.'); }
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Student</title>
-    <link rel="stylesheet" href="admin.css">
+    <link rel="stylesheet" href="../frontend/admin.css">
     <style>
         body { background: #f4f8fb; }
         .edit-form-container {
