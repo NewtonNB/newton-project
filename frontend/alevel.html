@@ -16,267 +16,635 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <style>
-    /* Modern, professional styles for A-Level page */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', Arial, Helvetica, sans-serif;
-    }
-    body {
-      color: #1f2937;
-      background: #f8f9fa;
-      line-height: 1.6;
-    }
-    .alevel-hero {
-      min-height: 48vh;
-      width: 100%;
-      background: url('nyabzgallery/current.jpg') center center/cover no-repeat;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 56px;
-      box-shadow: 0 8px 32px 0 rgba(25, 118, 210, 0.15);
-      overflow: hidden;
-    }
-    .alevel-hero-overlay {
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(120deg, rgba(44,90,160,0.7) 0%, rgba(16,185,129,0.7) 100%);
-      backdrop-filter: blur(2.5px);
-      z-index: 1;
-    }
-    .alevel-hero-text {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      color: #fff;
-      padding: 60px 20px 30px 20px;
-      max-width: 700px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 220px;
-    }
-    .alevel-hero-title {
-      font-family: 'Bungee', cursive;
-      font-size: 2.2rem;
-      margin-bottom: 1rem;
-      letter-spacing: 1.5px;
-      text-shadow: 0 2px 12px rgba(44,90,160,0.25), 0 4px 24px rgba(0,0,0,0.18);
-      font-weight: 900;
-      color: #fff;
-    }
-    .alevel-hero-subtitle {
-      font-size: 1.05rem;
-      color: #e3f2fd;
-      max-width: 650px;
-      margin: 0 auto 10px auto;
-      text-shadow: 0 1px 6px rgba(44,90,160,0.12), 0 2px 8px rgba(0,0,0,0.10);
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-    @media (max-width: 700px) {
-      .alevel-hero-title {
-        font-size: 1.3rem;
-      }
-      .alevel-hero-subtitle {
-        font-size: 0.95rem;
-      }
-    }
-    .alevel-divider {
-      height: 2px;
-      background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
-      margin: 0 0 32px 0;
-      border-radius: 2px;
-    }
-    .alevel-section-heading {
-      text-align: center;
-      color: #1976d2;
-      font-family: 'Bungee', cursive;
-      font-size: 2rem;
-      margin-bottom: 36px;
-      letter-spacing: 1px;
-    }
-    .alevel-section {
-      padding: 60px 0 30px 0;
-      background: #f8f9fa;
-    }
-    .subject-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-      gap: 32px;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 16px;
-    }
-    .course {
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 4px 24px rgba(44,90,160,0.10), 0 1.5px 6px 0 rgba(44,90,160,0.08);
-      border-left: 6px solid #268b17;
-      padding: 2.2rem 1.5rem 1.5rem 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      transition: transform 0.22s, box-shadow 0.22s, background 0.22s;
-      position: relative;
-      min-height: 160px;
-    }
-    .course:hover {
-      transform: translateY(-10px) scale(1.035);
-      box-shadow: 0 10px 32px rgba(44,90,160,0.16);
-      background: #f4fff7;
-      border-left: 6px solid #10b981;
-    }
-    .course h3 {
-      font-family: 'Bungee', cursive;
-      color: #166f26;
-      font-size: 1.18rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      text-shadow: 0 1px 4px rgba(44,90,160,0.04);
-    }
-    .course p {
-      color: #555;
-      font-size: 1.01rem;
-      margin: 0;
-      font-weight: 500;
-      letter-spacing: 0.1px;
-    }
-    .no-subjects, .database-error {
-      text-align: center;
-      padding: 50px 20px;
-      color: #666;
-    }
-    .no-subjects i, .database-error i {
-      font-size: 4rem;
-      color: #ddd;
-      margin-bottom: 20px;
-    }
-    .no-subjects h3, .database-error h3 {
-      color: #268b17;
-      margin-bottom: 15px;
-    }
-    .no-subjects p, .database-error p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-    }
-    .database-error {
-      color: #d32f2f;
-      background: #ffebee;
-      border-radius: 10px;
-      margin: 20px;
-    }
-    .database-error i {
-      color: #d32f2f;
-    }
-    .database-error h3 {
-      color: #d32f2f;
-    }
-    .database-error a {
-      color: #1976d2;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .database-error a:hover {
-      text-decoration: underline;
-    }
-    @media (max-width: 900px) {
-      .subject-grid {
-        gap: 18px;
-        padding: 0 6px;
-      }
-      .course {
-        padding: 1.2rem 0.8rem 1.1rem 0.8rem;
-      }
-    }
-    @media (max-width: 600px) {
-      .subject-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-        padding: 0 2px;
-      }
-      .course {
-        width: 98vw;
-        min-width: 140px;
-        max-width: 99vw;
-        padding: 1.1rem 0.5rem;
-      }
-    }
+/* Modern A-Level Subjects Page */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+body {
+  color: #333;
+  background: linear-gradient(135deg, #f8f9fa 60%, #e3f0ff 100%);
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.alevel-hero {
+  min-height: 50vh;
+  width: 100%;
+  background: url('nyabzgallery/current.jpg') center center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0;
+  padding-top: 80px;
+  padding-bottom: 60px;
+  box-shadow: 0 8px 32px rgba(25, 118, 210, 0.15);
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+}
+
+.alevel-hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(120deg, rgba(44,90,160,0.7) 0%, rgba(16,185,129,0.7) 100%);
+  backdrop-filter: blur(2.5px);
+  z-index: 1;
+  border-radius: 0 0 24px 24px;
+}
+
+.alevel-hero-text {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  padding: 40px 20px 40px 20px;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+.alevel-hero-title {
+  font-family: 'Bungee', cursive;
+  font-size: 2.7rem;
+  margin-bottom: 1rem;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 12px rgba(44,90,160,0.25), 0 4px 24px rgba(0,0,0,0.18);
+  font-weight: 900;
+  color: #fff;
+}
+
+.alevel-hero-subtitle {
+  font-size: 1.15rem;
+  color: #e3f2fd;
+  max-width: 650px;
+  margin: 0 auto;
+  text-shadow: 0 1px 6px rgba(44,90,160,0.12), 0 2px 8px rgba(0,0,0,0.10);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+/* Statistics Cards */
+.stats-container {
+  max-width: 1200px;
+  margin: 60px auto 80px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 35px;
+  position: relative;
+  z-index: 5;
+}
+
+.stat-card {
+  background: white;
+  padding: 35px 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.stat-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(44,90,160,0.2);
+  border-color: #2c5aa0;
+}
+
+.stat-card .icon {
+  font-size: 3rem;
+  color: #2c5aa0;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover .icon {
+  transform: scale(1.15);
+}
+
+.stat-card .number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #166f26;
+  margin: 10px 0;
+  line-height: 1;
+}
+
+.stat-card .label {
+  font-size: 0.95rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* Search Bar */
+.search-container {
+  max-width: 650px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
+}
+
+.search-box {
+  display: flex;
+  background: white;
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.1);
+  transition: box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.search-box:focus-within {
+  box-shadow: 0 8px 40px rgba(44,90,160,0.2);
+  border-color: #2c5aa0;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  padding: 15px 25px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.search-box button {
+  background: linear-gradient(135deg, #2c5aa0 0%, #10b981 100%);
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.search-box button:hover {
+  background: linear-gradient(135deg, #1e3a66 0%, #0d8f6a 100%);
+  transform: scale(1.05);
+}
+
+.search-box button i {
+  margin-right: 5px;
+}
+
+/* Section */
+.alevel-section {
+  padding: 0 0 100px 0;
+  background: transparent;
+}
+
+.alevel-section-heading {
+  text-align: center;
+  color: #2c5aa0;
+  font-family: 'Bungee', cursive;
+  font-size: 2.2rem;
+  margin-bottom: 60px;
+  letter-spacing: 1.5px;
+  text-shadow: 0 2px 8px rgba(44,90,160,0.1);
+}
+
+.alevel-divider {
+  height: 4px;
+  width: 100px;
+  background: linear-gradient(90deg, #2c5aa0 0%, #10b981 100%);
+  margin: 0 auto 60px;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(44,90,160,0.3);
+}
+
+/* Subject Cards */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.subject-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 30px rgba(44,90,160,0.12);
+  border-left: 6px solid #268b17;
+  padding: 2.5rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.3s ease;
+  position: relative;
+  min-height: 160px;
+}
+
+.subject-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 12px 40px rgba(44,90,160,0.2);
+  background: #f4fff7;
+  border-left: 6px solid #10b981;
+}
+
+.subject-card .subject-icon {
+  font-size: 2.8rem;
+  color: #2c5aa0;
+  margin-bottom: 18px;
+  transition: all 0.3s ease;
+}
+
+.subject-card:hover .subject-icon {
+  transform: scale(1.15) rotate(5deg);
+  color: #166f26;
+}
+
+.subject-card h3 {
+  font-family: 'Bungee', cursive;
+  color: #166f26;
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+
+.subject-card p {
+  color: #555;
+  font-size: 1.05rem;
+  margin: 0;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* Loading State */
+.loading-container {
+  text-align: center;
+  padding: 60px 20px;
+  grid-column: 1 / -1;
+}
+
+.spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+}
+
+/* Empty State */
+.no-subjects, .database-error {
+  text-align: center;
+  padding: 60px 20px;
+  color: #666;
+  grid-column: 1 / -1;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+.no-subjects i, .database-error i {
+  font-size: 4rem;
+  color: #ddd;
+  margin-bottom: 20px;
+}
+
+.no-subjects h3, .database-error h3 {
+  color: #268b17;
+  margin-bottom: 15px;
+  font-family: 'Bungee', cursive;
+}
+
+.no-subjects p, .database-error p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.database-error {
+  color: #d32f2f;
+  background: #ffebee;
+}
+
+.database-error i {
+  color: #d32f2f;
+}
+
+.database-error h3 {
+  color: #d32f2f;
+}
+
+.database-error a {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 600;
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: white;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.database-error a:hover {
+  background: #1976d2;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* Back to Top Button */
+.back-to-top {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 999;
+  background: linear-gradient(135deg, #2c5aa0, #10b981);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 4px 16px rgba(44,90,160,0.3);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+  background: linear-gradient(135deg, #1e3a66, #0d8f6a);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 24px rgba(44,90,160,0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .alevel-hero {
+    min-height: 40vh;
+    padding-top: 70px;
+    padding-bottom: 40px;
+  }
+  
+  .alevel-hero-title {
+    font-size: 1.8rem;
+  }
+  
+  .alevel-hero-subtitle {
+    font-size: 1rem;
+  }
+  
+  .alevel-hero-text {
+    padding: 20px 15px;
+  }
+  
+  .stats-container {
+    margin: 40px auto 60px;
+    gap: 25px;
+    grid-template-columns: 1fr;
+  }
+  
+  .stat-card {
+    padding: 35px 25px;
+  }
+  
+  .stat-card .icon {
+    font-size: 2.8rem;
+  }
+  
+  .stat-card .number {
+    font-size: 2.3rem;
+  }
+  
+  .search-container {
+    margin: 0 auto 60px;
+  }
+  
+  .search-box {
+    flex-direction: column;
+    border-radius: 15px;
+  }
+  
+  .search-box input,
+  .search-box button {
+    width: 100%;
+    padding: 14px 20px;
+  }
+  
+  .search-box button {
+    border-radius: 0 0 15px 15px;
+  }
+  
+  .alevel-section-heading {
+    font-size: 1.8rem;
+    margin-bottom: 40px;
+  }
+  
+  .alevel-divider {
+    margin: 0 auto 40px;
+  }
+  
+  .alevel-section {
+    padding: 0 0 80px 0;
+  }
+  
+  .container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 0 15px;
+  }
+  
+  .subject-card {
+    padding: 2rem 1.5rem;
+  }
+  
+  .back-to-top {
+    width: 48px;
+    height: 48px;
+    font-size: 1.2rem;
+    bottom: 20px;
+    right: 20px;
+  }
+}
     </style>
 </head>
 <body>
 <div id="navbar-placeholder"></div>
-<!-- Modern Hero Section -->
+<!-- Hero Section -->
 <section class="alevel-hero" aria-label="A-Level Hero">
   <div class="alevel-hero-overlay"></div>
   <div class="alevel-hero-text" data-aos="fade-down" data-aos-duration="1200">
     <h1 class="alevel-hero-title">A-LEVEL SUBJECTS</h1>
-    <p class="alevel-hero-subtitle">Our Advanced level program serves over 240 students from S.5 to S.6. Academics centre around a Uganda National curriculum, including the following subjects:</p>
+    <p class="alevel-hero-subtitle">Our Advanced level program serves over 240 students from S.5 to S.6. Academics centre around Uganda National curriculum, offering comprehensive subject coverage.</p>
   </div>
 </section>
 
+<!-- Statistics -->
+<div class="stats-container" data-aos="fade-up" data-aos-delay="100">
+  <div class="stat-card">
+    <div class="icon"><i class="fas fa-book-open"></i></div>
+    <div class="number" id="totalSubjects">0</div>
+    <div class="label">Total Subjects</div>
+  </div>
+  <div class="stat-card">
+    <div class="icon"><i class="fas fa-users"></i></div>
+    <div class="number">240+</div>
+    <div class="label">Students</div>
+  </div>
+  <div class="stat-card">
+    <div class="icon"><i class="fas fa-graduation-cap"></i></div>
+    <div class="number">S5 - S6</div>
+    <div class="label">Class Levels</div>
+  </div>
+</div>
+
+<!-- Search Bar -->
+<div class="search-container" data-aos="fade-up" data-aos-delay="200">
+  <div class="search-box">
+    <input type="text" 
+           id="searchInput" 
+           placeholder="Search subjects..." 
+           onkeyup="handleSearch()">
+    <button onclick="handleSearch()">
+      <i class="fas fa-search"></i> Search
+    </button>
+  </div>
+</div>
+
+<!-- Subjects Section -->
 <section class="alevel-section" aria-label="A-Level Subjects">
   <div class="alevel-divider"></div>
   <h2 class="alevel-section-heading" data-aos="fade-up" data-aos-delay="100">Explore A-Level Subjects</h2>
-  <div class="subject-grid" role="list" aria-label="A-Level Subjects List">
-    <article class="course" data-aos="fade-up" data-aos-delay="" role="listitem" tabindex="0" aria-label="">
-          <h3></h3>
-          <p>Advanced study of principles, theories, and practical applications.</p>
-        </article>
-        <div class="database-error" data-aos="fade-in" role="alert">
-        <i class="fa fa-database" aria-hidden="true"></i>
-        <h3>Database Setup Required</h3>
-        <p>The subjects database needs to be set up. Please run the database setup script.</p>
-        <p><a href="../backend/import_database.php">Click here to set up the database</a></p>
+  <div class="container" id="subjectsContainer">
+    <!-- Loading spinner -->
+    <div class="loading-container">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
-    <div class="no-subjects" data-aos="fade-in" role="status">
-        <i class="fa fa-university" aria-hidden="true"></i>
-        <h3>No A-Level Subjects Available</h3>
-        <p>Subjects will be displayed here once they are added to the system.</p>
-      </div>
+      <p class="mt-3">Loading subjects...</p>
     </div>
+  </div>
 </section>
 
 <!-- Back to Top Button -->
-<button onclick="scrollToTop()" aria-label="Back to Top" style="position:fixed;bottom:32px;right:32px;z-index:999;background:#1976d2;color:#fff;border:none;border-radius:50%;width:48px;height:48px;box-shadow:0 2px 8px rgba(25,118,210,0.18);font-size:1.5rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.2s;">
+<button onclick="scrollToTop()" class="back-to-top" aria-label="Back to Top">
   <i class="fas fa-arrow-up"></i>
 </button>
 
-<!-- AOS JS -->
+<!-- Scripts -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-  AOS.init({
-    duration: 900,
-    easing: 'ease-in-out',
-    once: true,
-  });
-</script>
-    
-    <!-- JavaScript for toggle menu -->
-    <script>
-        var navlinks = document.getElementById("navlinks");
-        function showMenu(){
-            navlinks.style.right = "0"
-        }
-        function hideMenu(){
-            navlinks.style.right = "-200px"
-        }
-    </script>
+AOS.init({
+  duration: 900,
+  easing: 'ease-in-out',
+  once: true
+});
 
-    <script>
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        }
-    </script>
+let allSubjects = [];
+
+// Load subjects on page load
+document.addEventListener('DOMContentLoaded', function() {
+  loadSubjects();
+});
+
+async function loadSubjects() {
+  const container = document.getElementById('subjectsContainer');
+  
+  try {
+    const response = await fetch('../backend/get_subjects.php?level=alevel');
+    const data = await response.json();
+    
+    // Remove loading spinner
+    container.innerHTML = '';
+    
+    if (data.success && data.subjects && data.subjects.length > 0) {
+      allSubjects = data.subjects;
+      
+      // Update statistics
+      document.getElementById('totalSubjects').textContent = data.count;
+      
+      // Display all subjects
+      displaySubjects(allSubjects);
+    } else {
+      container.innerHTML = `
+        <div class="no-subjects" data-aos="fade-in">
+          <i class="fa fa-book"></i>
+          <h3>No A-Level Subjects Available</h3>
+          <p>Subjects will be displayed here once they are added to the system.</p>
+        </div>
+      `;
+    }
+  } catch (error) {
+    console.error('Error loading subjects:', error);
+    container.innerHTML = `
+      <div class="database-error" data-aos="fade-in">
+        <i class="fa fa-exclamation-circle"></i>
+        <h3>Error Loading Subjects</h3>
+        <p>Unable to load subjects. This could be a database connection issue.</p>
+        <a href="../backend/import_database.php">Set up database</a>
+      </div>
+    `;
+  }
+}
+
+function displaySubjects(subjects) {
+  const container = document.getElementById('subjectsContainer');
+  const icons = ['fa-flask', 'fa-calculator', 'fa-book', 'fa-language', 'fa-globe', 'fa-laptop-code', 'fa-palette', 'fa-music', 'fa-microscope', 'fa-atom'];
+  
+  if (subjects.length > 0) {
+    container.innerHTML = subjects.map((subject, index) => `
+      <div class="subject-card" data-aos="fade-up" data-aos-delay="${Math.min(index * 50, 500)}">
+        <div class="subject-icon">
+          <i class="fas ${icons[index % icons.length]}"></i>
+        </div>
+        <h3>${subject.subject_name}</h3>
+        <p>Advanced study of principles, theories, and practical applications.</p>
+      </div>
+    `).join('');
+    
+    // Reinitialize AOS
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+    }
+  } else {
+    container.innerHTML = `
+      <div class="no-subjects">
+        <i class="fa fa-search"></i>
+        <h3>No Results Found</h3>
+        <p>No subjects match your search. Try different keywords.</p>
+      </div>
+    `;
+  }
+}
+
+function handleSearch() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+  
+  if (searchTerm === '') {
+    displaySubjects(allSubjects);
+    return;
+  }
+  
+  const filtered = allSubjects.filter(subject => 
+    subject.subject_name.toLowerCase().includes(searchTerm)
+  );
+  
+  displaySubjects(filtered);
+}
+
+// Allow search on Enter key
+document.getElementById('searchInput')?.addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') {
+    handleSearch();
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+</script>
 <script src="js/includes.js"></script>
 </body>
 </html> 

@@ -183,6 +183,19 @@ function initTables($conn) {
         UNIQUE KEY unique_attendance (student_id, class_id, date)
     )");
     
+    // Create admins table
+    $conn->query("CREATE TABLE IF NOT EXISTS admins (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(255) NOT NULL UNIQUE,
+        email VARCHAR(255) UNIQUE,
+        phone VARCHAR(20),
+        password VARCHAR(255) NOT NULL,
+        status VARCHAR(20) DEFAULT 'Active',
+        role VARCHAR(50) DEFAULT 'admin',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    )");
+    
     // Create exam_schedule table
     $conn->query("CREATE TABLE IF NOT EXISTS exam_schedule (
         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -201,17 +214,19 @@ function initTables($conn) {
     )");
     
     // Create admin user if it doesn't exist
-    $result = $conn->query("SELECT COUNT(*) as count FROM students WHERE usertype = 'admin'");
+    $result = $conn->query("SELECT COUNT(*) as count FROM admins");
     $row = $result->fetch_assoc();
     
     if ($row['count'] == 0) {
-        $stmt = $conn->prepare("INSERT INTO students (username, email, usertype, password, status) VALUES (?, ?, ?, ?, ?)");
+        // Create default admin account
+        $stmt = $conn->prepare("INSERT INTO admins (username, email, phone, password, status, role) VALUES (?, ?, ?, ?, ?, ?)");
         $username = 'admin';
         $email = 'admin@nyabikoni.com';
-        $usertype = 'admin';
-        $password = 'admin123';
+        $phone = '+256703599882';
+        $password = 'admin123'; // Default password - should be changed after first login
         $status = 'Active';
-        $stmt->bind_param('sssss', $username, $email, $usertype, $password, $status);
+        $role = 'superadmin';
+        $stmt->bind_param('ssssss', $username, $email, $phone, $password, $status, $role);
         $stmt->execute();
         $stmt->close();
     }

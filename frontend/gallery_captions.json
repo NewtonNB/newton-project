@@ -14,9 +14,10 @@
         },
         {
             "filename": "teacher_686e47eecf4363.94450118.jpg",
-            "category": "teachers",
+            "category": "nonteachers",
             "caption": "teacher_686e47eecf4363.94450118.jpg",
-            "order": 3
+            "order": 3,
+            "updated_at": "2026-08-21 09:50:37"
         },
         {
             "filename": "teacher_686e47c8aa1c94.23380109.jpg",
@@ -44,9 +45,10 @@
         },
         {
             "filename": "burser2.jpg",
-            "category": "nonteachers",
+            "category": "teachers",
             "caption": "burser2.jpg",
-            "order": 8
+            "order": 8,
+            "updated_at": "2026-08-21 09:50:29"
         },
         {
             "filename": "burser1.png",
@@ -599,6 +601,46 @@
             "category": "others",
             "caption": "Nyabikoni-Secondary-School-Logo.jpg",
             "order": 100
+        },
+        {
+            "filename": "gallery_6a8810c46cf1c.jpg",
+            "caption": "Tr Felix",
+            "category": "teachers",
+            "order": 101,
+            "likes": 0,
+            "views": 0,
+            "uploaded_at": "2026-08-21 08:48:04",
+            "uploaded_by": "admin"
+        },
+        {
+            "filename": "gallery_6a8810df06f6e.jpg",
+            "caption": "Tr Agatha",
+            "category": "teachers",
+            "order": 102,
+            "likes": 0,
+            "views": 0,
+            "uploaded_at": "2026-08-21 08:48:31",
+            "uploaded_by": "admin"
+        },
+        {
+            "filename": "gallery_6a8810fc7465a.jpg",
+            "caption": "Tr Miriah",
+            "category": "teachers",
+            "order": 103,
+            "likes": 0,
+            "views": 0,
+            "uploaded_at": "2026-08-21 08:49:00",
+            "uploaded_by": "admin"
+        },
+        {
+            "filename": "gallery_6a881583abcf3.jpg",
+            "caption": "Tr Oscar",
+            "category": "teachers",
+            "order": 104,
+            "likes": 0,
+            "views": 0,
+            "uploaded_at": "2026-08-21 09:08:19",
+            "uploaded_by": "admin"
         }
     ]
 }

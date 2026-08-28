@@ -1,41 +1,82 @@
 <?php
+/**
+ * Delete Gallery Image
+ * Handles image deletion from gallery
+ */
+
+error_reporting(0);
+ini_set('display_errors', 0);
+
 session_start();
-if (!isset($_SESSION['admin'])) {
-    http_response_code(403);
+header('Content-Type: application/json');
+
+// Check admin authentication
+if (!isset($_SESSION['admin']) || $_SESSION['usertype'] !== 'admin') {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit();
 }
 
-header('Content-Type: application/json');
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'error' => 'Invalid request method']);
-    exit();
+require '../shared/config.php';
+
+try {
+    // Get JSON input
+    $input = json_decode(file_get_contents('php://input'), true);
+    $filename = $input['filename'] ?? '';
+
+    if (empty($filename)) {
+        throw new Exception('Filename is required');
+    }
+
+    // Sanitize filename
+    $filename = basename($filename);
+
+    // Set paths
+    $imagePath = __DIR__ . '/../frontend/nyabzgallery/' . $filename;
+    $metaFile = __DIR__ . '/../frontend/gallery_captions.json';
+
+    // Check if file exists
+    if (!file_exists($imagePath)) {
+        throw new Exception('Image file not found');
+    }
+
+    // Delete the image file
+    if (!unlink($imagePath)) {
+        throw new Exception('Failed to delete image file');
+    }
+
+    // Update metadata file
+    if (file_exists($metaFile)) {
+        $content = file_get_contents($metaFile);
+        $decoded = json_decode($content, true);
+        
+        $metadataWrapper = ['images' => []];
+        if (isset($decoded['images']) && is_array($decoded['images'])) {
+            $metadataWrapper = $decoded;
+        } elseif (is_array($decoded)) {
+            $metadataWrapper['images'] = $decoded;
+        }
+
+        // Remove the deleted image from metadata
+        $metadataWrapper['images'] = array_filter($metadataWrapper['images'], function($item) use ($filename) {
+            return $item['filename'] !== $filename;
+        });
+
+        // Re-index array
+        $metadataWrapper['images'] = array_values($metadataWrapper['images']);
+
+        // Save updated metadata
+        file_put_contents($metaFile, json_encode($metadataWrapper, JSON_PRETTY_PRINT));
+    }
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Image deleted successfully'
+    ]);
+
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
 }
-
-require_once '../shared/config.php';
-$data = json_decode(file_get_contents('php://input'), true);
-$filename = $data['filename'] ?? '';
-if (!$filename) {
-    echo json_encode(['success' => false, 'error' => 'No filename provided']);
-    exit();
-}
-
-$galleryDir = 'nyabzgallery/';
-$metaFile = 'gallery_captions.json';
-$imgPath = $galleryDir . $filename;
-
-// Delete the image file
-if (file_exists($imgPath)) {
-    unlink($imgPath);
-}
-
-// Remove from metadata
-$meta = file_exists($metaFile) ? json_decode(file_get_contents($metaFile), true) : ['images' => []];
-if (isset($meta['images']) && is_array($meta['images'])) {
-    $meta['images'] = array_values(array_filter($meta['images'], function($img) use ($filename) {
-        return $img['filename'] !== $filename;
-    }));
-    file_put_contents($metaFile, json_encode($meta, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-}
-
-echo json_encode(['success' => true]); 
+?>

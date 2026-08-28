@@ -879,90 +879,227 @@ section {
 
 <!-- Admission Form Modal -->
 <div class="modal fade" id="admissionModal" tabindex="-1" aria-labelledby="admissionModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
     <div class="modal-content admission-modal-glass animate__animated animate__fadeInDown">
-      <div class="modal-header position-relative" style="background: linear-gradient(135deg, #2c5aa0 0%, #10b981 100%); color: #fff; border-bottom: none; box-shadow: 0 2px 12px rgba(44,90,160,0.10); padding-top: 2.2rem; padding-bottom: 1.5rem;">
-        <div class="w-100 text-center position-absolute top-0 start-50 translate-middle-x" style="margin-top: -48px;">
-          <img src="nyabzgallery/nyabzlogo.png" alt="School Logo" style="width: 80px; height: 80px; border-radius: 50%; box-shadow: 0 4px 18px rgba(44,90,160,0.13); background: #fff; padding: 8px; border: 3px solid #10b981;">
+      <div class="modal-header position-relative" style="background: linear-gradient(135deg, #2c5aa0 0%, #10b981 100%); color: #fff; border-bottom: none; box-shadow: 0 4px 20px rgba(44,90,160,0.15); padding: 2rem 2rem 1.5rem; min-height: 140px;">
+        <div class="w-100 text-center position-absolute top-0 start-50 translate-middle-x" style="margin-top: -55px;">
+          <div class="admission-logo-wrapper">
+            <img src="nyabzgallery/nyabzlogo.png" alt="School Logo" class="admission-logo">
+          </div>
         </div>
-        <div class="w-100" style="margin-top: 32px;"><h5 class="modal-title w-100 text-center" id="admissionModalLabel">Admission Form</h5></div>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="w-100 text-center" style="margin-top: 45px;">
+          <h5 class="modal-title fw-bold mb-1" id="admissionModalLabel" style="font-size: 1.75rem; letter-spacing: 0.5px;">Student Admission Form</h5>
+          <p class="mb-0 opacity-90" style="font-size: 0.95rem;">Nyabikoni Secondary School</p>
+        </div>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" style="position: absolute; right: 1rem; top: 1rem;"></button>
         <div class="admission-modal-accent"></div>
       </div>
-      <div class="modal-body" style="background: rgba(248,250,252,0.95);">
-        <form id="admission-popup-form" action="../backend/data_check.php" method="POST" aria-label="Admission Form" autocomplete="off" enctype="multipart/form-data">
-          <div class="form-group mb-3">
-            <label for="popupName" class="form-label">Name</label>
-            <input type="text" class="form-control" id="popupName" name="name" placeholder="Enter your full name">
+      <div class="modal-body" style="background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%); padding: 2rem 2.5rem;">
+        <form id="admission-popup-form" action="../backend/data_check.php" method="POST" aria-label="Admission Form" autocomplete="off" enctype="multipart/form-data" novalidate>
+          
+          <!-- Personal Information Section -->
+          <div class="form-section mb-4">
+            <h6 class="section-title mb-3">
+              <i class="fas fa-user-circle me-2"></i>Personal Information
+            </h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="popupName" class="form-label">Full Name <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-user"></i></span>
+                    <input type="text" class="form-control form-control-modern" id="popupName" name="name" placeholder="Enter your full name" required minlength="2" maxlength="100">
+                  </div>
+                  <div class="invalid-feedback">Please enter a valid full name (at least 2 characters).</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="popupDob" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-calendar-alt"></i></span>
+                    <input type="date" class="form-control form-control-modern" id="popupDob" name="dob" required>
+                  </div>
+                  <div class="invalid-feedback">Please select your date of birth.</div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="popupGender" class="form-label">Gender <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-venus-mars"></i></span>
+                    <select class="form-control form-control-modern" id="popupGender" name="gender" required>
+                      <option value="">Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                  <div class="invalid-feedback">Please select your gender.</div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="popupNationality" class="form-label">Nationality</label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-flag"></i></span>
+                    <input type="text" class="form-control form-control-modern" id="popupNationality" name="nationality" placeholder="e.g., Ugandan" maxlength="50">
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group mb-3">
+                  <label for="popupReligion" class="form-label">Religion</label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-pray"></i></span>
+                    <input type="text" class="form-control form-control-modern" id="popupReligion" name="religion" placeholder="e.g., Christian" maxlength="50">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group mb-3">
+              <label for="popupAddress" class="form-label">Address</label>
+              <div class="input-group">
+                <span class="input-icon"><i class="fas fa-map-marker-alt"></i></span>
+                <input type="text" class="form-control form-control-modern" id="popupAddress" name="address" placeholder="Enter your full address" maxlength="200">
+              </div>
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="popupDob" class="form-label">Date of Birth</label>
-            <input type="date" class="form-control" id="popupDob" name="dob">
+
+          <!-- Academic Information Section -->
+          <div class="form-section mb-4">
+            <h6 class="section-title mb-3">
+              <i class="fas fa-graduation-cap me-2"></i>Academic Information
+            </h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="popupClass" class="form-label">Class Applying For</label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-chalkboard-teacher"></i></span>
+                    <select class="form-control form-control-modern" id="popupClass" name="class_applying">
+                      <option value="">Select Class</option>
+                      <option value="S1">Senior 1 (S1)</option>
+                      <option value="S2">Senior 2 (S2)</option>
+                      <option value="S3">Senior 3 (S3)</option>
+                      <option value="S4">Senior 4 (S4)</option>
+                      <option value="S5">Senior 5 (S5)</option>
+                      <option value="S6">Senior 6 (S6)</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="popupPrevSchool" class="form-label">Previous School</label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-school"></i></span>
+                    <input type="text" class="form-control form-control-modern" id="popupPrevSchool" name="previous_school" placeholder="Enter your previous school" maxlength="100">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="popupGender" class="form-label">Gender</label>
-            <select class="form-control" id="popupGender" name="gender">
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
+
+          <!-- Parent/Guardian Information Section -->
+          <div class="form-section mb-4">
+            <h6 class="section-title mb-3">
+              <i class="fas fa-users me-2"></i>Parent/Guardian Information
+            </h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="popupParentName" class="form-label">Parent/Guardian Name <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-user-tie"></i></span>
+                    <input type="text" class="form-control form-control-modern" id="popupParentName" name="parent_name" placeholder="Enter parent or guardian name" required minlength="2" maxlength="100">
+                  </div>
+                  <div class="invalid-feedback">Please enter parent/guardian name (at least 2 characters).</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="popupParentPhone" class="form-label">Parent/Guardian Phone <span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-phone"></i></span>
+                    <input type="tel" class="form-control form-control-modern" id="popupParentPhone" name="parent_phone" placeholder="e.g., +256700123456" required pattern="^(\+?256|0)?[7][0-9]{8}$">
+                  </div>
+                  <div class="invalid-feedback">Please enter a valid Ugandan phone number (e.g., +256700123456 or 0700123456).</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="popupAddress" class="form-label">Address</label>
-            <input type="text" class="form-control" id="popupAddress" name="address" placeholder="Enter your address">
+
+          <!-- Contact Information Section -->
+          <div class="form-section mb-4">
+            <h6 class="section-title mb-3">
+              <i class="fas fa-address-card me-2"></i>Contact Information
+            </h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="popupEmail" class="form-label">Email Address</label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                    <input type="email" class="form-control form-control-modern" id="popupEmail" name="email" placeholder="your.email@example.com" maxlength="100">
+                  </div>
+                  <div class="invalid-feedback">Please enter a valid email address.</div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group mb-3">
+                  <label for="popupPhone" class="form-label">Student Phone</label>
+                  <div class="input-group">
+                    <span class="input-icon"><i class="fas fa-mobile-alt"></i></span>
+                    <input type="tel" class="form-control form-control-modern" id="popupPhone" name="phone" placeholder="e.g., +256700123456" pattern="^(\+?256|0)?[7][0-9]{8}$">
+                  </div>
+                  <div class="invalid-feedback">Please enter a valid Ugandan phone number.</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="popupNationality" class="form-label">Nationality</label>
-            <input type="text" class="form-control" id="popupNationality" name="nationality" placeholder="Enter your nationality">
+
+          <!-- Documents Section -->
+          <div class="form-section mb-4">
+            <h6 class="section-title mb-3">
+              <i class="fas fa-camera me-2"></i>Documents
+            </h6>
+            <div class="form-group mb-3">
+              <label for="popupPhoto" class="form-label">Passport Photo</label>
+              <div class="custom-file-upload">
+                <input type="file" class="form-control" id="popupPhoto" name="passport_photo" accept="image/jpeg,image/jpg,image/png">
+                <label for="popupPhoto" class="file-label">
+                  <i class="fas fa-cloud-upload-alt me-2"></i>
+                  <span class="file-text">Choose a photo or drag here</span>
+                </label>
+              </div>
+              <small class="form-text text-muted d-block mt-2"><i class="fas fa-info-circle me-1"></i>Maximum file size: 2MB. Accepted formats: JPG, PNG</small>
+              <div class="invalid-feedback">Please upload a valid image file (JPG or PNG, max 2MB).</div>
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="popupReligion" class="form-label">Religion</label>
-            <input type="text" class="form-control" id="popupReligion" name="religion" placeholder="Enter your religion">
+
+          <!-- Message Section -->
+          <div class="form-section mb-4">
+            <h6 class="section-title mb-3">
+              <i class="fas fa-comment-alt me-2"></i>Additional Information
+            </h6>
+            <div class="form-group mb-3">
+              <label for="popupMessage" class="form-label">Message (Optional)</label>
+              <textarea class="form-control form-control-modern" id="popupMessage" name="message" placeholder="Tell us anything else we should know..." style="min-height: 100px; resize: vertical;" maxlength="500"></textarea>
+              <small class="form-text text-muted d-block mt-1 text-end"><span id="messageCounter">0</span>/500 characters</small>
+            </div>
           </div>
-          <div class="form-group mb-3">
-            <label for="popupPrevSchool" class="form-label">Previous School</label>
-            <input type="text" class="form-control" id="popupPrevSchool" name="previous_school" placeholder="Enter your previous school">
-          </div>
-          <div class="form-group mb-3">
-            <label for="popupClass" class="form-label">Class Applying For</label>
-            <select class="form-control" id="popupClass" name="class_applying">
-              <option value="">Select Class</option>
-              <option value="S1">S1</option>
-              <option value="S2">S2</option>
-              <option value="S3">S3</option>
-              <option value="S4">S4</option>
-              <option value="S5">S5</option>
-              <option value="S6">S6</option>
-            </select>
-          </div>
-          <div class="form-group mb-3">
-            <label for="popupParentName" class="form-label">Parent/Guardian Name</label>
-            <input type="text" class="form-control" id="popupParentName" name="parent_name" placeholder="Enter parent or guardian name">
-          </div>
-          <div class="form-group mb-3">
-            <label for="popupParentPhone" class="form-label">Parent/Guardian Phone</label>
-            <input type="tel" class="form-control" id="popupParentPhone" name="parent_phone" placeholder="Enter parent or guardian phone number" pattern="^\+?\d{10,15}$" title="Enter a valid phone number with 10 to 15 digits.">
-          </div>
-          <div class="form-group mb-3">
-            <label for="popupEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="popupEmail" name="email" placeholder="Enter your email address">
-          </div>
-          <div class="form-group mb-3">
-            <label for="popupPhone" class="form-label">Phone</label>
-            <input type="tel" class="form-control" id="popupPhone" name="phone" placeholder="Enter your phone number" pattern="^\+?\d{10,15}$" title="Enter a valid phone number with 10 to 15 digits.">
-          </div>
-          <div class="form-group mb-3">
-            <label for="popupPhoto" class="form-label">Passport Photo</label>
-            <input type="file" class="form-control" id="popupPhoto" name="passport_photo" accept="image/*">
-          </div>
-          <div class="form-group mb-3">
-            <label for="popupMessage" class="form-label">Message</label>
-            <textarea class="form-control" id="popupMessage" name="message" placeholder="Write a brief message (optional)" style="min-height: 90px;"></textarea>
-          </div>
+
           <div id="admission-popup-feedback" class="mb-3"></div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-success px-5 admission-gradient-btn">Apply</button>
+          
+          <div class="text-center pt-3">
+            <button type="submit" class="btn btn-submit-modern">
+              <i class="fas fa-paper-plane me-2"></i>Submit Application
+            </button>
           </div>
         </form>
       </div>
@@ -971,6 +1108,194 @@ section {
 </div>
 
 <style>
+/* Form Section Styles */
+.form-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border-left: 4px solid #10b981;
+  transition: all 0.3s ease;
+}
+
+.form-section:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-2px);
+}
+
+.section-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #2c5aa0;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.section-title i {
+  color: #10b981;
+}
+
+/* Input Group with Icons */
+.input-group {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.input-group .form-control {
+  padding-left: 45px !important;
+}
+
+/* Modern Form Controls */
+.form-control-modern {
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+}
+
+.form-control-modern:focus {
+  border-color: #10b981;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+  outline: none;
+}
+
+.form-control-modern:hover:not(:focus) {
+  border-color: #cbd5e1;
+  background: #fff;
+}
+
+/* Form Labels */
+#admission-popup-form .form-label {
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Logo Wrapper */
+.admission-logo-wrapper {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.admission-logo {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  box-shadow: 0 6px 24px rgba(44,90,160,0.2);
+  background: #fff;
+  padding: 10px;
+  border: 4px solid #10b981;
+  object-fit: cover;
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Custom File Upload */
+.custom-file-upload {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.custom-file-upload input[type="file"] {
+  position: absolute;
+  left: -9999px;
+}
+
+.custom-file-upload .file-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  background: #f8fafc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.custom-file-upload .file-label:hover {
+  border-color: #10b981;
+  background: #f0fdf4;
+  color: #10b981;
+}
+
+.custom-file-upload input[type="file"]:focus + .file-label {
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+}
+
+/* Submit Button */
+.btn-submit-modern {
+  background: linear-gradient(135deg, #10b981 0%, #2c5aa0 100%);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 0.9rem 3rem;
+  box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-submit-modern::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-submit-modern:hover::before {
+  left: 100%;
+}
+
+.btn-submit-modern:hover {
+  background: linear-gradient(135deg, #0ea871 0%, #245086 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16,185,129,0.4);
+}
+
+.btn-submit-modern:active {
+  transform: translateY(0);
+}
+
 #admission-popup-feedback {
   display: none;
   padding: 1rem 1.5rem;
@@ -1004,115 +1329,219 @@ section {
 }
 
 /* Modern Modal Styles */
+#admissionModal .modal-dialog {
+  max-width: 900px;
+}
+
 #admissionModal .modal-content {
-  border-radius: 22px;
-  box-shadow: 0 8px 32px rgba(44,90,160,0.13);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(44,90,160,0.2);
   border: none;
   overflow: hidden;
 }
+
 #admissionModal .modal-header {
   position: relative;
   border-bottom: none;
-  min-height: 90px;
+  min-height: 140px;
 }
+
 #admissionModal .modal-title {
   font-family: 'Bungee', cursive;
-  font-size: 1.6rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
 }
+
 #admissionModal .btn-close {
-  filter: invert(1);
-  opacity: 0.8;
-  transition: opacity 0.2s;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: all 0.2s;
+  z-index: 10;
 }
+
 #admissionModal .btn-close:hover {
   opacity: 1;
+  transform: rotate(90deg);
 }
+
 #admissionModal .modal-body {
-  background: rgba(248,250,252,0.95);
-  padding: 2.5rem 2rem 2rem 2rem;
+  background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
+  padding: 2rem 2.5rem;
+  max-height: 70vh;
+  overflow-y: auto;
 }
-#admission-popup-form .form-label {
-  font-weight: 600;
-  color: #2c5aa0;
-  margin-bottom: 0.4em;
+
+/* Scrollbar Styling */
+#admissionModal .modal-body::-webkit-scrollbar {
+  width: 8px;
 }
+
+#admissionModal .modal-body::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+#admissionModal .modal-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+#admissionModal .modal-body::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
 #admission-popup-form .form-control {
-  border-radius: 16px;
-  border: 1.5px solid #cbd5e1;
-  font-size: 1.08em;
-  padding: 0.85em 1.2em;
-  box-shadow: 0 1px 4px rgba(44,90,160,0.04);
-  margin-bottom: 1.1em;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  border-radius: 10px;
+  border: 2px solid #e2e8f0;
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s;
+  background: #f8fafc;
 }
+
 #admission-popup-form .form-control:focus {
-  border-color: #2c5aa0;
-  box-shadow: 0 2px 12px rgba(44, 90, 160, 0.13);
+  border-color: #10b981;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+  outline: none;
 }
+
 #admission-popup-form textarea.form-control {
-  min-height: 90px;
+  min-height: 100px;
   resize: vertical;
 }
+
+.admission-gradient-btn,
 #admission-popup-form .btn-success {
   background: linear-gradient(135deg, #10b981 0%, #2c5aa0 100%);
   border: none;
-  border-radius: 18px;
-  font-size: 1.15em;
+  border-radius: 12px;
+  font-size: 1.1rem;
   font-weight: 700;
-  padding: 0.7em 2.5em;
-  box-shadow: 0 4px 18px rgba(16,185,129,0.13);
-  transition: background 0.2s, transform 0.2s;
+  padding: 0.9rem 3rem;
+  box-shadow: 0 4px 15px rgba(16,185,129,0.3);
+  transition: all 0.3s ease;
 }
+
+.admission-gradient-btn:hover,
 #admission-popup-form .btn-success:hover {
   background: linear-gradient(135deg, #2c5aa0 0%, #10b981 100%);
-  transform: translateY(-2px) scale(1.04);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16,185,129,0.4);
 }
+
 @media (max-width: 767px) {
   #admissionModal .modal-body {
-    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    padding: 1.5rem 1rem;
   }
   #admissionModal .modal-title {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
   .admission-modal-glass {
-    border-radius: 14px;
+    border-radius: 16px;
+  }
+  .form-section {
+    padding: 1rem;
+  }
+  .btn-submit-modern {
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
   }
 }
+
 .admission-modal-glass {
-  background: rgba(255,255,255,0.85) !important;
-  backdrop-filter: blur(16px);
-  border-radius: 28px;
-  box-shadow: 0 12px 48px rgba(44,90,160,0.13), 0 2px 12px rgba(16,185,129,0.08);
+  background: rgba(255,255,255,0.95) !important;
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(44,90,160,0.2);
   border: none;
   overflow: hidden;
-  animation: fadeInDown 0.7s cubic-bezier(.4,2,.6,1);
+  animation: fadeInDown 0.6s cubic-bezier(.4,2,.6,1);
 }
+
 @keyframes fadeInDown {
-  0% { opacity: 0; transform: translateY(-60px) scale(0.98); }
+  0% { opacity: 0; transform: translateY(-80px) scale(0.95); }
   100% { opacity: 1; transform: translateY(0) scale(1); }
 }
+
 .admission-modal-accent {
   position: absolute;
-  left: 0; right: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 5px;
-  background: linear-gradient(90deg, #10b981 0%, #2c5aa0 100%);
-  border-radius: 0 0 12px 12px;
-  width: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #2c5aa0 50%, #10b981 100%);
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite;
 }
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 .admission-error {
   color: #e53e3e;
-  font-size: 0.98em;
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
   font-weight: 500;
   display: block;
+  animation: shakeError 0.3s;
 }
+
+@keyframes shakeError {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
 .admission-invalid {
   border-color: #e53e3e !important;
-  box-shadow: 0 0 0 2px rgba(229,62,62,0.12);
-  background: #fff0f0;
+  box-shadow: 0 0 0 3px rgba(229,62,62,0.1);
+  background: #fff5f5 !important;
+  animation: pulse 0.5s;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.form-control.is-invalid {
+  border-color: #dc3545;
+  padding-right: calc(1.5em + 0.75rem);
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right calc(0.375em + 0.1875rem) center;
+  background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+  display: none;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: #dc3545;
+}
+
+.was-validated .form-control:invalid ~ .invalid-feedback,
+.form-control.is-invalid ~ .invalid-feedback {
+  display: block;
+}
+
+/* Text muted styling */
+.text-muted {
+  color: #64748b !important;
+  font-size: 0.85rem;
 }
 </style>
 
@@ -1121,6 +1550,31 @@ section {
 
 <script>
 $(function() {
+  // Set max date for DOB (today)
+  var today = new Date().toISOString().split('T')[0];
+  $('#popupDob').attr('max', today);
+  
+  // Character counter for message
+  $('#popupMessage').on('input', function() {
+    var length = $(this).val().length;
+    $('#messageCounter').text(length);
+  });
+  
+  // File size validation
+  $('#popupPhoto').on('change', function() {
+    var file = this.files[0];
+    if (file) {
+      var maxSize = 2 * 1024 * 1024; // 2MB
+      if (file.size > maxSize) {
+        $(this).addClass('is-invalid');
+        $(this).siblings('.invalid-feedback').text('File size exceeds 2MB. Please choose a smaller file.');
+        this.value = '';
+      } else {
+        $(this).removeClass('is-invalid');
+      }
+    }
+  });
+  
   // Check for success parameter in URL
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('success') === '1') {
@@ -1144,92 +1598,137 @@ $(function() {
   if (form.length) {
     form.on('submit', function(e) {
       e.preventDefault();
-      // Remove previous errors
+      e.stopPropagation();
+      
+      // Remove previous custom errors
       form.find('.admission-error').remove();
       form.find('.admission-invalid').removeClass('admission-invalid');
+      
       var valid = true;
-      // Name
-      var name = $('#popupName').val().trim();
-      if (name.length < 2) {
-        $('#popupName').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupName').after('<span class="admission-error">Please enter your name (at least 2 characters).</span>');
+      
+      // Check HTML5 validity
+      if (!this.checkValidity()) {
+        form.addClass('was-validated');
         valid = false;
-      }
-      // DOB
-      var dob = $('#popupDob').val();
-      if (!dob) {
-        $('#popupDob').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupDob').after('<span class="admission-error">Please select your date of birth.</span>');
-        valid = false;
-      }
-      // Gender
-      var gender = $('#popupGender').val();
-      if (!gender) {
-        $('#popupGender').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupGender').after('<span class="admission-error">Please select your gender.</span>');
-        valid = false;
-      }
-      // Address
-      var address = $('#popupAddress').val().trim();
-      if (address.length < 3) {
-        $('#popupAddress').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupAddress').after('<span class="admission-error">Please enter your address.</span>');
-        valid = false;
-      }
-      // Nationality
-      var nationality = $('#popupNationality').val().trim();
-      if (nationality.length < 2) {
-        $('#popupNationality').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupNationality').after('<span class="admission-error">Please enter your nationality.</span>');
-        valid = false;
-      }
-      // Religion
-      var religion = $('#popupReligion').val().trim();
-      if (religion.length < 2) {
-        $('#popupReligion').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupReligion').after('<span class="admission-error">Please enter your religion.</span>');
-        valid = false;
-      }
-      // Class
-      var classApplying = $('#popupClass').val();
-      if (!classApplying) {
-        $('#popupClass').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupClass').after('<span class="admission-error">Please select the class you are applying for.</span>');
-        valid = false;
-      }
-      // Parent Name
-      var parentName = $('#popupParentName').val().trim();
-      if (parentName.length < 2) {
-        $('#popupParentName').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupParentName').after('<span class="admission-error">Please enter parent or guardian name.</span>');
-        valid = false;
-      }
-      // Parent Phone
-      var parentPhone = $('#popupParentPhone').val().trim();
-      var phonePattern = /^\+?\d{10,15}$/;
-      if (!phonePattern.test(parentPhone)) {
-        $('#popupParentPhone').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupParentPhone').after('<span class="admission-error">Please enter a valid parent/guardian phone number (10-15 digits, optional +).</span>');
-        valid = false;
-      }
-      // Email
-      var email = $('#popupEmail').val().trim();
-      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(email)) {
-        $('#popupEmail').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupEmail').after('<span class="admission-error">Please enter a valid email address.</span>');
-        valid = false;
-      }
-      // Phone
-      var phone = $('#popupPhone').val().trim();
-      if (!phonePattern.test(phone)) {
-        $('#popupPhone').addClass('admission-invalid').next('.admission-error').remove();
-        $('#popupPhone').after('<span class="admission-error">Please enter a valid phone number (10-15 digits, optional +).</span>');
-        valid = false;
-      }
-      if (!valid) {
+        
+        // Focus on first invalid field
+        var firstInvalid = form.find(':invalid').first();
+        if (firstInvalid.length) {
+          firstInvalid[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => firstInvalid.focus(), 300);
+        }
         return false;
       }
+      
+      form.addClass('was-validated');
+      
+      // Custom validation for additional checks
+      // Name validation
+      var name = $('#popupName').val().trim();
+      if (name.length < 2) {
+        $('#popupName').addClass('admission-invalid is-invalid');
+        $('#popupName').siblings('.invalid-feedback').remove();
+        $('#popupName').after('<div class="invalid-feedback d-block admission-error">Please enter a valid full name (at least 2 characters).</div>');
+        valid = false;
+      }
+      
+      // Date of Birth validation (must be at least 5 years old)
+      var dob = $('#popupDob').val();
+      if (dob) {
+        var birthDate = new Date(dob);
+        var today = new Date();
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+        }
+        if (age < 5 || age > 25) {
+          $('#popupDob').addClass('admission-invalid is-invalid');
+          $('#popupDob').siblings('.invalid-feedback').remove();
+          $('#popupDob').after('<div class="invalid-feedback d-block admission-error">Student must be between 5 and 25 years old.</div>');
+          valid = false;
+        }
+      }
+      
+      // Gender validation
+      var gender = $('#popupGender').val();
+      if (!gender) {
+        $('#popupGender').addClass('admission-invalid is-invalid');
+        valid = false;
+      }
+      
+      // Parent Name validation
+      var parentName = $('#popupParentName').val().trim();
+      if (parentName.length < 2) {
+        $('#popupParentName').addClass('admission-invalid is-invalid');
+        $('#popupParentName').siblings('.invalid-feedback').remove();
+        $('#popupParentName').after('<div class="invalid-feedback d-block admission-error">Please enter parent or guardian name (at least 2 characters).</div>');
+        valid = false;
+      }
+      
+      // Parent Phone validation - Ugandan format
+      var parentPhone = $('#popupParentPhone').val().trim();
+      var ugandanPhonePattern = /^(\+?256|0)?[7][0-9]{8}$/;
+      if (!ugandanPhonePattern.test(parentPhone)) {
+        $('#popupParentPhone').addClass('admission-invalid is-invalid');
+        $('#popupParentPhone').siblings('.invalid-feedback').remove();
+        $('#popupParentPhone').after('<div class="invalid-feedback d-block admission-error">Please enter a valid Ugandan phone number (e.g., +256700123456 or 0700123456).</div>');
+        valid = false;
+      }
+      
+      // Email validation (if provided)
+      var email = $('#popupEmail').val().trim();
+      if (email) {
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          $('#popupEmail').addClass('admission-invalid is-invalid');
+          $('#popupEmail').siblings('.invalid-feedback').remove();
+          $('#popupEmail').after('<div class="invalid-feedback d-block admission-error">Please enter a valid email address.</div>');
+          valid = false;
+        }
+      }
+      
+      // Student Phone validation (if provided) - Ugandan format
+      var phone = $('#popupPhone').val().trim();
+      if (phone && !ugandanPhonePattern.test(phone)) {
+        $('#popupPhone').addClass('admission-invalid is-invalid');
+        $('#popupPhone').siblings('.invalid-feedback').remove();
+        $('#popupPhone').after('<div class="invalid-feedback d-block admission-error">Please enter a valid Ugandan phone number.</div>');
+        valid = false;
+      }
+      
+      // File validation
+      var photoInput = document.getElementById('popupPhoto');
+      if (photoInput.files.length > 0) {
+        var file = photoInput.files[0];
+        var allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        var maxSize = 2 * 1024 * 1024; // 2MB
+        
+        if (!allowedTypes.includes(file.type)) {
+          $('#popupPhoto').addClass('admission-invalid is-invalid');
+          $('#popupPhoto').siblings('.invalid-feedback').remove();
+          $('#popupPhoto').after('<div class="invalid-feedback d-block admission-error">Only JPG and PNG files are allowed.</div>');
+          valid = false;
+        }
+        
+        if (file.size > maxSize) {
+          $('#popupPhoto').addClass('admission-invalid is-invalid');
+          $('#popupPhoto').siblings('.invalid-feedback').remove();
+          $('#popupPhoto').after('<div class="invalid-feedback d-block admission-error">File size must be less than 2MB.</div>');
+          valid = false;
+        }
+      }
+      
+      if (!valid) {
+        // Scroll to first error
+        var firstError = form.find('.admission-invalid, .is-invalid').first();
+        if (firstError.length) {
+          firstError[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+          setTimeout(() => firstError.focus(), 300);
+        }
+        return false;
+      }
+      
       // If valid, proceed with AJAX
       var formData = new FormData(this);
       var feedback = $('#admission-popup-feedback');
@@ -1244,14 +1743,9 @@ $(function() {
         method: 'POST',
         body: formData
       })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-      })
+      .then(response => response.json())
       .then(data => {
-        if (data.toLowerCase().includes('success')) {
+        if (data.success) {
           // Close the modal
           var modal = bootstrap.Modal.getInstance(document.getElementById('admissionModal'));
           if (modal) {
@@ -1260,7 +1754,7 @@ $(function() {
           
           // Show success notification
           var successNotification = $('<div class="alert alert-success alert-dismissible fade show position-fixed" style="top: 80px; right: 20px; z-index: 9999; min-width: 350px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" role="alert">' +
-            '<i class="fas fa-check-circle me-2"></i><strong>Success!</strong> Your application has been submitted successfully. We will contact you soon.' +
+            '<i class="fas fa-check-circle me-2"></i><strong>Success!</strong> ' + data.message +
             '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>' +
             '</div>');
           $('body').append(successNotification);
@@ -1275,7 +1769,7 @@ $(function() {
           
           submitBtn.prop('disabled', false).html(originalText);
         } else {
-          feedback.removeClass('success').addClass('error').html('<i class="fas fa-exclamation-circle me-2"></i>' + data).show();
+          feedback.removeClass('success').addClass('error').html('<i class="fas fa-exclamation-circle me-2"></i>' + data.error).show();
           submitBtn.prop('disabled', false).html(originalText);
         }
       })
@@ -1283,9 +1777,6 @@ $(function() {
         console.error('Error:', error);
         feedback.removeClass('success').addClass('error').html('<i class="fas fa-exclamation-circle me-2"></i>An error occurred. Please try again.').show();
         submitBtn.prop('disabled', false).html(originalText);
-      });
-      .catch(() => {
-        feedback.addClass('error').html('<i class="fas fa-exclamation-triangle me-2"></i>An error occurred. Please try again later.').show();
       });
     });
   }

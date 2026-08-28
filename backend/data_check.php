@@ -1,77 +1,113 @@
 <?php
+/**
+ * data_check.php
+ * Handles student admission form submissions
+ */
+error_reporting(0);
+ini_set('display_errors', 0);
 
 session_start();
-$host = "localhost";
-$user = "root";
-$password = "1234";
-$db = "schoolproject"; 
+header('Content-Type: application/json');
 
-$data = mysqli_connect($host, $user, $password, $db);
+require_once '../shared/config.php';
 
-if ($data === false) {
-    die("Connection error: " . mysqli_connect_error());
-}
+try {
+    // Validate request method
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        throw new Exception('Invalid request method. Please submit the form properly.');
+    }
 
-if (
-    isset($_POST['name']) && isset($_POST['email']) && isset($_POST['phone']) &&
-    isset($_POST['dob']) && isset($_POST['gender']) && isset($_POST['address']) &&
-    isset($_POST['nationality']) && isset($_POST['religion']) && isset($_POST['parent_name']) && isset($_POST['parent_phone']) && isset($_POST['class_applying'])
-) {
-    // Sanitize user input
-    $data_name = mysqli_real_escape_string($data, $_POST['name']);
-    $data_dob = mysqli_real_escape_string($data, $_POST['dob']);
-    $data_gender = mysqli_real_escape_string($data, $_POST['gender']);
-    $data_address = mysqli_real_escape_string($data, $_POST['address']);
-    $data_nationality = mysqli_real_escape_string($data, $_POST['nationality']);
-    $data_religion = mysqli_real_escape_string($data, $_POST['religion']);
-    $data_prev_school = isset($_POST['previous_school']) ? mysqli_real_escape_string($data, $_POST['previous_school']) : '';
-    $data_class = mysqli_real_escape_string($data, $_POST['class_applying']);
-    $data_parent_name = mysqli_real_escape_string($data, $_POST['parent_name']);
-    $data_parent_phone = mysqli_real_escape_string($data, $_POST['parent_phone']);
-    $data_email = mysqli_real_escape_string($data, $_POST['email']);
-    $data_phone = mysqli_real_escape_string($data, $_POST['phone']);
-    $data_message = isset($_POST['message']) ? mysqli_real_escape_string($data, $_POST['message']) : '';
+    // Check if POST data exists
+    if (empty($_POST)) {
+        throw new Exception('No form data received. Please submit the application form.');
+    }
+
+    // Get form data
+    $name = trim($_POST['name'] ?? '');
+    $dob = trim($_POST['dob'] ?? '');
+    $gender = trim($_POST['gender'] ?? '');
+    $parentName = trim($_POST['parent_name'] ?? '');
+    $parentPhone = trim($_POST['parent_phone'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $message = trim($_POST['message'] ?? '');
+
+    // Basic validation
+    if (empty($name) || empty($dob) || empty($gender) || empty($parentName) || empty($parentPhone)) {
+        throw new Exception('Please fill in all required fields (Name, Date of Birth, Gender, Parent Name, Parent Phone)');
+    }
+
+    // Validate email if provided
+    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        throw new Exception('Invalid email address');
+    }
 
     // Handle passport photo upload
-    $passport_photo_path = '';
+    $photoPath = null;
     if (isset($_FILES['passport_photo']) && $_FILES['passport_photo']['error'] === UPLOAD_ERR_OK) {
-        $upload_dir = 'uploads/passport_photos/';
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
+        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        $maxSize = 2 * 1024 * 1024; // 2MB
+
+        $fileType = $_FILES['passport_photo']['type'];
+        $fileSize = $_FILES['passport_photo']['size'];
+
+        if (!in_array($fileType, $allowedTypes)) {
+            throw new Exception('Invalid file type. Only JPG and PNG allowed');
         }
-        $file_tmp = $_FILES['passport_photo']['tmp_name'];
-        $file_name = basename($_FILES['passport_photo']['name']);
-        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-        $allowed_exts = ['jpg', 'jpeg', 'png', 'gif'];
-        if (in_array($file_ext, $allowed_exts)) {
-            $new_file_name = uniqid('passport_', true) . '.' . $file_ext;
-            $target_path = $upload_dir . $new_file_name;
-            if (move_uploaded_file($file_tmp, $target_path)) {
-                $passport_photo_path = $target_path;
-            } else {
-                echo "Error: Failed to upload passport photo.";
-                exit;
-            }
-        } else {
-            echo "Error: Invalid passport photo file type.";
-            exit;
+
+        if ($fileSize > $maxSize) {
+            throw new Exception('File too large. Maximum size is 2MB');
+        }
+
+        // Create upload directory if it doesn't exist
+        $uploadDir = __DIR__ . '/../frontend/admission_photos/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0755, true);
+        }
+
+        // Generate unique filename
+        $extension = pathinfo($_FILES['passport_photo']['name'], PATHINFO_EXTENSION);
+        $filename = 'admission_' . uniqid() . '.' . $extension;
+        $targetPath = $uploadDir . $filename;
+
+        if (move_uploaded_file($_FILES['passport_photo']['tmp_name'], $targetPath)) {
+            $photoPath = 'admission_photos/' . $filename;
         }
     }
 
-    $sql = "INSERT INTO admission (name, dob, gender, address, nationality, religion, previous_school, class_applying, parent_name, parent_phone, email, phone, passport_photo, message)
-            VALUES ('$data_name', '$data_dob', '$data_gender', '$data_address', '$data_nationality', '$data_religion', '$data_prev_school', '$data_class', '$data_parent_name', '$data_parent_phone', '$data_email', '$data_phone', '$passport_photo_path', '$data_message')";
+    // Insert into database
+    $stmt = $conn->prepare("INSERT INTO student_applications 
+        (name, date_of_birth, gender, parent_name, parent_phone, email, phone, message, photo, status, created_at) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending', NOW())");
+    
+    $stmt->bind_param("sssssssss", 
+        $name, $dob, $gender, $parentName, $parentPhone, $email, $phone, $message, $photoPath
+    );
 
-    $result = mysqli_query($data, $sql);
-
-    if ($result) {
-        // Skip email sending for faster response
-        // Email functionality can be added later with proper PHPMailer setup
-        echo "Success: Your application was sent successfully!";
+    if ($stmt->execute()) {
+        $applicationId = $stmt->insert_id;
+        
+        // Send email notification (optional)
+        // You can add email sending code here if needed
+        
+        echo json_encode([
+            'success' => true,
+            'message' => 'Application submitted successfully! We will contact you soon.',
+            'application_id' => $applicationId
+        ]);
     } else {
-        echo "Apply Failed: Could not process your application.";
+        throw new Exception('Failed to submit application. Please try again.');
     }
-} else {
-    echo "Error: Invalid form submission.";
+
+    $stmt->close();
+
+} catch (Exception $e) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
 }
 
+$conn->close();
 ?>

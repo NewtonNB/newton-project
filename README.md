@@ -122,23 +122,22 @@ This is a complete school management website featuring:
 
 ## 📁 Project Structure
 
-The project has been reorganized into a clean separation of concerns:
+Clean, modern architecture with full frontend-backend separation:
 
 ```
 school-project/
-├── backend/              # Server-side logic and API endpoints
-│   ├── AJAX handlers     # All AJAX request handlers
-│   ├── Database ops      # Database operations
-│   └── API endpoints    # RESTful API endpoints
-├── frontend/            # Client-side files
-│   ├── PHP pages        # Display pages
-│   ├── CSS files        # Stylesheets
-│   ├── JavaScript       # Client-side scripts
-│   └── Assets          # Images and static files
-├── shared/              # Shared resources
-│   ├── config.php      # Database configuration
-│   └── Common files    # Shared utilities
-└── netlify.toml        # Netlify deployment config
+├── backend/              # PHP API endpoints (74 files)
+│   ├── *_ajax.php       # AJAX handlers
+│   ├── get_*.php        # Data retrieval
+│   └── schoolproject.db # SQLite database
+├── frontend/            # HTML pages (53 files - NO PHP!)
+│   ├── *.html           # All pages use .html extension
+│   ├── js/              # JavaScript modules
+│   ├── nyabzgallery/    # Image galleries
+│   └── assets/          # CSS, fonts, etc.
+├── shared/              # Shared configuration
+│   └── config.php       # Database configuration
+└── DOCUMENTATION.md     # Complete guide
 ```
 
 ## 🌐 Deployment
@@ -173,14 +172,19 @@ For frontend-only deployment to Netlify:
 
 ## 📖 Documentation
 
-Comprehensive documentation is available in:
-- **[SYSTEM_ENHANCEMENTS_GUIDE.md](SYSTEM_ENHANCEMENTS_GUIDE.md)** - Complete system documentation
+**Complete documentation is available in:**
+### **[DOCUMENTATION.md](DOCUMENTATION.md)** - All-in-one comprehensive guide
 
-### Quick Links
-- [Installation Guide](SYSTEM_ENHANCEMENTS_GUIDE.md#installation--configuration)
-- [User Guide](SYSTEM_ENHANCEMENTS_GUIDE.md#user-guide)
-- [Admin Guide](SYSTEM_ENHANCEMENTS_GUIDE.md#admin-guide)
-- [Troubleshooting](SYSTEM_ENHANCEMENTS_GUIDE.md#troubleshooting)
+**Includes:**
+- 🚀 Quick Start Guide
+- 📥 Installation Instructions
+- 💻 Development Guide
+- 🗄️ Database Setup
+- 🌐 Deployment Guide
+- ✨ Features Overview
+- 🔌 API Reference
+- 🐛 Troubleshooting
+- 🔄 Recent Changes
 
 ## 🎨 Features Showcase
 

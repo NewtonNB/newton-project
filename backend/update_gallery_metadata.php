@@ -1,73 +1,152 @@
 <?php
+/**
+ * Update Gallery Metadata
+ * Handles caption updates, category changes, and image reordering
+ */
+
+error_reporting(0);
+ini_set('display_errors', 0);
+
 session_start();
-if (!isset($_SESSION['admin'])) {
-    http_response_code(403);
+header('Content-Type: application/json');
+
+// Check admin authentication
+if (!isset($_SESSION['admin']) || $_SESSION['usertype'] !== 'admin') {
     echo json_encode(['success' => false, 'error' => 'Unauthorized']);
     exit();
 }
 
-$metaFile = 'gallery_captions.json';
-header('Content-Type: application/json');
+require '../shared/config.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    echo json_encode(['success' => false, 'error' => 'Invalid request method']);
-    exit();
-}
+try {
+    // Get JSON input
+    $input = json_decode(file_get_contents('php://input'), true);
+    $action = $input['action'] ?? '';
 
-$data = json_decode(file_get_contents('php://input'), true);
-if (!$data || !isset($data['action'])) {
-    echo json_encode(['success' => false, 'error' => 'Invalid data']);
-    exit();
-}
+    if (empty($action)) {
+        throw new Exception('Action is required');
+    }
 
-// Load current metadata
-$meta = file_exists($metaFile) ? json_decode(file_get_contents($metaFile), true) : ['images' => []];
-if (!isset($meta['images']) || !is_array($meta['images'])) {
-    $meta['images'] = [];
-}
+    // Load metadata
+    $metaFile = __DIR__ . '/../frontend/gallery_captions.json';
+    $metadataWrapper = ['images' => []];
+    
+    if (file_exists($metaFile)) {
+        $content = file_get_contents($metaFile);
+        $decoded = json_decode($content, true);
+        if (isset($decoded['images']) && is_array($decoded['images'])) {
+            $metadataWrapper = $decoded;
+        } elseif (is_array($decoded)) {
+            // Convert old format to new format
+            $metadataWrapper['images'] = $decoded;
+        }
+    }
+    
+    $metadata = &$metadataWrapper['images'];
 
-$changed = false;
+    switch ($action) {
+        case 'update_caption':
+            $filename = $input['filename'] ?? '';
+            $caption = trim($input['caption'] ?? '');
 
-if ($data['action'] === 'update_caption') {
-    // Update caption for a specific image
-    $filename = $data['filename'] ?? '';
-    $caption = $data['caption'] ?? '';
-    foreach ($meta['images'] as &$img) {
-        if ($img['filename'] === $filename) {
-            $img['caption'] = $caption;
-            $changed = true;
+            if (empty($filename)) {
+                throw new Exception('Filename is required');
+            }
+
+            // Find and update the image
+            $found = false;
+            foreach ($metadata as &$item) {
+                if ($item['filename'] === $filename) {
+                    $item['caption'] = $caption;
+                    $item['updated_at'] = date('Y-m-d H:i:s');
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                // Add new entry if not found
+                $metadata[] = [
+                    'filename' => $filename,
+                    'caption' => $caption,
+                    'category' => 'others',
+                    'order' => count($metadata) + 1,
+                    'likes' => 0,
+                    'views' => 0,
+                    'uploaded_at' => date('Y-m-d H:i:s')
+                ];
+            }
             break;
-        }
-    }
-} elseif ($data['action'] === 'update_category') {
-    // Update category for a specific image
-    $filename = $data['filename'] ?? '';
-    $category = $data['category'] ?? '';
-    foreach ($meta['images'] as &$img) {
-        if ($img['filename'] === $filename) {
-            $img['category'] = $category;
-            $changed = true;
-            break;
-        }
-    }
-} elseif ($data['action'] === 'update_order') {
-    // Update order for all images
-    $orderArr = $data['order'] ?? [];
-    foreach ($meta['images'] as &$img) {
-        if (isset($orderArr[$img['filename']])) {
-            $img['order'] = $orderArr[$img['filename']];
-            $changed = true;
-        }
-    }
-}
 
-if ($changed) {
-    // Sort by new order before saving
-    usort($meta['images'], function($a, $b) {
-        return ($a['order'] ?? 9999) - ($b['order'] ?? 9999);
-    });
-    file_put_contents($metaFile, json_encode($meta, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-    echo json_encode(['success' => true]);
-} else {
-    echo json_encode(['success' => false, 'error' => 'No changes made']);
-} 
+        case 'update_category':
+            $filename = $input['filename'] ?? '';
+            $category = trim($input['category'] ?? '');
+
+            if (empty($filename) || empty($category)) {
+                throw new Exception('Filename and category are required');
+            }
+
+            // Validate category
+            $validCategories = ['teachers', 'nonteachers', 'sports', 'clubs', 'buildings', 'others'];
+            if (!in_array($category, $validCategories)) {
+                throw new Exception('Invalid category');
+            }
+
+            // Find and update the image
+            $found = false;
+            foreach ($metadata as &$item) {
+                if ($item['filename'] === $filename) {
+                    $item['category'] = $category;
+                    $item['updated_at'] = date('Y-m-d H:i:s');
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                throw new Exception('Image not found in metadata');
+            }
+            break;
+
+        case 'update_order':
+            $order = $input['order'] ?? [];
+
+            if (!is_array($order) || empty($order)) {
+                throw new Exception('Order data is required');
+            }
+
+            // Update order for each image
+            foreach ($metadata as &$item) {
+                if (isset($order[$item['filename']])) {
+                    $item['order'] = (int)$order[$item['filename']];
+                    $item['updated_at'] = date('Y-m-d H:i:s');
+                }
+            }
+
+            // Sort by order
+            usort($metadata, function($a, $b) {
+                return ($a['order'] ?? 999) - ($b['order'] ?? 999);
+            });
+            break;
+
+        default:
+            throw new Exception('Invalid action');
+    }
+
+    // Save updated metadata
+    if (file_put_contents($metaFile, json_encode($metadataWrapper, JSON_PRETTY_PRINT))) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Metadata updated successfully'
+        ]);
+    } else {
+        throw new Exception('Failed to save metadata');
+    }
+
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
+}
+?>

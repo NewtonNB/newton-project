@@ -1,5 +1,5 @@
 <?php
-// Disable error reporting to prevent HTML output before JSON
+// Disable error display in production
 error_reporting(0);
 ini_set('display_errors', 0);
 
@@ -15,8 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 try {
-    $galleryDir = 'nyabzgallery/';
-    $metaFile = 'gallery_captions.json';
+    $galleryDir = __DIR__ . '/../frontend/nyabzgallery/';
+    $metaFile = __DIR__ . '/../frontend/gallery_captions.json';
     
     // Load metadata
     $metadata = [];

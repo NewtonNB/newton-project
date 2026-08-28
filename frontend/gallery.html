@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Gallery - Nyabikoni Secondary School</title>
+    <title>Photo Gallery - Nyabikoni Secondary School</title>
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,889 +17,937 @@
     <!-- Lightbox CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css">
     
-<!-- AOS CSS -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <!-- AOS CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 
     <!-- Custom Navbar CSS -->
     <link rel="stylesheet" href="navbar.css">
     
     <!-- Modern Footer CSS -->
     <link rel="stylesheet" href="modern-footer.css">
-    <!-- Gallery-specific CSS moved inline -->
+    
     <style>
-/* Gallery-specific styles for Nyabikoni Secondary School */
+        /* Gallery Styles */
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #3949ab;
+            --accent-color: #667eea;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --light-bg: #f5f7fa;
+            --dark-text: #2c3e50;
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-md: 0 8px 30px rgba(0,0,0,0.12);
+            --shadow-lg: 0 15px 50px rgba(0,0,0,0.15);
+            --border-radius: 15px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-/* Hero Section */
-.gallery-hero {
-    position: relative;
-    min-height: 80vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-top: 120px; /* Account for fixed navbar */
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.gallery-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('nyabzgallery/current.jpg') center/cover;
-    opacity: 0.3;
-    z-index: 1;
-}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
 
-.hero-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
-    z-index: 2;
-}
+        /* Hero Section */
+        .gallery-hero {
+            position: relative;
+            min-height: 70vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            margin-top: 0;
+        }
 
-.gallery-hero .container {
-    position: relative;
-    z-index: 3;
-}
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('nyabzgallery/current.jpg') center/cover no-repeat;
+            opacity: 0.25;
+            z-index: 1;
+        }
 
-.hero-title {
-    font-family: 'Bungee', cursive;
-    font-size: 4rem;
-    font-weight: 900;
-    color: #ffffff;
-    margin-bottom: 1rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-    animation: fadeInUp 1s ease-out;
-}
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85) 0%, rgba(118, 75, 162, 0.85) 100%);
+            z-index: 2;
+        }
 
-.hero-subtitle {
-    font-size: 1.2rem;
-    color: #ffffff;
-    margin-bottom: 3rem;
-    opacity: 0.9;
-    animation: fadeInUp 1s ease-out 0.2s both;
-}
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: white;
+            padding: 2rem;
+        }
 
-.hero-stats {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    flex-wrap: wrap;
-    animation: fadeInUp 1s ease-out 0.4s both;
-}
+        .hero-title {
+            font-family: 'Bungee', cursive;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
 
-.stat-item {
-    text-align: center;
-    color: #ffffff;
-}
+        .hero-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
 
-.stat-item i {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    display: block;
-    opacity: 0.8;
-}
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
 
-.stat-number {
-    font-size: 2rem;
-    font-weight: 700;
-    display: block;
-    margin-bottom: 0.25rem;
-}
+        .stat-item {
+            text-align: center;
+        }
 
-.stat-label {
-    font-size: 0.9rem;
-    opacity: 0.8;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.85;
+        }
 
-/* Gallery Filter Section */
-.gallery-filter-section {
-    padding: 4rem 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-}
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
 
-.filter-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.85;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
-.filter-btn {
-    background: #ffffff;
-    border: 2px solid #e1e5e9;
-    color: #6c757d;
-    padding: 0.75rem 1.5rem;
-    border-radius: 50px;
-    font-weight: 500;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
+        /* Filter Section */
+        .gallery-filter-section {
+            padding: 3rem 0;
+            background: white;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+        }
 
-.filter-btn:hover, .filter-btn.active {
-    background: #667eea;
-    color: #ffffff;
-    border-color: #667eea;
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
-    transform: translateY(-2px);
-}
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
 
-.filter-btn i {
-    font-size: 0.8rem;
-}
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3.5rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 50px;
+            font-size: 1rem;
+            outline: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
 
-/* Gallery Grid Section */
-.gallery-grid-section {
-    padding: 4rem 0;
-    background: #ffffff;
-}
+        .search-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+        }
 
-.gallery-item {
-    margin-bottom: 2rem;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.6s ease;
-    display: flex;
-}
+        .search-icon {
+            position: absolute;
+            left: 1.25rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 1.2rem;
+        }
 
-.gallery-item.show, .gallery-item.loaded {
-    opacity: 1;
-    transform: translateY(0);
-}
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
 
-.gallery-card {
-    background: #ffffff;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
+        .filter-btn {
+            background: white;
+            border: 2px solid #e1e5e9;
+            color: #6c757d;
+            padding: 0.75rem 1.75rem;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
 
-.gallery-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-}
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
 
-.gallery-image {
-    position: relative;
-    overflow: hidden;
-    aspect-ratio: 4/3;
-}
+        .filter-btn i {
+            font-size: 0.9rem;
+        }
 
-.gallery-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
+        /* Gallery Grid */
+        .gallery-grid-section {
+            padding: 4rem 0;
+            background: var(--light-bg);
+        }
 
-.gallery-card:hover .gallery-image img {
-    transform: scale(1.1);
-}
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+        }
 
-.gallery-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
+        .gallery-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
 
-.gallery-card:hover .gallery-overlay {
-    opacity: 1;
-}
+        .gallery-item.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-.overlay-content {
-    display: flex;
-    gap: 1rem;
-}
+        .gallery-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
 
-.lightbox-btn, .share-btn {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #ffffff;
-    color: #333;
-    border: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1.1rem;
-}
+        .gallery-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
 
-.lightbox-btn:hover, .share-btn:hover {
-    background: #667eea;
-    color: #ffffff;
-    transform: scale(1.1);
-}
+        .gallery-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: #f0f0f0;
+        }
 
-.gallery-info {
-    padding: 1.5rem;
-}
+        .gallery-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
 
-.gallery-info h4 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 0.5rem;
-    line-height: 1.3;
-}
+        .gallery-card:hover .gallery-image img {
+            transform: scale(1.1);
+        }
 
-.gallery-category {
-    color: #667eea;
-    font-size: 0.8rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
-}
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
 
-.gallery-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid #e9ecef;
-}
+        .gallery-card:hover .gallery-overlay {
+            opacity: 1;
+        }
 
-.like-btn, .download-btn {
-    background: none;
-    border: none;
-    color: #6c757d;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 5px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.9rem;
-}
+        .overlay-content {
+            display: flex;
+            gap: 1rem;
+        }
 
-.like-btn:hover, .download-btn:hover {
-    color: #667eea;
-    background: rgba(102, 126, 234, 0.1);
-}
+        .overlay-btn {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: white;
+            color: var(--dark-text);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
 
-.like-btn.liked {
-    color: #e74c3c;
-}
+        .overlay-btn:hover {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.15);
+        }
 
-.like-btn.liked i {
-    animation: heartBeat 0.6s ease;
-}
+        .gallery-info {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
 
-/* Gallery Stats Section */
-.gallery-stats-section {
-    padding: 4rem 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #ffffff;
-}
+        .gallery-category {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
 
-.stat-card {
-    text-align: center;
-    padding: 2rem 1rem;
-    border-radius: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-}
+        .gallery-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
 
-.stat-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.15);
-}
+        .gallery-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+            flex: 1;
+        }
 
-.stat-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    opacity: 0.8;
-}
+        .gallery-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+        }
 
-.stat-content h3 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
+        .action-btn {
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
 
-.stat-content p {
-    font-size: 0.9rem;
-    opacity: 0.8;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
+        .action-btn:hover {
+            color: var(--accent-color);
+            background: rgba(102, 126, 234, 0.1);
+        }
 
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
+        .action-btn.liked {
+            color: var(--danger-color);
+        }
 
-@keyframes heartBeat {
-    0% { transform: scale(1); }
-    14% { transform: scale(1.3); }
-    28% { transform: scale(1); }
-    42% { transform: scale(1.3); }
-    70% { transform: scale(1); }
-}
+        .action-btn.liked i {
+            animation: heartBeat 0.6s ease;
+        }
 
-/* Counter Animation */
-.stat-number {
-    transition: all 0.3s ease;
-}
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #999;
+        }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-    .hero-title {
-        font-size: 2.5rem;
-    }
-    .hero-stats {
-        gap: 2rem;
-    }
-    .filter-buttons {
-        gap: 0.5rem;
-    }
-    .filter-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-    }
-    .gallery-info {
-        padding: 1rem;
-    }
-    .stat-card {
-        margin-bottom: 1rem;
-    }
-}
-@media (max-width: 576px) {
-    .hero-title {
-        font-size: 2rem;
-    }
-    .hero-subtitle {
-        font-size: 1rem;
-    }
-    .hero-stats {
-        flex-direction: column;
-        gap: 1.5rem;
-    }
-    .filter-buttons {
-        flex-direction: column;
-        align-items: center;
-    }
-    .filter-btn {
-        width: 100%;
-        max-width: 200px;
-    }
-}
-/* Loading animation for gallery items */
-.gallery-item.loading {
-    opacity: 0;
-    transform: translateY(30px);
-}
-.gallery-item.loaded {
-    opacity: 1;
-    transform: translateY(0);
-}
-/* Masonry-like layout adjustments */
-.gallery-grid-section .row {
-    display: flex;
-    flex-wrap: wrap;
-}
-.gallery-item {
-    display: flex;
-    margin-bottom: 2rem;
-}
-.gallery-card {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-/* Hide the Lightbox2 close (X) button */
-.lb-close {
-  display: none !important;
-}
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .no-results h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .no-results p {
+            font-size: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            14% { transform: scale(1.3); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.3); }
+            70% { transform: scale(1); }
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e1e5e9;
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .filter-buttons {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1.25rem;
+                font-size: 0.85rem;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        /* Hide Lightbox close button */
+        .lb-close {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
-<div id="navbar-placeholder"></div>
-    <!-- Include the unified navbar -->
+    <!-- Navbar -->
+    <div id="navbar-placeholder"></div>
+
     <!-- Hero Section -->
     <section class="gallery-hero">
         <div class="hero-overlay"></div>
-      <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-8 text-center" data-aos="fade-up" data-aos-duration="1000">
-                    <h1 class="hero-title">Our School Gallery</h1>
-                    <p class="hero-subtitle">Discover the vibrant moments, achievements, and memories that make Nyabikoni Secondary School special</p>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <i class="fas fa-images"></i>
-                            <span class="stat-number" data-count="150">0</span>
-                            <span class="stat-label">Photos</span>
-        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span class="stat-number" data-count="12">0</span>
-                            <span class="stat-label">Events</span>
-                        </div>
-                        <div class="stat-item">
-                            <i class="fas fa-users"></i>
-                            <span class="stat-number" data-count="500">0</span>
-                            <span class="stat-label">Students</span>
-                        </div>
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+                <h1 class="hero-title">School Gallery</h1>
+                <p class="hero-subtitle">Discover the vibrant moments, achievements, and memories that make Nyabikoni Secondary School special</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-images stat-icon"></i>
+                        <span class="stat-number" data-count="150" id="photoCount">0</span>
+                        <span class="stat-label">Photos</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-calendar-alt stat-icon"></i>
+                        <span class="stat-number" data-count="12" id="eventCount">12</span>
+                        <span class="stat-label">Events</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-users stat-icon"></i>
+                        <span class="stat-number" data-count="500" id="studentCount">500</span>
+                        <span class="stat-label">Students</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    
-    <!-- Gallery Filter Section -->
+
+    <!-- Filter Section -->
     <section class="gallery-filter-section">
-  <div class="container">
-  <div class="row justify-content-center">
-                <div class="col-lg-8 text-center">
-                    <div class="filter-buttons" data-aos="fade-up" data-aos-delay="200">
-                        <button class="filter-btn active" data-filter="all">
-                            <i class="fas fa-th"></i> All Photos
-                        </button>
-                        <button class="filter-btn" data-filter="events">
-                            <i class="fas fa-calendar"></i> Events
-                        </button>
-                        <button class="filter-btn" data-filter="activities">
-                            <i class="fas fa-running"></i> Activities
-                        </button>
-                        <button class="filter-btn" data-filter="facilities">
-                            <i class="fas fa-building"></i> Facilities
-                        </button>
-                        <button class="filter-btn" data-filter="students">
-                            <i class="fas fa-user-graduate"></i> Students
-                        </button>
-                    </div>
-    </div>
-  </div>
-</div>
+        <div class="container">
+            <!-- Search Bar -->
+            <div class="search-container" data-aos="fade-up" data-aos-delay="100">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search photos by title, category, or description...">
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="filter-buttons" data-aos="fade-up" data-aos-delay="200">
+                <button class="filter-btn active" data-filter="all">
+                    <i class="fas fa-th"></i> All Photos
+                </button>
+                <button class="filter-btn" data-filter="events">
+                    <i class="fas fa-calendar"></i> Events
+                </button>
+                <button class="filter-btn" data-filter="activities">
+                    <i class="fas fa-running"></i> Activities
+                </button>
+                <button class="filter-btn" data-filter="facilities">
+                    <i class="fas fa-building"></i> Facilities
+                </button>
+                <button class="filter-btn" data-filter="students">
+                    <i class="fas fa-user-graduate"></i> Students
+                </button>
+                <button class="filter-btn" data-filter="sports">
+                    <i class="fas fa-futbol"></i> Sports
+                </button>
+            </div>
+        </div>
     </section>
 
-    <!-- Gallery Grid Section -->
+    <!-- Gallery Grid -->
     <section class="gallery-grid-section">
         <div class="container">
-            <div class="row" id="gallery-grid">
-                <div class="col-lg-4 col-md-6 gallery-item" data-category="<?= $category ?>" data-aos="fade-up" data-aos-duration="800" data-aos-delay="<?= ($count % 6) * 100 ?>">
-                    <div class="gallery-card">
-                        <div class="gallery-image">
-                            <a href="<?= $galleryDir . $img ?>" data-lightbox="gallery" data-title="<?= htmlspecialchars(getImageTitle($img)) ?>">
-                                <img src="<?= $galleryDir . $img ?>" alt="<?= htmlspecialchars(pathinfo($img, PATHINFO_FILENAME)) ?>" class="img-fluid">
-                            </a>
-                            <div class="gallery-overlay">
-                                <div class="overlay-content">
-                                    <a href="<?= $galleryDir . $img ?>" data-lightbox="gallery" class="lightbox-btn">
-                                        <i class="fas fa-search-plus"></i>
-                                    </a>
-                                    <button class="share-btn" onclick="shareImage('<?= $galleryDir . $img ?>', '<?= htmlspecialchars(pathinfo($img, PATHINFO_FILENAME)) ?>')">
-                                        <i class="fas fa-share-alt"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallery-info">
-                            <h4><?= getImageTitle($img) ?></h4>
-                            <p class="gallery-category"><?= ucfirst($category) ?></p>
-                            <p class="gallery-description"><?= getImageDescription($img, $category) ?></p>
-                            <div class="gallery-actions">
-                                <button class="like-btn" onclick="toggleLike(this)">
-                                    <i class="far fa-heart"></i>
-                                    <span class="like-count">0</span>
-                                </button>
-                                <button class="download-btn" onclick="downloadImage('<?= $galleryDir . $img ?>', '<?= htmlspecialchars(pathinfo($img, PATHINFO_FILENAME)) ?>')">
-                                    <i class="fas fa-download"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </div>
-        </div>
-    </section>
-
-    <!-- Gallery Stats Section -->
-    <section class="gallery-stats-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-camera"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 class="stat-number" data-count="<?= count($filtered_images) ?>">0</h3>
-                            <p class="stat-label">Total Photos</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-eye"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 class="stat-number" data-count="2500">0</h3>
-                            <p class="stat-label">Monthly Views</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-heart"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 class="stat-number" data-count="180">0</h3>
-                            <p class="stat-label">Likes</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-download"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 class="stat-number" data-count="95">0</h3>
-                            <p class="stat-label">Downloads</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be dynamically loaded here -->
+            </div>
+            <div class="no-results" id="noResults" style="display: none;">
+                <i class="fas fa-search"></i>
+                <h3>No photos found</h3>
+                <p>Try adjusting your search or filter criteria</p>
             </div>
         </div>
     </section>
 
-    <!-- Include the modern footer -->
-<!-- Scripts -->
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-
-    <!-- Enhanced Gallery JavaScript -->
-    <script src="gallery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    
     <script>
-        // Enhanced Gallery with Dynamic Features
-        class EnhancedGallery {
+        // Gallery Management System
+        class GalleryManager {
             constructor() {
                 this.currentFilter = 'all';
+                this.searchTerm = '';
                 this.allImages = [];
                 this.filteredImages = [];
-                this.isLoading = false;
                 
                 this.init();
             }
 
             async init() {
-                // Load images dynamically
-                await this.loadImagesFromAPI();
-                this.setupEnhancedFeatures();
-                this.updateCounters();
+                // Initialize AOS
+                AOS.init({
+                    duration: 800,
+                    easing: 'ease-in-out',
+                    once: true,
+                    offset: 100
+                });
+
+                // Initialize Lightbox (optional - if library is loaded)
+                try {
+                    if (typeof lightbox !== 'undefined') {
+                        lightbox.option({
+                            'resizeDuration': 200,
+                            'wrapAround': true,
+                            'albumLabel': 'Image %1 of %2',
+                            'fadeDuration': 300,
+                            'imageFadeDuration': 300,
+                            'showImageNumberLabel': true
+                        });
+                    }
+                } catch (error) {
+                    console.warn('Lightbox initialization failed:', error);
+                }
+
+                this.setupEventListeners();
+                await this.loadGalleryImages();
+                this.renderGallery();
+                this.animateCounters();
             }
 
-            async loadImagesFromAPI() {
+            setupEventListeners() {
+                // Search functionality
+                const searchInput = document.getElementById('searchInput');
+                searchInput.addEventListener('input', this.debounce((e) => {
+                    this.searchTerm = e.target.value.toLowerCase();
+                    this.filterAndRender();
+                }, 300));
+
+                // Filter buttons
+                document.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        this.currentFilter = btn.getAttribute('data-filter');
+                        this.filterAndRender();
+                    });
+                });
+            }
+
+            async loadGalleryImages() {
                 try {
-                    this.isLoading = true;
+                    // Load images from backend API
                     const response = await fetch('../backend/get_gallery_images.php');
                     const data = await response.json();
                     
-                    if (data.success) {
-                        this.allImages = data.images;
-                        this.filteredImages = [...this.allImages];
-                        this.updateGalleryWithAPI();
+                    if (data.success && data.images) {
+                        // Map backend categories to frontend categories
+                        this.allImages = data.images.map(img => ({
+                            src: img.full_url || img.thumbnail,
+                            title: img.caption,
+                            category: this.mapCategory(img.category),
+                            description: img.description || img.caption,
+                            likes: img.likes || 0
+                        }));
+                    } else {
+                        // Fallback to sample data if API fails
+                        console.warn('API failed, using fallback data');
+                        this.loadFallbackImages();
                     }
                 } catch (error) {
-                    console.error('Error loading images:', error);
-                } finally {
-                    this.isLoading = false;
-                }
-            }
-
-            updateGalleryWithAPI() {
-                // Update existing gallery items with API data
-                const galleryItems = document.querySelectorAll('.gallery-item');
-                
-                galleryItems.forEach((item, index) => {
-                    if (this.allImages[index]) {
-                        const image = this.allImages[index];
-                        const likeBtn = item.querySelector('.like-btn');
-                        const likeCount = item.querySelector('.like-count');
-                        
-                        if (likeCount) {
-                            likeCount.textContent = image.likes || 0;
-                        }
-                        
-                        // Add real-time features
-                        this.addRealTimeFeatures(item, image);
-                    }
-                });
-            }
-
-            addRealTimeFeatures(item, imageData) {
-                // Add view tracking
-                const img = item.querySelector('img');
-                if (img) {
-                    const observer = new IntersectionObserver((entries) => {
-                        entries.forEach(entry => {
-                            if (entry.isIntersecting) {
-                                this.trackView(imageData.filename);
-                                observer.unobserve(entry.target);
-                            }
-                        });
-                    });
-                    observer.observe(img);
+                    console.error('Error loading gallery:', error);
+                    // Fallback to sample data
+                    this.loadFallbackImages();
                 }
 
-                // Add enhanced hover effects
-                item.addEventListener('mouseenter', () => {
-                    this.showImagePreview(imageData);
-                });
+                this.filteredImages = [...this.allImages];
+                
+                // Update photo count
+                document.getElementById('photoCount').setAttribute('data-count', this.allImages.length);
+            }
 
-                // Add keyboard navigation
-                item.setAttribute('tabindex', '0');
-                item.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        const lightboxLink = item.querySelector('a[data-lightbox]');
-                        if (lightboxLink) lightboxLink.click();
+            // Map backend categories to frontend filter categories
+            mapCategory(backendCategory) {
+                const categoryMap = {
+                    'teachers': 'students',      // Teachers → Students category
+                    'nonteachers': 'students',   // Staff → Students category
+                    'sports': 'sports',          // Sports → Sports (matches)
+                    'clubs': 'activities',       // Clubs → Activities
+                    'buildings': 'facilities',   // Buildings → Facilities
+                    'others': 'events'           // Others → Events
+                };
+                return categoryMap[backendCategory] || 'events';
+            }
+
+            // Fallback images if API fails
+            loadFallbackImages() {
+                this.allImages = [
+                    {
+                        src: 'nyabzgallery/current.jpg',
+                        title: 'School Main Building',
+                        category: 'facilities',
+                        description: 'Main academic building with modern classrooms',
+                        likes: 45
+                    },
+                    {
+                        src: 'nyabzgallery/harvad3.jpg',
+                        title: 'Harvard Block View',
+                        category: 'facilities',
+                        description: 'Student accommodation block',
+                        likes: 32
+                    },
+                    {
+                        src: 'nyabzgallery/esternblock - Copy.jpg',
+                        title: 'Eastern Campus',
+                        category: 'facilities',
+                        description: 'Eastern campus facilities',
+                        likes: 28
+                    },
+                    {
+                        src: 'nyabzgallery/SCHOOL MAIN HALL.jpg',
+                        title: 'Main Hall',
+                        category: 'facilities',
+                        description: 'Assembly and events hall',
+                        likes: 50
+                    },
+                    {
+                        src: 'nyabzgallery/admin2 - Copy.JPG',
+                        title: 'Administration Block',
+                        category: 'facilities',
+                        description: 'School administrative offices',
+                        likes: 22
+                    },
+                    {
+                        src: 'nyabzgallery/chapel - Copy.JPG',
+                        title: 'School Chapel',
+                        category: 'facilities',
+                        description: 'Chapel for spiritual gatherings',
+                        likes: 38
+                    },
+                    {
+                        src: 'nyabzgallery/boyswing - Copy.JPG',
+                        title: 'Boys Dormitory',
+                        category: 'facilities',
+                        description: 'Student accommodation wing',
+                        likes: 25
+                    },
+                    {
+                        src: 'nyabzgallery/havard - Copy.jpg',
+                        title: 'Harvard Wing',
+                        category: 'facilities',
+                        description: 'Modern student residence',
+                        likes: 40
+                    },
+                    {
+                        src: 'nyabzgallery/staff.JPG',
+                        title: 'Teaching Staff',
+                        category: 'events',
+                        description: 'Our dedicated teaching team',
+                        likes: 55
+                    },
+                    {
+                        src: 'nyabzgallery/sports.JPG',
+                        title: 'Sports Activities',
+                        category: 'sports',
+                        description: 'Students participating in sports',
+                        likes: 42
+                    },
+                    {
+                        src: 'nyabzgallery/library.JPG',
+                        title: 'School Library',
+                        category: 'facilities',
+                        description: 'Modern library with extensive resources',
+                        likes: 35
+                    },
+                    {
+                        src: 'nyabzgallery/chapel3.jpg',
+                        title: 'Chapel Interior',
+                        category: 'facilities',
+                        description: 'Interior view of school chapel',
+                        likes: 30
+                    },
+                    {
+                        src: 'nyabzgallery/school life.JPG',
+                        title: 'Sports Day',
+                        category: 'events',
+                        description: 'Annual sports day celebration',
+                        likes: 62
+                    },
+                    {
+                        src: 'nyabzgallery/Alevelstudents.jpg',
+                        title: 'A-Level Students',
+                        category: 'students',
+                        description: 'Our dedicated A-Level students',
+                        likes: 48
                     }
+                ];
+                
+                this.filteredImages = [...this.allImages];
+                
+                // Update photo count
+                document.getElementById('photoCount').setAttribute('data-count', this.allImages.length);
+            }
+
+            filterAndRender() {
+                this.filteredImages = this.allImages.filter(image => {
+                    // Category filter
+                    const categoryMatch = this.currentFilter === 'all' || image.category === this.currentFilter;
+                    
+                    // Search filter
+                    if (this.searchTerm) {
+                        const searchFields = [
+                            image.title.toLowerCase(),
+                            image.category.toLowerCase(),
+                            image.description.toLowerCase()
+                        ];
+                        const searchMatch = searchFields.some(field => field.includes(this.searchTerm));
+                        return categoryMatch && searchMatch;
+                    }
+                    
+                    return categoryMatch;
                 });
+
+                this.renderGallery();
             }
 
-            setupEnhancedFeatures() {
-                // Enhanced search with debouncing
-                this.setupEnhancedSearch();
+            renderGallery() {
+                const galleryGrid = document.getElementById('galleryGrid');
+                const noResults = document.getElementById('noResults');
                 
-                // Real-time filtering
-                this.setupRealTimeFiltering();
-                
-                // Infinite scroll
-                this.setupInfiniteScroll();
-                
-                // Keyboard shortcuts
-                this.setupKeyboardShortcuts();
-            }
-
-            setupEnhancedSearch() {
-                const searchInput = document.querySelector('.gallery-search');
-                if (searchInput) {
-                    searchInput.addEventListener('input', this.debounce((e) => {
-                        this.performSearch(e.target.value);
-                    }, 300));
+                if (this.filteredImages.length === 0) {
+                    galleryGrid.innerHTML = '';
+                    noResults.style.display = 'block';
+                    return;
                 }
-            }
-
-            setupRealTimeFiltering() {
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        this.currentFilter = btn.getAttribute('data-filter');
-                        this.applyFilter();
-                        this.updateFilterUI(btn);
-                    });
-                });
-            }
-
-            applyFilter() {
-                const galleryItems = document.querySelectorAll('.gallery-item');
                 
-                galleryItems.forEach(item => {
-                    const category = item.getAttribute('data-category');
-                    const shouldShow = this.currentFilter === 'all' || category === this.currentFilter;
+                noResults.style.display = 'none';
+                galleryGrid.innerHTML = '';
+
+                this.filteredImages.forEach((image, index) => {
+                    const galleryItem = document.createElement('div');
+                    galleryItem.className = 'gallery-item';
+                    galleryItem.setAttribute('data-aos', 'fade-up');
+                    galleryItem.setAttribute('data-aos-delay', (index % 6) * 100);
                     
-                    if (shouldShow) {
-                        item.style.display = 'block';
-                        setTimeout(() => item.classList.add('show'), 50);
-                    } else {
-                        item.classList.remove('show');
-                        setTimeout(() => item.style.display = 'none', 300);
-                    }
-                });
-
-                this.updateCounters();
-            }
-
-            updateFilterUI(activeBtn) {
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                activeBtn.classList.add('active');
-            }
-
-            performSearch(searchTerm) {
-                const galleryItems = document.querySelectorAll('.gallery-item');
-                const term = searchTerm.toLowerCase();
-                
-                galleryItems.forEach(item => {
-                    const title = item.querySelector('h4').textContent.toLowerCase();
-                    const category = item.querySelector('.gallery-category').textContent.toLowerCase();
-                    const description = item.querySelector('.gallery-description')?.textContent.toLowerCase() || '';
+                    galleryItem.innerHTML = `
+                        <div class="gallery-card">
+                            <div class="gallery-image">
+                                <a href="${image.src}" data-lightbox="gallery" data-title="${image.title}">
+                                    <img src="${image.src}" alt="${image.title}" loading="lazy">
+                                </a>
+                                <div class="gallery-overlay">
+                                    <div class="overlay-content">
+                                        <a href="${image.src}" data-lightbox="gallery" class="overlay-btn" title="View">
+                                            <i class="fas fa-search-plus"></i>
+                                        </a>
+                                        <button class="overlay-btn" onclick="shareImage('${image.src}', '${image.title}')" title="Share">
+                                            <i class="fas fa-share-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="gallery-info">
+                                <p class="gallery-category">${image.category}</p>
+                                <h4 class="gallery-title">${image.title}</h4>
+                                <p class="gallery-description">${image.description}</p>
+                                <div class="gallery-actions">
+                                    <button class="action-btn" onclick="toggleLike(this)">
+                                        <i class="far fa-heart"></i>
+                                        <span class="like-count">${image.likes}</span>
+                                    </button>
+                                    <button class="action-btn" onclick="downloadImage('${image.src}', '${image.title}')">
+                                        <i class="fas fa-download"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                     
-                    const matches = title.includes(term) || category.includes(term) || description.includes(term);
-                    
-                    if (matches || term === '') {
-                        item.style.display = 'block';
-                        item.classList.add('show');
-                    } else {
-                        item.classList.remove('show');
-                        setTimeout(() => item.style.display = 'none', 300);
-                    }
+                    galleryGrid.appendChild(galleryItem);
                 });
-            }
 
-            setupInfiniteScroll() {
-                let page = 1;
-                const itemsPerPage = 12;
-                
-                window.addEventListener('scroll', this.debounce(() => {
-                    if (this.isNearBottom() && !this.isLoading) {
-                        this.loadMoreImages(page++, itemsPerPage);
-                    }
-                }, 100));
-            }
-
-            setupKeyboardShortcuts() {
-                document.addEventListener('keydown', (e) => {
-                    // Press 'f' to focus search
-                    if (e.key === 'f' && !e.ctrlKey && !e.metaKey) {
-                        const searchInput = document.querySelector('.gallery-search');
-                        if (searchInput && document.activeElement !== searchInput) {
-                            e.preventDefault();
-                            searchInput.focus();
-                        }
-                    }
-                    
-                    // Press 'Escape' to clear search
-                    if (e.key === 'Escape') {
-                        const searchInput = document.querySelector('.gallery-search');
-                        if (searchInput) {
-                            searchInput.value = '';
-                            this.performSearch('');
-                        }
-                    }
-                });
-            }
-
-            async trackView(filename) {
-                try {
-                    await fetch('../backend/track_gallery_view.php', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ filename: filename })
-                    });
-                } catch (error) {
-                    console.error('Error tracking view:', error);
-                }
-            }
-
-            showImagePreview(imageData) {
-                // Create floating preview tooltip
-                const preview = document.createElement('div');
-                preview.className = 'image-preview-tooltip';
-                preview.innerHTML = `
-                    <div class="preview-content">
-                        <h5>${imageData.caption}</h5>
-                        <p><i class="fas fa-heart"></i> ${imageData.likes || 0} likes</p>
-                        <p><i class="fas fa-eye"></i> ${imageData.views || 0} views</p>
-                        <p><i class="fas fa-calendar"></i> ${this.formatDate(imageData.modified)}</p>
-                    </div>
-                `;
-                
-                // Add styles
-                preview.style.cssText = `
-                    position: fixed;
-                    background: rgba(0,0,0,0.9);
-                    color: white;
-                    padding: 1rem;
-                    border-radius: 8px;
-                    z-index: 1000;
-                    pointer-events: none;
-                    opacity: 0;
-                    transition: opacity 0.3s ease;
-                    max-width: 200px;
-                `;
-                
-                document.body.appendChild(preview);
-                
-                // Position and show
-                setTimeout(() => preview.style.opacity = '1', 100);
-                
-                // Remove after delay
+                // Trigger AOS refresh
                 setTimeout(() => {
-                    preview.style.opacity = '0';
-                    setTimeout(() => preview.remove(), 300);
-                }, 2000);
-            }
-
-            updateCounters() {
-                const visibleItems = document.querySelectorAll('.gallery-item[style*="block"], .gallery-item:not([style*="none"])').length;
-                
-                // Update hero stats
-                const totalPhotos = document.querySelector('.stat-number[data-count]');
-                if (totalPhotos) {
-                    this.animateCounter(totalPhotos, visibleItems);
-                }
-            }
-
-            animateCounter(element, target) {
-                const duration = 1000;
-                const start = parseInt(element.textContent) || 0;
-                const increment = (target - start) / (duration / 16);
-                let current = start;
-
-                const updateCounter = () => {
-                    current += increment;
-                    if ((increment > 0 && current < target) || (increment < 0 && current > target)) {
-                        element.textContent = Math.floor(current);
-                        requestAnimationFrame(updateCounter);
-                    } else {
-                        element.textContent = target;
+                    document.querySelectorAll('.gallery-item').forEach(item => {
+                        item.classList.add('show');
+                    });
+                    if (typeof AOS !== 'undefined') {
+                        AOS.refresh();
                     }
+                }, 100);
+            }
+
+            animateCounters() {
+                const counters = document.querySelectorAll('.stat-number');
+                
+                const observerOptions = {
+                    threshold: 0.5,
+                    rootMargin: '0px 0px -50px 0px'
                 };
 
-                updateCounter();
-            }
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const counter = entry.target;
+                            const target = parseInt(counter.getAttribute('data-count'));
+                            const duration = 2000;
+                            const increment = target / (duration / 16);
+                            let current = 0;
 
-            formatDate(dateString) {
-                if (!dateString) return 'Unknown';
-                const date = new Date(dateString);
-                return date.toLocaleDateString();
-            }
+                            const updateCounter = () => {
+                                current += increment;
+                                if (current < target) {
+                                    counter.textContent = Math.floor(current);
+                                    requestAnimationFrame(updateCounter);
+                                } else {
+                                    counter.textContent = target;
+                                }
+                            };
 
-            isNearBottom() {
-                return window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000;
+                            updateCounter();
+                            observer.unobserve(counter);
+                        }
+                    });
+                }, observerOptions);
+
+                counters.forEach(counter => observer.observe(counter));
             }
 
             debounce(func, wait) {
@@ -915,27 +963,45 @@
             }
         }
 
-        // Enhanced download function
-        function downloadImage(url, title) {
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + url.substring(url.lastIndexOf('.'));
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+        // Utility Functions
+        function toggleLike(button) {
+            const icon = button.querySelector('i');
+            const countSpan = button.querySelector('.like-count');
+            let count = parseInt(countSpan.textContent);
             
-            // Show notification
+            if (button.classList.contains('liked')) {
+                button.classList.remove('liked');
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                count--;
+            } else {
+                button.classList.add('liked');
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                count++;
+            }
+            
+            countSpan.textContent = count;
+        }
+
+        function downloadImage(imageSrc, imageName) {
+            const link = document.createElement('a');
+            link.href = imageSrc;
+            link.download = imageName.replace(/\s+/g, '_').toLowerCase() + '.jpg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
             showNotification('Image downloaded successfully!', 'success');
         }
 
-        // Enhanced share function
         function shareImage(imageSrc, imageName) {
             if (navigator.share) {
                 navigator.share({
                     title: 'Nyabikoni Secondary School Gallery',
                     text: `Check out this photo: ${imageName}`,
                     url: window.location.href
-                });
+                }).catch(() => {});
             } else {
                 const url = window.location.href;
                 const text = `Check out this photo from Nyabikoni Secondary School: ${imageName}\n${url}`;
@@ -948,15 +1014,9 @@
             }
         }
 
-        // Notification system
         function showNotification(message, type = 'success') {
             const notification = document.createElement('div');
-            notification.className = `gallery-notification ${type}`;
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-                <span>${message}</span>
-            `;
-            
+            notification.className = 'notification';
             notification.style.cssText = `
                 position: fixed;
                 top: 20px;
@@ -964,14 +1024,20 @@
                 background: ${type === 'success' ? '#27ae60' : '#e74c3c'};
                 color: white;
                 padding: 1rem 1.5rem;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                border-radius: 10px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
                 z-index: 10000;
-                transform: translateX(100%);
+                transform: translateX(400px);
                 transition: transform 0.3s ease;
                 display: flex;
                 align-items: center;
-                gap: 0.5rem;
+                gap: 0.75rem;
+                font-size: 0.95rem;
+            `;
+            
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
             `;
             
             document.body.appendChild(notification);
@@ -979,16 +1045,18 @@
             setTimeout(() => notification.style.transform = 'translateX(0)', 100);
             
             setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
+                notification.style.transform = 'translateX(400px)';
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
 
-        // Initialize enhanced gallery
+        // Initialize Gallery
         document.addEventListener('DOMContentLoaded', function() {
-            new EnhancedGallery();
+            new GalleryManager();
         });
     </script>
-<script src="js/includes.js"></script>
+    
+    <!-- Include Navigation and Footer -->
+    <script src="js/includes.js"></script>
 </body>
-</html> 
+</html>

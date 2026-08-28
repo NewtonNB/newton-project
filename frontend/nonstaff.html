@@ -21,7 +21,7 @@
 /* Modern Hero Section for Non-Teaching Staff */
 .nonstaff-hero {
     position: relative;
-    min-height: 54vh;
+    min-height: 50vh;
     width: 100%;
     background-image: linear-gradient(rgba(44,90,160,0.7),rgba(16,185,129,0.7)), url('nyabzgallery/current.jpg');
     background-position: center;
@@ -30,12 +30,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 80px;
-    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 2.5rem;
+    padding-top: 80px;
+    padding-bottom: 20px;
     overflow: hidden;
     box-shadow: 0 8px 32px rgba(44,90,160,0.10);
     border-radius: 0 0 24px 24px;
-    margin-bottom: 2.5rem;
 }
 
 .nonstaff-hero-overlay {
@@ -50,7 +51,7 @@
     position: relative;
     z-index: 2;
     text-align: center;
-    padding: 60px 20px 30px 20px;
+    padding: 40px 20px 40px 20px;
     color: #fff;
     width: 100%;
     max-width: 700px;
@@ -86,6 +87,137 @@
     border-radius: 2px;
     margin: 0 auto 2.5rem auto;
     opacity: 0.18;
+}
+
+body {
+  font-family: 'Poppins', 'Roboto', Arial, sans-serif;
+  background: linear-gradient(135deg, #f8f9fa 60%, #e3f0ff 100%);
+  color: #222;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* Statistics Cards */
+.stats-container {
+    max-width: 1200px;
+    margin: -40px auto 40px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    position: relative;
+    z-index: 5;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(44,90,160,0.15);
+    border-color: #2c5aa0;
+}
+
+.stat-card .icon {
+    font-size: 2.5rem;
+    color: #2c5aa0;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover .icon {
+    transform: scale(1.1);
+}
+
+.stat-card .number {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #166f26;
+    margin: 5px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.stat-card .label {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* Search Bar */
+.search-container {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.search-box {
+    display: flex;
+    background: white;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+.search-box:focus-within {
+    box-shadow: 0 6px 30px rgba(44,90,160,0.15);
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1rem;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-box button {
+    background: linear-gradient(135deg, #2c5aa0 0%, #1e3a8a 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.search-box button:hover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2c5aa0 100%);
+    transform: scale(1.05);
+}
+
+.search-box button i {
+    margin-right: 5px;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    width: 100%;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    color: #777;
+    font-style: italic;
 }
 
 body {
@@ -160,6 +292,23 @@ body {
 }
 
 @media (max-width: 900px) {
+    .stats-container {
+        margin: -20px auto 30px;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 20px 15px;
+    }
+    
+    .stat-card .icon {
+        font-size: 2rem;
+    }
+    
+    .stat-card .number {
+        font-size: 1.8rem;
+    }
+    
     .container.gallery-container {
         gap: 1.2rem;
         padding: 1.2rem 0.5rem;
@@ -171,6 +320,20 @@ body {
     }
 }
 @media (max-width: 600px) {
+    .search-box {
+        flex-direction: column;
+        border-radius: 15px;
+    }
+    
+    .search-box input, .search-box button {
+        width: 100%;
+        padding: 12px 20px;
+    }
+    
+    .search-box button {
+        border-radius: 0 0 15px 15px;
+    }
+    
     .container.gallery-container {
         flex-direction: column;
         align-items: center;
@@ -188,6 +351,13 @@ body {
     }
     .nonstaff-hero {
         border-radius: 0 0 12px 12px;
+        padding-top: 70px;
+        padding-bottom: 20px;
+        min-height: 35vh;
+        margin-top: 0;
+    }
+    .nonstaff-hero .text-box {
+        padding: 20px 15px 20px 15px;
     }
 }
 
@@ -200,21 +370,198 @@ body {
     <section class="header nonstaff-hero" aria-label="Non-Teaching Staff Hero">
         <div class="nonstaff-hero-overlay animate__animated animate__fadeInDown" style="animation-delay:0.05s;"></div>
         <div class="text-box animate__animated animate__fadeInDown">
-            <h1 class="page-title animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">Non Teaching Staff</h1>
+            <h1 class="page-title animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">Non-Teaching Staff</h1>
             <p class="hero-subtitle animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
                 Meet our dedicated non-teaching staff who support the smooth running of Nyabikoni Secondary School and contribute to our culture of excellence.
             </p>
         </div>
     </section>
 
+    <!-- Statistics Cards -->
+    <div class="stats-container" data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-users-cog"></i></div>
+            <div class="number" id="totalStaff">0</div>
+            <div class="label">Support Staff</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon"><i class="fas fa-user-tie"></i></div>
+            <div class="number" id="adminStaff">0</div>
+            <div class="label">Administrative</div>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="search-box">
+            <input type="text" 
+                   id="searchInput" 
+                   placeholder="Search by name, role, or email..." 
+                   onkeyup="handleSearch()">
+            <button onclick="handleSearch()">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+    </div>
+
     <section class="gallery-section animate__animated animate__fadeInUp" style="animation-delay:0.2s;">
         <div class="divider"></div>
-        <div class="container gallery-container">
-            <!-- Staff Cards Start -->
-            <!-- Staff Cards End -->
+        <div class="container gallery-container" id="nonTeachingStaffContainer">
+            <!-- Loading spinner -->
+            <div style="width: 100%; text-align: center; padding: 40px;" id="loadingSpinner">
+                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">Loading non-teaching staff...</p>
+            </div>
         </div>
     </section>
 </main>
+
+<script>
+let allStaff = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadNonTeachingStaff();
+});
+
+async function loadNonTeachingStaff() {
+    const container = document.getElementById('nonTeachingStaffContainer');
+    const spinner = document.getElementById('loadingSpinner');
+    
+    try {
+        const response = await fetch('../backend/get_teachers_public.php?page=1&perPage=100');
+        const data = await response.json();
+        
+        // Load gallery images for nonteachers category
+        let galleryImages = [];
+        try {
+            const galleryResponse = await fetch('../backend/get_gallery_images.php');
+            const galleryData = await galleryResponse.json();
+            if (galleryData.success && galleryData.images) {
+                // Filter only nonteachers category images
+                galleryImages = galleryData.images.filter(img => img.category === 'nonteachers');
+            }
+        } catch (error) {
+            console.warn('Could not load gallery images:', error);
+        }
+        
+        // Remove spinner
+        if (spinner) spinner.remove();
+        
+        if (data.teachers && data.teachers.length > 0) {
+            // Filter non-teaching staff (those without subjects or with admin roles)
+            allStaff = data.teachers.filter(teacher => 
+                !teacher.subject || 
+                teacher.subject.trim() === '' || 
+                teacher.subject.toLowerCase().includes('admin') ||
+                teacher.subject.toLowerCase().includes('bursar') ||
+                teacher.subject.toLowerCase().includes('accountant') ||
+                teacher.subject.toLowerCase().includes('secretary') ||
+                teacher.subject.toLowerCase().includes('librarian') ||
+                teacher.subject.toLowerCase().includes('headmaster') ||
+                teacher.subject.toLowerCase().includes('deputy') ||
+                teacher.subject.toLowerCase().includes('director') ||
+                teacher.subject.toLowerCase().includes('nurse') ||
+                teacher.subject.toLowerCase().includes('security') ||
+                teacher.subject.toLowerCase().includes('cleaner') ||
+                teacher.subject.toLowerCase().includes('cook')
+            );
+            
+            // Match staff with gallery images if they don't have photos
+            allStaff = allStaff.map((staff, index) => {
+                if (!staff.photo && galleryImages.length > 0) {
+                    // Assign gallery image (round-robin distribution)
+                    const galleryImage = galleryImages[index % galleryImages.length];
+                    staff.photo = galleryImage.filename;
+                    staff.photo_source = 'gallery';
+                }
+                return staff;
+            });
+            
+            // Update statistics
+            updateStatistics(allStaff);
+            
+            // Display all staff
+            displayStaff(allStaff);
+            
+        } else {
+            container.innerHTML = '<div class="empty-state"><i class="fas fa-users-slash"></i><p>No staff found in the database.</p></div>';
+        }
+    } catch (error) {
+        console.error('Error loading non-teaching staff:', error);
+        if (spinner) spinner.remove();
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p style="color: #d32f2f;">Error loading staff data. Please try again later.</p></div>';
+    }
+}
+
+function displayStaff(staff) {
+    const container = document.getElementById('nonTeachingStaffContainer');
+    
+    if (staff.length > 0) {
+        container.innerHTML = staff.map((person, index) => `
+            <div class="staff-item" data-aos="fade-up" data-aos-delay="${Math.min(index * 50, 500)}">
+                <img src="${person.photo ? 'nyabzgallery/' + person.photo : 'nyabzgallery/default.svg'}" 
+                     alt="${person.full_name}"
+                     onerror="this.src='nyabzgallery/default.svg'">
+                <h3>${person.full_name.toUpperCase()}</h3>
+                <p><i class="fas fa-briefcase"></i> ${person.subject || 'Support Staff'}</p>
+                ${person.email ? `<small style="color: #666; font-size: 0.85rem; display: block; margin-top: 8px;"><i class="fas fa-envelope"></i> ${person.email}</small>` : ''}
+                ${person.phone ? `<small style="color: #666; font-size: 0.85rem; display: block; margin-top: 0.3rem;"><i class="fas fa-phone"></i> ${person.phone}</small>` : ''}
+            </div>
+        `).join('');
+        
+        // Reinitialize AOS for new elements
+        if (typeof AOS !== 'undefined') {
+            AOS.refresh();
+        }
+    } else {
+        container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>No staff match your search.</p></div>';
+    }
+}
+
+function updateStatistics(staff) {
+    const total = staff.length;
+    const adminRoles = ['headmaster', 'deputy', 'director', 'bursar', 'accountant', 'secretary'];
+    const admin = staff.filter(s => {
+        const role = (s.subject || '').toLowerCase();
+        return adminRoles.some(r => role.includes(r));
+    }).length;
+    
+    document.getElementById('totalStaff').textContent = total;
+    document.getElementById('adminStaff').textContent = admin;
+}
+
+function handleSearch() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    
+    if (searchTerm === '') {
+        displayStaff(allStaff);
+        return;
+    }
+    
+    const filtered = allStaff.filter(person => 
+        person.full_name.toLowerCase().includes(searchTerm) ||
+        (person.subject && person.subject.toLowerCase().includes(searchTerm)) ||
+        (person.email && person.email.toLowerCase().includes(searchTerm)) ||
+        (person.phone && person.phone.includes(searchTerm))
+    );
+    
+    displayStaff(filtered);
+}
+
+// Allow search on Enter key
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        });
+    }
+});
+</script>
 
 <script>
         

@@ -6,7 +6,6 @@
     <title>Gallery Management - NYABIKONI SECONDARY SCHOOL</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
-    <link rel="stylesheet" href="modern-footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
     body {
@@ -482,7 +481,7 @@
             <form id="addImageForm" class="add-image-form" enctype="multipart/form-data">
                 <input type="file" name="add_image" accept="image/*" required>
                 <input type="text" name="add_caption" placeholder="Caption/Label (optional)">
-                <input type="hidden" name="section" id="addImageSectionInput" value="teachers">
+                <input type="hidden" name="add_category" id="addImageCategoryInput" value="teachers">
                 <button type="submit">Upload</button>
                 <span id="addImageMsg"></span>
             </form>
@@ -497,8 +496,9 @@
             <button class="gallery-tab-btn" data-tab="others">Others</button>
         </div>
         
-        <div class="gallery-grid">
-            </div>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Images will be loaded dynamically -->
+        </div>
         
         <!-- Lightbox Modal -->
         <div id="lightboxModal" class="lightbox-modal" onclick="closeLightbox()">
@@ -744,7 +744,9 @@
         btn.addEventListener('click', function() {
             var tab = this.getAttribute('data-tab');
             if (addImageSection) addImageSection.textContent = this.textContent;
-            if (addImageSectionInput) addImageSectionInput.value = tab;
+            if (document.getElementById('addImageCategoryInput')) {
+                document.getElementById('addImageCategoryInput').value = tab;
+            }
         });
     });
     
@@ -759,8 +761,30 @@
     if (addImageForm) {
         addImageForm.onsubmit = function(e) {
             e.preventDefault();
-            addImageMsg.textContent = 'Upload functionality requires backend implementation.';
-            addImageMsg.style.color = '#e74c3c';
+            addImageMsg.textContent = 'Uploading...';
+            addImageMsg.style.color = '#667eea';
+            
+            var formData = new FormData(addImageForm);
+            
+            fetch('../backend/upload_gallery_image.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    addImageMsg.textContent = 'Image uploaded successfully!';
+                    addImageMsg.style.color = '#27ae60';
+                    setTimeout(() => window.location.reload(), 1200);
+                } else {
+                    addImageMsg.textContent = data.error || 'Upload failed.';
+                    addImageMsg.style.color = '#e74c3c';
+                }
+            })
+            .catch(error => {
+                addImageMsg.textContent = 'Upload error: ' + error.message;
+                addImageMsg.style.color = '#e74c3c';
+            });
         };
     }
 
@@ -874,6 +898,235 @@
       );
     };
     if (addImageBar) addImageBar.appendChild(bulkDeleteBtn);
+
+    // Load gallery images from backend
+    function loadGalleryImages() {
+        fetch('../backend/get_manage_gallery_images.php')
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    renderGalleryImages(data.grouped);
+                } else {
+                    console.error('Failed to load gallery:', data.error);
+                    alert('Failed to load gallery images: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error loading gallery:', error);
+                alert('Error loading gallery images');
+            });
+    }
+
+    function renderGalleryImages(grouped) {
+        const galleryGrid = document.getElementById('galleryGrid');
+        if (!galleryGrid) return;
+
+        galleryGrid.innerHTML = ''; // Clear existing items
+
+        // Render all categories
+        Object.keys(grouped).forEach(category => {
+            grouped[category].forEach((image, index) => {
+                const item = createGalleryItem(image, category);
+                galleryGrid.appendChild(item);
+            });
+        });
+
+        // Activate first tab
+        const firstTab = document.querySelector('.gallery-tab-btn');
+        if (firstTab) firstTab.click();
+
+        // Re-initialize drag and drop
+        initializeDragDrop();
+    }
+
+    function createGalleryItem(image, category) {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        item.setAttribute('data-tab', category);
+        item.setAttribute('data-img', image.filename);
+        item.setAttribute('draggable', 'true');
+
+        item.innerHTML = `
+            <img src="${image.url}" alt="${image.caption}" onclick="openLightbox('${image.url}')">
+            <div class="gallery-caption" contenteditable="true" data-img="${image.filename}">
+                ${image.caption}
+            </div>
+            <select class="gallery-category-select" data-img="${image.filename}">
+                <option value="teachers" ${category === 'teachers' ? 'selected' : ''}>Teachers</option>
+                <option value="nonteachers" ${category === 'nonteachers' ? 'selected' : ''}>Non-Teachers</option>
+                <option value="sports" ${category === 'sports' ? 'selected' : ''}>Sports</option>
+                <option value="clubs" ${category === 'clubs' ? 'selected' : ''}>Clubs</option>
+                <option value="buildings" ${category === 'buildings' ? 'selected' : ''}>Buildings</option>
+                <option value="others" ${category === 'others' ? 'selected' : ''}>Others</option>
+            </select>
+            <div class="gallery-actions">
+                <button class="gallery-edit-btn" data-img="${image.filename}">Edit</button>
+                <button class="gallery-delete-btn" data-img="${image.filename}">Delete</button>
+            </div>
+        `;
+
+        return item;
+    }
+
+    function initializeDragDrop() {
+        let dragSrc = null;
+
+        document.querySelectorAll('.gallery-item').forEach(function(item) {
+            item.addEventListener('dragstart', function(e) {
+                dragSrc = this;
+                this.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            item.addEventListener('dragend', function() {
+                this.classList.remove('dragging');
+                document.querySelectorAll('.gallery-item').forEach(i => i.classList.remove('drag-over'));
+                
+                // Save new order via AJAX
+                const items = Array.from(document.querySelectorAll('.gallery-item[data-tab="' + this.getAttribute('data-tab') + '"]'));
+                const order = {};
+                items.forEach((el, idx) => {
+                    order[el.getAttribute('data-img')] = idx + 1;
+                });
+                
+                fetch('../backend/update_gallery_metadata.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'update_order',
+                        order: order
+                    })
+                });
+            });
+
+            item.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                if (this !== dragSrc && this.getAttribute('data-tab') === dragSrc.getAttribute('data-tab')) {
+                    this.classList.add('drag-over');
+                }
+            });
+
+            item.addEventListener('dragleave', function() {
+                this.classList.remove('drag-over');
+            });
+
+            item.addEventListener('drop', function(e) {
+                e.preventDefault();
+                if (this !== dragSrc && this.getAttribute('data-tab') === dragSrc.getAttribute('data-tab')) {
+                    this.classList.remove('drag-over');
+                    this.parentNode.insertBefore(dragSrc, this);
+                }
+            });
+        });
+
+        // Re-attach caption editing
+        document.querySelectorAll('.gallery-caption').forEach(function(caption) {
+            caption.addEventListener('blur', function() {
+                var img = this.getAttribute('data-img');
+                var newCaption = this.textContent.trim();
+                
+                fetch('../backend/update_gallery_metadata.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'update_caption',
+                        filename: img,
+                        caption: newCaption
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    this.style.background = data.success ? '#e6ffe6' : '#ffe6e6';
+                    setTimeout(() => { this.style.background = ''; }, 800);
+                });
+            });
+
+            caption.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    this.blur();
+                }
+            });
+        });
+
+        // Re-attach category change handlers
+        document.querySelectorAll('.gallery-category-select').forEach(function(select) {
+            select.addEventListener('change', function() {
+                var img = this.getAttribute('data-img');
+                var newCategory = this.value;
+                
+                fetch('../backend/update_gallery_metadata.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'update_category',
+                        filename: img,
+                        category: newCategory
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        this.style.background = '#e6ffe6';
+                        setTimeout(() => { window.location.reload(); }, 600);
+                    } else {
+                        this.style.background = '#ffe6e6';
+                        setTimeout(() => { this.style.background = ''; }, 800);
+                    }
+                });
+            });
+        });
+
+        // Re-attach edit button handlers
+        document.querySelectorAll('.gallery-edit-btn').forEach(btn => {
+            btn.onclick = function() {
+                var img = this.getAttribute('data-img');
+                document.getElementById('editImgName').value = img;
+                document.getElementById('editImgPreview').src = 'nyabzgallery/' + img;
+                document.getElementById('editImgCaption').value = img;
+                document.getElementById('editImgMsg').style.display = 'none';
+                document.getElementById('galleryEditModal').style.display = 'flex';
+            };
+        });
+
+        // Re-attach delete button handlers
+        document.querySelectorAll('.gallery-delete-btn').forEach(btn => {
+            btn.onclick = function() {
+                var img = this.getAttribute('data-img');
+                if (confirm('Permanently delete image: "' + img + '"? This cannot be undone.')) {
+                    fetch('../backend/delete_gallery_image.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ filename: img })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            window.location.reload();
+                        } else {
+                            alert('Failed to delete image: ' + (data.error || 'Unknown error'));
+                        }
+                    });
+                }
+            };
+        });
+
+        // Re-attach bulk checkboxes
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            if (item.querySelector('.gallery-actions') && !item.querySelector('.gallery-bulk-checkbox')) {
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.className = 'gallery-bulk-checkbox';
+                cb.style.marginRight = '8px';
+                item.querySelector('.gallery-actions').prepend(cb);
+            }
+        });
+    }
+
+    // Load images on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        loadGalleryImages();
+    });
     </script>
 <script src="js/includes.js"></script>
 </body>

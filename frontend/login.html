@@ -276,9 +276,10 @@
       <p>Sign in to access the admin dashboard</p>
     </div>
 
-    <div class="alert">
+    <div class="alert" id="errorAlert" style="display: none;">
         <i class="fa-solid fa-circle-exclamation"></i>
-        </div>
+        <span id="errorMessage">Invalid credentials</span>
+    </div>
     <form action="../backend/login_check.php" method="POST" id="loginForm" novalidate>
 
       <div class="form-group">
@@ -336,8 +337,37 @@
     }
   }
 
-  // Remember me
+  // Check for error parameter in URL
   window.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    const errorAlert = document.getElementById('errorAlert');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    if (error) {
+      errorAlert.style.display = 'flex';
+      
+      switch(error) {
+        case 'invalid':
+          errorMessage.textContent = 'Invalid username or password. Please try again.';
+          break;
+        case 'empty':
+          errorMessage.textContent = 'Please enter both username and password.';
+          break;
+        case 'session':
+          errorMessage.textContent = 'Your session has expired. Please login again.';
+          break;
+        default:
+          errorMessage.textContent = 'Login failed. Please check your credentials.';
+      }
+      
+      // Hide alert after 5 seconds
+      setTimeout(() => {
+        errorAlert.style.display = 'none';
+      }, 5000);
+    }
+    
+    // Remember me functionality
     const saved = localStorage.getItem('nyabz_user');
     if (saved) {
       document.getElementById('username').value = saved;

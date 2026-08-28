@@ -161,6 +161,8 @@ body {
   box-shadow: 0 8px 32px rgba(44,90,160,0.10);
   border-radius: 0 0 24px 24px;
   margin-bottom: 2.5rem;
+  margin-top: 0;
+  padding-top: 80px;
   z-index: 10;
   position: relative;
   overflow: hidden;
@@ -180,7 +182,7 @@ body {
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
-  padding: 60px 20px 30px 20px;
+  padding: 40px 20px 40px 20px;
 }
 .page-title {
   font-family: 'Bungee', cursive;
@@ -205,14 +207,16 @@ body {
 @media (max-width: 700px) {
   .teaching-hero {
     min-height: 30vh;
-    padding: 20px 0;
+    padding-top: 70px;
+    padding-bottom: 20px;
     border-radius: 0 0 12px 12px;
+    margin-top: 0;
   }
   .teaching-hero .page-title {
     font-size: 1.5rem;
   }
   .teaching-hero .text-box {
-    padding: 30px 5px 20px 5px;
+    padding: 20px 15px 20px 15px;
   }
 }
 @media (max-width: 900px) {
@@ -257,6 +261,169 @@ body {
 .navbar-title, .navbar-title-marquee {
     font-size: 1em !important;
 }
+
+/* Statistics Cards */
+.stats-container {
+    max-width: 1200px;
+    margin: -40px auto 40px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    position: relative;
+    z-index: 5;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(44,90,160,0.15);
+    border-color: #2c5aa0;
+}
+
+.stat-card .icon {
+    font-size: 2.5rem;
+    color: #2c5aa0;
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover .icon {
+    transform: scale(1.1);
+}
+
+.stat-card .number {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #166f26;
+    margin: 5px 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+.stat-card .label {
+    font-size: 0.9rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* Search Bar */
+.search-container {
+    max-width: 600px;
+    margin: 0 auto 40px;
+    padding: 0 20px;
+}
+
+.search-box {
+    display: flex;
+    background: white;
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: box-shadow 0.3s ease;
+}
+
+.search-box:focus-within {
+    box-shadow: 0 6px 30px rgba(44,90,160,0.15);
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1rem;
+    outline: none;
+    font-family: 'Poppins', sans-serif;
+}
+
+.search-box button {
+    background: linear-gradient(135deg, #2c5aa0 0%, #1e3a8a 100%);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.search-box button:hover {
+    background: linear-gradient(135deg, #1e3a8a 0%, #2c5aa0 100%);
+    transform: scale(1.05);
+}
+
+.search-box button i {
+    margin-right: 5px;
+}
+
+/* Loading Spinner */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3em;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    grid-column: 1 / -1;
+}
+
+.empty-state i {
+    font-size: 4rem;
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+.empty-state p {
+    font-size: 1.1rem;
+    color: #777;
+    font-style: italic;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .stats-container {
+        margin: -20px auto 30px;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        padding: 20px 15px;
+    }
+    
+    .stat-card .icon {
+        font-size: 2rem;
+    }
+    
+    .stat-card .number {
+        font-size: 1.8rem;
+    }
+    
+    .search-box {
+        flex-direction: column;
+        border-radius: 15px;
+    }
+    
+    .search-box input, .search-box button {
+        width: 100%;
+        padding: 12px 20px;
+    }
+    
+    .search-box button {
+        border-radius: 0 0 15px 15px;
+    }
+}
 </style>    
 </head>
 <body>
@@ -271,53 +438,184 @@ body {
   </div>
 </section>
 
-
-        <div class="text-box wow animate__animated animate__fadeInUp animate__delay-1s" style="display:none;">
-           <h1 style="font-family: Bungee;  margin-bottom:100px;">TEACHING STAFF</h1><br>
-      
-            <div class="teacher-card slow-fade" data-aos="fade-up" data-aos-delay="100">
-      <img src="nyabzgallery/default.png" alt="Mr. Kimuli">
-      <h3>MR. KIMULI</h3>
-      <p>Agriculture</p>
-    </div>
-    <div class="teacher-card slow-fade" data-aos="fade-up" data-aos-delay="100">
-      <img src="nyabzgallery/teacher_686e47b5b0f0f2.30009133.jpg" alt="Mr. Kimuli">
-      <h3>MR. KIMULI</h3>
-      <p>Agriculture</p>
-    </div>
-    <div class="teacher-card slow-fade" data-aos="fade-up" data-aos-delay="100">
-      <img src="nyabzgallery/teacher_686e47c8aa1c94.23380109.jpg" alt="Ms. Kaketo Sulait">
-      <h3>MS. KAKETO SULAIT</h3>
-      <p>Geography</p>
-    </div>
-    <div class="teacher-card slow-fade" data-aos="fade-up" data-aos-delay="100">
-      <img src="nyabzgallery/teacher_686e47eecf4363.94450118.jpg" alt="Ms. Agatha">
-      <h3>MS. AGATHA</h3>
-      <p>English</p>
-    </div>
-    <div class="teacher-card slow-fade" data-aos="fade-up" data-aos-delay="100">
-      <img src="nyabzgallery/teacher_686e64cb718099.16589115.png" alt="Mr. Nicholas Akampurira">
-      <h3>MR. NICHOLAS AKAMPURIRA</h3>
-      <p>Mathematics</p>
-    </div>
-    <div class="teacher-card slow-fade" data-aos="fade-up" data-aos-delay="100">
-      <img src="nyabzgallery/teacher_686e64e87bda74.25457742.jpg" alt="Mr. Turyasiima Elly">
-      <h3>MR. TURYASIIMA ELLY</h3>
-      <p>Headmaster</p>
-    </div>
+<!-- Statistics Cards -->
+<div class="stats-container" data-aos="fade-up" data-aos-delay="100">
+  <div class="stat-card">
+    <div class="icon"><i class="fas fa-chalkboard-teacher"></i></div>
+    <div class="number" id="totalTeachers">0</div>
+    <div class="label">Total Teachers</div>
+  </div>
+  <div class="stat-card">
+    <div class="icon"><i class="fas fa-male"></i></div>
+    <div class="number" id="maleTeachers">0</div>
+    <div class="label">Male</div>
+  </div>
+  <div class="stat-card">
+    <div class="icon"><i class="fas fa-female"></i></div>
+    <div class="number" id="femaleTeachers">0</div>
+    <div class="label">Female</div>
+  </div>
 </div>
-    </section>
+
+<!-- Search Bar -->
+<div class="search-container" data-aos="fade-up" data-aos-delay="200">
+  <div class="search-box">
+    <input type="text" 
+           id="searchInput" 
+           placeholder="Search by name, subject, or email..." 
+           onkeyup="handleSearch()">
+    <button onclick="handleSearch()">
+      <i class="fas fa-search"></i> Search
+    </button>
+  </div>
+</div>
     
 <section class="gallery">
-  <div class="gallery-container">
-    <div class="teacher-card" data-aos="fade-up" data-aos-delay="100">
-          <img src="nyabzgallery/" alt="">
-          <h3></h3>
-          <p></p>
-        </div>
-      <p style="text-align:center; grid-column: 1 / -1; padding: 40px; font-style:italic; color:#777;">No teachers found in the database.</p>
+  <div class="gallery-container" id="teachingStaffContainer">
+    <!-- Loading spinner -->
+    <div class="col-12 text-center" id="loadingSpinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Loading teaching staff...</p>
     </div>
+    <!-- Staff cards will be dynamically loaded here -->
+  </div>
 </section>
+
+<script>
+let allTeachers = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadTeachingStaff();
+});
+
+async function loadTeachingStaff() {
+  const container = document.getElementById('teachingStaffContainer');
+  const spinner = document.getElementById('loadingSpinner');
+  
+  try {
+    const response = await fetch('../backend/get_teachers_public.php?page=1&perPage=100');
+    const data = await response.json();
+    
+    // Load gallery images for teachers category
+    let galleryImages = [];
+    try {
+      const galleryResponse = await fetch('../backend/get_gallery_images.php');
+      const galleryData = await galleryResponse.json();
+      if (galleryData.success && galleryData.images) {
+        // Filter only teacher category images
+        galleryImages = galleryData.images.filter(img => img.category === 'teachers');
+      }
+    } catch (error) {
+      console.warn('Could not load gallery images:', error);
+    }
+    
+    // Remove spinner
+    if (spinner) spinner.remove();
+    
+    if (data.teachers && data.teachers.length > 0) {
+      // Filter teaching staff (those with subjects, excluding admin roles)
+      allTeachers = data.teachers.filter(teacher => 
+        teacher.subject && 
+        teacher.subject.trim() !== '' &&
+        !teacher.subject.toLowerCase().includes('headmaster') &&
+        !teacher.subject.toLowerCase().includes('deputy') &&
+        !teacher.subject.toLowerCase().includes('bursar') &&
+        !teacher.subject.toLowerCase().includes('accountant') &&
+        !teacher.subject.toLowerCase().includes('secretary')
+      );
+      
+      // Match teachers with gallery images if they don't have photos
+      allTeachers = allTeachers.map((teacher, index) => {
+        if (!teacher.photo && galleryImages.length > 0) {
+          // Assign gallery image (round-robin distribution)
+          const galleryImage = galleryImages[index % galleryImages.length];
+          teacher.photo = galleryImage.filename;
+          teacher.photo_source = 'gallery';
+        }
+        return teacher;
+      });
+      
+      // Update statistics
+      updateStatistics(allTeachers);
+      
+      // Display all teachers
+      displayTeachers(allTeachers);
+      
+    } else {
+      container.innerHTML = '<div class="empty-state"><i class="fas fa-users-slash"></i><p>No teaching staff found in the database.</p></div>';
+    }
+  } catch (error) {
+    console.error('Error loading teaching staff:', error);
+    if (spinner) spinner.remove();
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p style="color: #d32f2f;">Error loading staff data. Please try again later.</p></div>';
+  }
+}
+
+function displayTeachers(teachers) {
+  const container = document.getElementById('teachingStaffContainer');
+  
+  if (teachers.length > 0) {
+    container.innerHTML = teachers.map((teacher, index) => `
+      <div class="teacher-card" data-aos="fade-up" data-aos-delay="${Math.min(index * 50, 500)}">
+        <img src="${teacher.photo ? 'nyabzgallery/' + teacher.photo : 'nyabzgallery/default.svg'}" 
+             alt="${teacher.full_name}"
+             onerror="this.src='nyabzgallery/default.svg'">
+        <h3>${teacher.full_name.toUpperCase()}</h3>
+        <p><i class="fas fa-book"></i> ${teacher.subject}</p>
+        ${teacher.email ? `<small style="color: #666; font-size: 0.85rem; display: block; margin-top: 8px;"><i class="fas fa-envelope"></i> ${teacher.email}</small>` : ''}
+      </div>
+    `).join('');
+    
+    // Reinitialize AOS for new elements
+    if (typeof AOS !== 'undefined') {
+      AOS.refresh();
+    }
+  } else {
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-search"></i><p>No teachers match your search.</p></div>';
+  }
+}
+
+function updateStatistics(teachers) {
+  const total = teachers.length;
+  const male = teachers.filter(t => t.gender && t.gender.toLowerCase() === 'male').length;
+  const female = teachers.filter(t => t.gender && t.gender.toLowerCase() === 'female').length;
+  
+  document.getElementById('totalTeachers').textContent = total;
+  document.getElementById('maleTeachers').textContent = male;
+  document.getElementById('femaleTeachers').textContent = female;
+}
+
+function handleSearch() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+  
+  if (searchTerm === '') {
+    displayTeachers(allTeachers);
+    return;
+  }
+  
+  const filtered = allTeachers.filter(teacher => 
+    teacher.full_name.toLowerCase().includes(searchTerm) ||
+    (teacher.subject && teacher.subject.toLowerCase().includes(searchTerm)) ||
+    (teacher.email && teacher.email.toLowerCase().includes(searchTerm))
+  );
+  
+  displayTeachers(filtered);
+}
+
+// Allow search on Enter key
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        handleSearch();
+      }
+    });
+  }
+});
+</script>
 
 
 <script>
