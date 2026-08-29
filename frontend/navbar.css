@@ -239,19 +239,39 @@ html, body {
 
 /* Toggler */
 .navbar-toggler {
-    border: none;
-    padding: 8px;
-    border-radius: 8px;
-    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.3);
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.12);
     transition: all 0.3s;
     display: none;
+    cursor: pointer;
+    position: relative;
+    width: 46px;
+    height: 46px;
 }
-.navbar-toggler:hover { background: rgba(255,255,255,0.2); }
-.navbar-toggler:focus { box-shadow: 0 0 0 3px rgba(96,165,250,0.3); outline: none; }
+.navbar-toggler:hover { 
+    background: rgba(255,255,255,0.2);
+    border-color: rgba(255,255,255,0.5);
+    transform: scale(1.05);
+}
+.navbar-toggler:active {
+    transform: scale(0.95);
+}
+.navbar-toggler:focus { 
+    box-shadow: 0 0 0 3px rgba(96,165,250,0.4); 
+    outline: none;
+    border-color: #60a5fa;
+}
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.85%29' stroke-linecap='round' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    width: 24px; height: 24px;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.95%29' stroke-linecap='round' stroke-width='2.5' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 26px; 
+    height: 26px;
     display: block;
+    transition: transform 0.3s;
+}
+.navbar-toggler:hover .navbar-toggler-icon {
+    transform: rotate(90deg);
 }
 
 /* Page body offset (not homepage — index uses body.home-page) */
@@ -276,9 +296,15 @@ body:not(.home-page) { padding-top: 108px !important; } /* 44 topbar + 64 navbar
 
 /* Tablets */
 @media (max-width: 991px) {
-    .navbar-toggler { display: block; order: 3; margin-left: auto; }
+    .navbar-toggler { 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 3; 
+        margin-left: auto;
+    }
 
-    .navbar-left { max-width: calc(100% - 52px); }
+    .navbar-left { max-width: calc(100% - 60px); }
 
     .navbar-collapse {
         display: none;
@@ -290,30 +316,61 @@ body:not(.home-page) { padding-top: 108px !important; } /* 44 topbar + 64 navbar
         justify-content: flex-start;
         background: linear-gradient(135deg, #1f2937, #111827);
         border-top: 1px solid rgba(255,255,255,0.1);
-        padding: 12px 16px 20px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        padding: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         z-index: 1080;
+        max-height: calc(100vh - 64px);
+        overflow-y: auto;
+        animation: slideDown 0.3s ease-out;
     }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
     .navbar-collapse.show { display: block; }
 
     .navbar-nav {
         flex-direction: column;
         height: auto;
-        gap: 2px;
+        gap: 4px;
         width: 100%;
     }
     .nav-item { width: 100%; }
     .nav-link {
         width: 100%;
-        padding: 14px 16px !important;
-        font-size: 15px;
-        border-radius: 8px;
+        padding: 16px 18px !important;
+        font-size: 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+    .nav-link:hover {
+        background: rgba(255,255,255,0.18);
+        transform: translateX(4px);
+    }
+    .nav-link.active {
+        background: rgba(96,165,250,0.2);
+        border-left: 4px solid #60a5fa;
+    }
+    .nav-link i {
+        font-size: 18px;
+        width: 24px;
     }
     .nav-link.login-btn {
-        border-radius: 8px;
+        border-radius: 10px;
         text-align: center;
         justify-content: center;
-        margin-top: 8px;
+        margin-top: 12px;
+        padding: 16px 20px !important;
+        font-size: 16px;
     }
     .dropdown-menu {
         position: static;
@@ -321,15 +378,23 @@ body:not(.home-page) { padding-top: 108px !important; } /* 44 topbar + 64 navbar
         visibility: visible;
         transform: none;
         box-shadow: none;
-        border-radius: 8px;
-        margin: 4px 0 4px 16px;
-        background: rgba(255,255,255,0.05);
+        border-radius: 10px;
+        margin: 6px 0 6px 20px;
+        background: rgba(255,255,255,0.08);
         display: none;
+        border: 1px solid rgba(255,255,255,0.1);
     }
     .dropdown-menu.show { display: block; }
-    .dropdown-item { font-size: 14px; padding: 12px 16px !important; }
-    .dropdown-item:hover { padding-left: 20px !important; }
-
+    .dropdown-item { 
+        font-size: 15px; 
+        padding: 14px 18px !important;
+        border-radius: 8px;
+        margin: 2px 4px;
+    }
+    .dropdown-item:hover { 
+        padding-left: 24px !important;
+        background: rgba(255,255,255,0.15) !important;
+    }
 }
 
 /* Mobile landscape / large phones */
@@ -360,9 +425,31 @@ body:not(.home-page) { padding-top: 108px !important; } /* 44 topbar + 64 navbar
 
     .navbar { top: 36px !important; height: 54px; }
     .navbar .container { height: 54px; padding: 0 12px; }
-    .navbar-collapse { top: 54px; }
+    .navbar-collapse { 
+        top: 54px;
+        max-height: calc(100vh - 54px);
+        padding: 12px;
+    }
+    .navbar-toggler {
+        width: 42px;
+        height: 42px;
+        padding: 8px;
+    }
+    .navbar-toggler-icon {
+        width: 24px;
+        height: 24px;
+    }
     .navbar-logo { width: 32px; height: 32px; }
     .navbar-school-name { display: none; }
+    
+    .nav-link {
+        padding: 14px 16px !important;
+        font-size: 15px;
+    }
+    .nav-link i {
+        font-size: 16px;
+        width: 22px;
+    }
 
     body:not(.home-page) { padding-top: 90px !important; } /* 36 + 54 */
 }
@@ -375,8 +462,27 @@ body:not(.home-page) { padding-top: 108px !important; } /* 44 topbar + 64 navbar
 
     .navbar { top: 32px !important; height: 50px; }
     .navbar .container { height: 50px; padding: 0 10px; }
-    .navbar-collapse { top: 50px; }
+    .navbar-collapse { 
+        top: 50px;
+        max-height: calc(100vh - 50px);
+        padding: 10px;
+    }
+    .navbar-toggler {
+        width: 38px;
+        height: 38px;
+        padding: 6px;
+    }
+    .navbar-toggler-icon {
+        width: 22px;
+        height: 22px;
+    }
     .navbar-logo { width: 28px; height: 28px; }
+    
+    .nav-link {
+        padding: 12px 14px !important;
+        font-size: 14px;
+    }
+    
     body:not(.home-page) { padding-top: 82px !important; } /* 32 + 50 */
 }
 
