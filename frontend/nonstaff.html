@@ -421,6 +421,7 @@ body {
     .stats-container {
         margin: -20px auto 30px;
         gap: 15px;
+        grid-template-columns: 1fr;
     }
     
     .stat-card {
@@ -436,13 +437,9 @@ body {
     }
     
     .container.gallery-container {
-        gap: 1.2rem;
-        padding: 1.2rem 0.5rem;
-    }
-    .staff-item {
-        width: 45vw;
-        min-width: 170px;
-        max-width: 260px;
+        gap: 1.5rem;
+        padding: 2rem 1rem;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     }
 }
 @media (max-width: 600px) {
@@ -463,27 +460,34 @@ body {
     .container.gallery-container {
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
-        padding: 0.5rem 0.2rem;
+        gap: 1.5rem;
+        padding: 1.5rem 1rem;
+        grid-template-columns: 1fr;
     }
     .staff-item {
-        width: 90vw;
-        min-width: 140px;
-        max-width: 98vw;
-        padding: 1.2rem 0.5rem;
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
     }
     .page-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
+        line-height: 1.3;
     }
     .nonstaff-hero {
         border-radius: 0 0 12px 12px;
-        padding-top: 70px;
+        padding-top: 60px;
         padding-bottom: 20px;
         min-height: 35vh;
         margin-top: 0;
+        background-attachment: scroll;
     }
     .nonstaff-hero .text-box {
-        padding: 20px 15px 20px 15px;
+        padding: 15px 15px 15px 15px;
+    }
+    .nonstaff-hero .hero-subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
     }
 }
 

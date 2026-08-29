@@ -1836,6 +1836,80 @@
           }
         });
     </script>
+
+<!-- Back to Top Button -->
+<button onclick="scrollToTop()" class="back-to-top-home" id="backToTopHome" aria-label="Back to Top">
+  <i class="fas fa-arrow-up"></i>
+</button>
+
+<style>
+/* Back to Top Button for Home Page */
+.back-to-top-home {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 9999;
+  background: linear-gradient(135deg, #2c5aa0, #1e3a8a);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 4px 20px rgba(44,90,160,0.3);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.back-to-top-home.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.back-to-top-home:hover {
+  background: linear-gradient(135deg, #10b981, #059669);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 25px rgba(16,185,129,0.4);
+}
+
+@media (max-width: 768px) {
+  .back-to-top-home {
+    width: 48px;
+    height: 48px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 1.2rem;
+  }
+}
+</style>
+
+<script>
+// Scroll to top function
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+// Show/hide back to top button based on scroll position
+window.addEventListener('scroll', function() {
+  const backToTopButton = document.getElementById('backToTopHome');
+  if (backToTopButton) {
+    if (window.pageYOffset > 400) {
+      backToTopButton.classList.add('show');
+    } else {
+      backToTopButton.classList.remove('show');
+    }
+  }
+});
+</script>
+
 <script src="js/includes.js"></script>
 </body>
 </html>
