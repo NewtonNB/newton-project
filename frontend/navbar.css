@@ -553,3 +553,19 @@ body.home-page #heroCarousel {
 /* Dropdown arrow rotation */
 .dropdown-toggle::after { transition: transform 0.25s; }
 .dropdown.show .dropdown-toggle::after { transform: rotate(180deg); }
+
+/* Hide login button on all pages except contact page */
+#nav-login-item {
+    display: none;
+}
+
+body.contact-page #nav-login-item {
+    display: block;
+}
+
+/* For mobile menu */
+@media (max-width: 991px) {
+    body.contact-page #nav-login-item {
+        display: list-item;
+    }
+}
