@@ -218,6 +218,60 @@
             text-decoration: none;
         }
 
+        /* Mobile-specific hero improvements */
+        @media (max-width: 576px) {
+            .nyab-hero-caption {
+                top: 60%;
+                width: 90%;
+                padding: 0 15px;
+            }
+            
+            .nyab-hero-caption h1 {
+                font-size: 1.6rem !important;
+                line-height: 1.2;
+                margin-bottom: 0.8rem;
+            }
+            
+            .nyab-hero-caption h2 {
+                font-size: 1rem !important;
+                margin-bottom: 0.8rem;
+                line-height: 1.4;
+            }
+            
+            .nyab-hero-caption p {
+                font-size: 0.9rem !important;
+                margin-bottom: 1.2rem;
+                line-height: 1.5;
+                display: none; /* Hide paragraph on very small screens */
+            }
+            
+            .nyab-hero-btn {
+                padding: 10px 24px;
+                font-size: 0.85rem;
+                letter-spacing: 0.5px;
+            }
+            
+            body.home-page #heroCarousel.nyab-hero-carousel {
+                height: 100vh !important;
+                min-height: -webkit-fill-available;
+            }
+        }
+
+        @media (max-width: 768px) and (min-width: 577px) {
+            .nyab-hero-caption h1 {
+                font-size: 1.8rem !important;
+            }
+            
+            .nyab-hero-caption h2 {
+                font-size: 1.1rem !important;
+            }
+            
+            .nyab-hero-caption p {
+                font-size: 0.95rem !important;
+                margin-bottom: 1.3rem;
+            }
+        }
+
         /* Welcome Section */
         .welcome-section {
             padding: 5rem 0;
@@ -616,6 +670,26 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
+        }
+
+        /* Mobile carousel controls */
+        @media (max-width: 576px) {
+            .nyab-hero-carousel .carousel-control-prev,
+            .nyab-hero-carousel .carousel-control-next {
+                width: 40px;
+                height: 40px;
+            }
+            .nyab-hero-carousel .carousel-control-prev { left: 10px; }
+            .nyab-hero-carousel .carousel-control-next { right: 10px; }
+            
+            .nyab-hero-carousel .carousel-indicators {
+                margin-bottom: 12px;
+            }
+            
+            .nyab-hero-carousel .carousel-indicators [data-bs-target] {
+                width: 8px;
+                height: 8px;
+            }
         }
 
         .nyab-hero-scroll-indicator {
