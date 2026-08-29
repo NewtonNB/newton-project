@@ -827,6 +827,11 @@
 
             filterAndRender() {
                 this.filteredImages = this.allImages.filter(image => {
+                    // Exclude staff photos from gallery (they belong on staff pages)
+                    if (image.category === 'teachers' || image.category === 'nonteachers') {
+                        return false;
+                    }
+                    
                     // Category filter
                     const categoryMatch = this.currentFilter === 'all' || image.category === this.currentFilter;
                     

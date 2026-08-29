@@ -91,7 +91,7 @@
 
 body {
   font-family: 'Poppins', 'Roboto', Arial, sans-serif;
-  background: linear-gradient(135deg, #f8f9fa 60%, #e3f0ff 100%);
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   color: #222;
   margin: 0;
   padding: 0;
@@ -112,45 +112,63 @@ body {
 
 .stat-card {
     background: white;
-    padding: 25px 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    padding: 30px 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
     text-align: center;
     transition: all 0.3s ease;
     border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #2c5aa0, #10b981);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover::before {
+    transform: scaleX(1);
 }
 
 .stat-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 30px rgba(44,90,160,0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 35px rgba(44,90,160,0.18);
     border-color: #2c5aa0;
 }
 
 .stat-card .icon {
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #2c5aa0;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     transition: transform 0.3s ease;
 }
 
 .stat-card:hover .icon {
-    transform: scale(1.1);
+    transform: scale(1.15) rotate(5deg);
 }
 
 .stat-card .number {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     font-weight: 700;
     color: #166f26;
-    margin: 5px 0;
+    margin: 8px 0;
     font-family: 'Poppins', sans-serif;
 }
 
 .stat-card .label {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #666;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    font-weight: 500;
+    letter-spacing: 0.8px;
+    font-weight: 600;
 }
 
 /* Search Bar */
@@ -165,18 +183,20 @@ body {
     background: white;
     border-radius: 50px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    box-shadow: 0 6px 25px rgba(0,0,0,0.1);
     transition: box-shadow 0.3s ease;
+    border: 2px solid transparent;
 }
 
 .search-box:focus-within {
-    box-shadow: 0 6px 30px rgba(44,90,160,0.15);
+    box-shadow: 0 8px 35px rgba(44,90,160,0.2);
+    border-color: #2c5aa0;
 }
 
 .search-box input {
     flex: 1;
     border: none;
-    padding: 15px 25px;
+    padding: 16px 28px;
     font-size: 1rem;
     outline: none;
     font-family: 'Poppins', sans-serif;
@@ -186,10 +206,10 @@ body {
     background: linear-gradient(135deg, #2c5aa0 0%, #1e3a8a 100%);
     color: white;
     border: none;
-    padding: 15px 30px;
+    padding: 16px 32px;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .search-box button:hover {
@@ -198,7 +218,7 @@ body {
 }
 
 .search-box button i {
-    margin-right: 5px;
+    margin-right: 6px;
 }
 
 /* Empty State */
@@ -220,75 +240,136 @@ body {
     font-style: italic;
 }
 
-body {
-  font-family: 'Poppins', 'Roboto', Arial, sans-serif;
-  background: linear-gradient(135deg, #f8f9fa 60%, #e3f0ff 100%);
-  color: #222;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-}
 .gallery-section {
   padding: 2.5rem 0 3rem 0;
 }
+
 .container.gallery-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2.2rem;
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
-  padding: 2.5rem 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+  padding: 3rem 2rem;
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1400px;
+  backdrop-filter: blur(10px);
 }
 
 .staff-item {
-    background: #f9f9f9;
-    border-radius: 18px;
-    box-shadow: 0 2px 12px rgba(22,111,38,0.10);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
     text-align: center;
-    padding: 2.2rem 1.2rem 1.5rem 1.2rem;
-    width: 230px;
-    transition: transform 0.22s, box-shadow 0.22s, background 0.22s;
+    padding: 2.5rem 1.5rem 2rem;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 0.5rem;
-    border: 1.5px solid #e0e0e0;
+    border: 2px solid transparent;
+    position: relative;
+    cursor: pointer;
 }
+
+.staff-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #10b981, #2c5aa0);
+    transform: scaleX(0);
+    transition: transform 0.35s ease;
+}
+
+.staff-item:hover::before {
+    transform: scaleX(1);
+}
+
+.staff-item .image-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
 .staff-item img {
     border-radius: 50%;
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     object-fit: cover;
-    margin-bottom: 1.1rem;
-    border: 3px solid #e0e0e0;
+    border: 4px solid #e8f0fe;
     background: #fff;
-    box-shadow: 0 2px 8px rgba(44,90,160,0.07);
-    transition: box-shadow 0.22s, border 0.22s;
+    box-shadow: 0 8px 24px rgba(16,185,129,0.12);
+    transition: all 0.35s ease;
 }
+
+.staff-item:hover img {
+    border-color: #10b981;
+    transform: scale(1.08);
+    box-shadow: 0 12px 32px rgba(16,185,129,0.25);
+}
+
+.staff-item .image-wrapper::after {
+    content: '\f508';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    bottom: -5px;
+    right: calc(50% - 80px);
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+    transition: all 0.35s ease;
+}
+
+.staff-item:hover .image-wrapper::after {
+    transform: scale(1.15) rotate(-10deg);
+}
+
 .staff-item h3 {
-    font-size: 1.13rem;
-    color: #166f26;
-    margin: 0.5rem 0 0.2rem 0;
+    font-size: 1.15rem;
+    color: #1e3a8a;
+    margin: 0.8rem 0 0.5rem 0;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+    transition: color 0.3s ease;
+}
+
+.staff-item:hover h3 {
+    color: #10b981;
+}
+
+.staff-item .badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+    color: #059669;
+    border-radius: 20px;
+    font-size: 0.85rem;
     font-weight: 600;
-    letter-spacing: 0.5px;
-    text-shadow: 0 1px 4px rgba(44,90,160,0.04);
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
 }
-.staff-item p {
-    font-size: 1.01rem;
-    color: #555;
-    margin: 0;
-    font-weight: 500;
-    letter-spacing: 0.1px;
+
+.staff-item:hover .badge {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: white;
+    transform: scale(1.05);
 }
+
 .staff-item:hover {
-    transform: translateY(-10px) scale(1.045);
-    box-shadow: 0 10px 32px rgba(22,111,38,0.16);
-    background: #f4fff7;
-    border: 1.5px solid #10b981;
+    transform: translateY(-12px);
+    box-shadow: 0 20px 50px rgba(16,185,129,0.2);
+    border-color: #10b981;
 }
 
 @media (max-width: 900px) {
@@ -430,68 +511,51 @@ async function loadNonTeachingStaff() {
     const spinner = document.getElementById('loadingSpinner');
     
     try {
-        const response = await fetch('../backend/get_teachers_public.php?page=1&perPage=100');
-        const data = await response.json();
-        
         // Load gallery images for nonteachers category
-        let galleryImages = [];
-        try {
-            const galleryResponse = await fetch('../backend/get_gallery_images.php');
-            const galleryData = await galleryResponse.json();
-            if (galleryData.success && galleryData.images) {
-                // Filter only nonteachers category images
-                galleryImages = galleryData.images.filter(img => img.category === 'nonteachers');
-            }
-        } catch (error) {
-            console.warn('Could not load gallery images:', error);
+        const response = await fetch('../backend/get_gallery_images.php');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+        
+        const data = await response.json();
+        console.log('Gallery data loaded:', data);
         
         // Remove spinner
         if (spinner) spinner.remove();
         
-        if (data.teachers && data.teachers.length > 0) {
-            // Filter non-teaching staff (those without subjects or with admin roles)
-            allStaff = data.teachers.filter(teacher => 
-                !teacher.subject || 
-                teacher.subject.trim() === '' || 
-                teacher.subject.toLowerCase().includes('admin') ||
-                teacher.subject.toLowerCase().includes('bursar') ||
-                teacher.subject.toLowerCase().includes('accountant') ||
-                teacher.subject.toLowerCase().includes('secretary') ||
-                teacher.subject.toLowerCase().includes('librarian') ||
-                teacher.subject.toLowerCase().includes('headmaster') ||
-                teacher.subject.toLowerCase().includes('deputy') ||
-                teacher.subject.toLowerCase().includes('director') ||
-                teacher.subject.toLowerCase().includes('nurse') ||
-                teacher.subject.toLowerCase().includes('security') ||
-                teacher.subject.toLowerCase().includes('cleaner') ||
-                teacher.subject.toLowerCase().includes('cook')
-            );
+        if (data.success && data.images) {
+            // Filter only nonteachers category images
+            const nonTeacherImages = data.images.filter(img => img.category === 'nonteachers');
+            console.log('Non-teacher images found:', nonTeacherImages.length);
             
-            // Match staff with gallery images if they don't have photos
-            allStaff = allStaff.map((staff, index) => {
-                if (!staff.photo && galleryImages.length > 0) {
-                    // Assign gallery image (round-robin distribution)
-                    const galleryImage = galleryImages[index % galleryImages.length];
-                    staff.photo = galleryImage.filename;
-                    staff.photo_source = 'gallery';
-                }
-                return staff;
-            });
-            
-            // Update statistics
-            updateStatistics(allStaff);
-            
-            // Display all staff
-            displayStaff(allStaff);
-            
+            if (nonTeacherImages.length > 0) {
+                // Transform gallery images to staff format
+                allStaff = nonTeacherImages.map((img, index) => ({
+                    full_name: img.caption || `Staff ${index + 1}`,
+                    photo: img.filename,
+                    subject: 'Support Staff',
+                    email: '',
+                    phone: '',
+                    photo_source: 'gallery'
+                }));
+                
+                // Update statistics
+                updateStatistics(allStaff);
+                
+                // Display all staff
+                displayStaff(allStaff);
+            } else {
+                container.innerHTML = '<div class="empty-state"><i class="fas fa-users-slash"></i><p>No non-teaching staff photos found. Please upload photos with "Non-Teachers" category in the gallery.</p></div>';
+            }
         } else {
-            container.innerHTML = '<div class="empty-state"><i class="fas fa-users-slash"></i><p>No staff found in the database.</p></div>';
+            console.error('Invalid response:', data);
+            container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p style="color: #d32f2f;">Error: ${data.error || 'Unknown error'}</p></div>`;
         }
     } catch (error) {
         console.error('Error loading non-teaching staff:', error);
         if (spinner) spinner.remove();
-        container.innerHTML = '<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p style="color: #d32f2f;">Error loading staff data. Please try again later.</p></div>';
+        container.innerHTML = `<div class="empty-state"><i class="fas fa-exclamation-circle"></i><p style="color: #d32f2f;">Error loading staff data: ${error.message}</p><p style="font-size: 0.9rem; margin-top: 10px;">Check browser console for details.</p></div>`;
     }
 }
 
@@ -499,17 +563,27 @@ function displayStaff(staff) {
     const container = document.getElementById('nonTeachingStaffContainer');
     
     if (staff.length > 0) {
-        container.innerHTML = staff.map((person, index) => `
+        container.innerHTML = staff.map((person, index) => {
+            // Clean up the name from filename if needed
+            let displayName = person.full_name;
+            if (displayName.includes('.')) {
+                // Extract caption or create a cleaner name
+                displayName = displayName.split('.')[0].replace(/_/g, ' ').replace(/\d+/g, '').trim();
+            }
+            
+            return `
             <div class="staff-item" data-aos="fade-up" data-aos-delay="${Math.min(index * 50, 500)}">
-                <img src="${person.photo ? 'nyabzgallery/' + person.photo : 'nyabzgallery/default.svg'}" 
-                     alt="${person.full_name}"
-                     onerror="this.src='nyabzgallery/default.svg'">
-                <h3>${person.full_name.toUpperCase()}</h3>
-                <p><i class="fas fa-briefcase"></i> ${person.subject || 'Support Staff'}</p>
-                ${person.email ? `<small style="color: #666; font-size: 0.85rem; display: block; margin-top: 8px;"><i class="fas fa-envelope"></i> ${person.email}</small>` : ''}
-                ${person.phone ? `<small style="color: #666; font-size: 0.85rem; display: block; margin-top: 0.3rem;"><i class="fas fa-phone"></i> ${person.phone}</small>` : ''}
+                <div class="image-wrapper">
+                    <img src="nyabzgallery/${person.photo}" 
+                         alt="${displayName}"
+                         onerror="this.src='nyabzgallery/default.svg'"
+                         loading="lazy">
+                </div>
+                <h3>${displayName}</h3>
+                <span class="badge">Support Staff</span>
             </div>
-        `).join('');
+        `;
+        }).join('');
         
         // Reinitialize AOS for new elements
         if (typeof AOS !== 'undefined') {
@@ -522,14 +596,13 @@ function displayStaff(staff) {
 
 function updateStatistics(staff) {
     const total = staff.length;
-    const adminRoles = ['headmaster', 'deputy', 'director', 'bursar', 'accountant', 'secretary'];
-    const admin = staff.filter(s => {
-        const role = (s.subject || '').toLowerCase();
-        return adminRoles.some(r => role.includes(r));
-    }).length;
     
-    document.getElementById('totalStaff').textContent = total;
-    document.getElementById('adminStaff').textContent = admin;
+    // Update all stat cards with the same total count
+    const totalElement = document.getElementById('totalStaff');
+    const adminElement = document.getElementById('adminStaff');
+    
+    if (totalElement) totalElement.textContent = total;
+    if (adminElement) adminElement.textContent = total;
 }
 
 function handleSearch() {
