@@ -556,16 +556,16 @@ body.home-page #heroCarousel {
 
 /* Hide login button on all pages except contact page */
 #nav-login-item {
-    display: none;
+    display: none !important;
 }
 
 body.contact-page #nav-login-item {
-    display: block;
+    display: block !important;
 }
 
 /* For mobile menu */
 @media (max-width: 991px) {
     body.contact-page #nav-login-item {
-        display: list-item;
+        display: list-item !important;
     }
 }
